@@ -1,0 +1,57 @@
+name: build
+
+on:
+  push:
+    paths:
+      - 'Image2Display/**'
+      - '.github/workflows/build.yml'
+  pull_request:
+    paths:
+      - 'Image2Display/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # build and publish in parallel: linux-arm,linux-x64,win-x86,win-x64,win-arm,osx-x64
+        dotnetos: [linux, win, osx]
+        dotnetarch: [x86, x64, arm, arm64]
+        exclude:
+          - dotnetos: linux
+            dotnetarch: x86
+          - dotnetos: osx
+            dotnetarch: x86
+          - dotnetos: osx
+            dotnetarch: arm
+          - dotnetos: osx
+            dotnetarch: arm64
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v1
+      - name: environment prepare
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y apt-transport-https
+          sudo apt-get update
+          sudo apt-get install -y dotnet-sdk-6.0
+          sudo apt-get install -y p7zip-full
+      - name: test
+        run: |
+          cd Image2Display
+          dotnet test
+      - name: build
+        env:
+          DOTNETOS: ${{ matrix.dotnetos }}
+          DOTNETARCH: ${{ matrix.dotnetarch }}
+        run: |
+          cd Image2Display
+          dotnet publish -r $DOTNETOS-$DOTNETARCH -p:PublishSingleFile=true --no-self-contained
+          mkdir pkg
+          mv Image2Display/bin/Debug/net6.0/$DOTNETOS-$DOTNETARCH/publish/* pkg/
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Image2Display-${{ matrix.dotnetos }}-${{ matrix.dotnetarch }}
+          path: Image2Display/pkg/
