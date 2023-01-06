@@ -5,9 +5,6 @@ on:
     paths:
       - 'Image2Display/**'
       - '.github/workflows/build.yml'
-  pull_request:
-    paths:
-      - 'Image2Display/**'
   workflow_dispatch:
 
 jobs:
@@ -40,8 +37,8 @@ jobs:
           DOTNETOS: ${{ matrix.dotnetos }}
           DOTNETARCH: ${{ matrix.dotnetarch }}
         run: |
-          cd Image2Display
-          dotnet publish -r $DOTNETOS-$DOTNETARCH -p:PublishSingleFile=true --no-self-contained
+          cd Image2Display/Image2Display
+          dotnet publish -r $DOTNETOS-$DOTNETARCH --no-self-contained
           mkdir pkg
           mv Image2Display/bin/Debug/net6.0/$DOTNETOS-$DOTNETARCH/publish/* pkg/
 

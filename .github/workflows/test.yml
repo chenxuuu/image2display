@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'Image2Display/**'
-      - '.github/workflows/build.yml'
+      - '.github/workflows/test.yml'
   pull_request:
     paths:
       - 'Image2Display/**'
