@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Image2Display", "Image2Display\Image2Display.csproj", "{EB489052-94DE-4DC3-982B-90ABBD5647D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Image2Display", "Image2Display\Image2Display.csproj", "{EB489052-94DE-4DC3-982B-90ABBD5647D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "I2D_Test", "I2D_Test\I2D_Test.csproj", "{83DD9A10-9E7C-4758-8EEB-EB5B04B1E9A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EB489052-94DE-4DC3-982B-90ABBD5647D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB489052-94DE-4DC3-982B-90ABBD5647D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB489052-94DE-4DC3-982B-90ABBD5647D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83DD9A10-9E7C-4758-8EEB-EB5B04B1E9A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83DD9A10-9E7C-4758-8EEB-EB5B04B1E9A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83DD9A10-9E7C-4758-8EEB-EB5B04B1E9A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83DD9A10-9E7C-4758-8EEB-EB5B04B1E9A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
