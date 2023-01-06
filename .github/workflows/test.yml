@@ -17,8 +17,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: environment prepare
         run: |
-          winget install Microsoft.DotNet.Runtime.7
-          winget install Microsoft.DotNet.SDK.6
+          choco install dotnet --version 6.0.12 -y
+          choco install dotnet-sdk --version 6.0.404 -y
       - name: test
         run: |
           cd Image2Display
