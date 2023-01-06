@@ -40,9 +40,9 @@ jobs:
           cd Image2Display/Image2Display
           dotnet publish -r $DOTNETOS-$DOTNETARCH --no-self-contained
           mkdir pkg
-          mv Image2Display/bin/Debug/net6.0/$DOTNETOS-$DOTNETARCH/publish/* pkg/
+          mv bin/Debug/net6.0/$DOTNETOS-$DOTNETARCH/publish/* pkg/
 
       - uses: actions/upload-artifact@v3
         with:
           name: Image2Display-${{ matrix.dotnetos }}-${{ matrix.dotnetarch }}
-          path: Image2Display/pkg/
+          path: Image2Display/Image2Display/pkg/
