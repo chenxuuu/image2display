@@ -12,22 +12,14 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-2022
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: environment prepare
         run: |
-          sudo apt-get update
-          sudo apt-get install -y apt-transport-https
-          sudo apt-get update
-          sudo apt-get install -y dotnet-sdk-6.0
-          sudo apt-get install -y p7zip-full
+          winget install Microsoft.DotNet.Runtime.7
+          winget install Microsoft.DotNet.SDK.6
       - name: test
         run: |
           cd Image2Display
           dotnet test
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Image2Display-${{ matrix.dotnetos }}-${{ matrix.dotnetarch }}
-          path: Image2Display/pkg/
