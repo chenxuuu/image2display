@@ -1,0 +1,33 @@
+name: test
+
+on:
+  push:
+    paths:
+      - 'Image2Display/**'
+      - '.github/workflows/build.yml'
+  pull_request:
+    paths:
+      - 'Image2Display/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: environment prepare
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y apt-transport-https
+          sudo apt-get update
+          sudo apt-get install -y dotnet-sdk-6.0
+          sudo apt-get install -y p7zip-full
+      - name: test
+        run: |
+          cd Image2Display
+          dotnet test
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Image2Display-${{ matrix.dotnetos }}-${{ matrix.dotnetarch }}
+          path: Image2Display/pkg/

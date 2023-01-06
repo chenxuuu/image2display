@@ -35,10 +35,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y dotnet-sdk-6.0
           sudo apt-get install -y p7zip-full
-      - name: test
-        run: |
-          cd Image2Display
-          dotnet test
       - name: build
         env:
           DOTNETOS: ${{ matrix.dotnetos }}
