@@ -1,12 +1,11 @@
 using Avalonia.Controls;
 
-namespace Image2Display.Views
+namespace Image2Display.Views;
+
+public partial class MainWindow : Window
 {
-    public partial class MainWindow : Window
+    public MainWindow()
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }
