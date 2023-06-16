@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace Image2Display.ViewModels;
 
-namespace Image2Display.ViewModels
+public partial class MainWindowViewModel : ViewModelBase
 {
-    public class MainWindowViewModel : ViewModelBase
-    {
-        public string Greeting => "Welcome to Avalonia!";
-    }
+    public string Greeting => "Welcome to Avalonia!";
 }

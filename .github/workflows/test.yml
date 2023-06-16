@@ -23,5 +23,3 @@ jobs:
         run: |
           cd Image2Display
           dotnet test
-          cd Image2Display
-          dotnet build
