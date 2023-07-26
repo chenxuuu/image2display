@@ -22,6 +22,8 @@ jobs:
             dotnetarch: x86
           - dotnetos: osx
             dotnetarch: arm
+          - dotnetos: win
+            dotnetarch: arm
       fail-fast: true
     steps:
       - uses: actions/checkout@v2
@@ -30,7 +32,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y apt-transport-https
           sudo apt-get update
-          sudo apt-get install -y dotnet-sdk-6.0
+          sudo apt-get install -y dotnet-sdk-7.0
           sudo apt-get install -y p7zip-full
       - name: build
         env:
@@ -38,9 +40,9 @@ jobs:
           DOTNETARCH: ${{ matrix.dotnetarch }}
         run: |
           cd Image2Display/Image2Display
-          dotnet publish -r $DOTNETOS-$DOTNETARCH --no-self-contained
+          dotnet publish -r $DOTNETOS-$DOTNETARCH --configuration Release -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained true
           mkdir pkg
-          mv bin/Debug/net6.0/$DOTNETOS-$DOTNETARCH/publish/* pkg/
+          mv bin/Release/net7.0/$DOTNETOS-$DOTNETARCH/publish/* pkg/
 
       - uses: actions/upload-artifact@v3
         with:

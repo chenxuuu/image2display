@@ -8,8 +8,10 @@
     xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
     xmlns:vm="using:Image2Display.ViewModels"
     Title="Image2Display"
+    Width="700"
+    Height="450"
     d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignWidth="600"
     x:DataType="vm:MainWindowViewModel"
     Icon="/Assets/avalonia-logo.ico"
     WindowStartupLocation="CenterScreen"
@@ -27,11 +29,26 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <ui:NavigationView IsPaneOpen="False">
+    <ui:NavigationView
+        Name="MainNavigationView"
+        Content="{Binding NavigationViewContent}"
+        IsPaneOpen="False"
+        OpenPaneLength="130"
+        PaneDisplayMode="Auto">
         <ui:NavigationView.MenuItems>
-            <ui:NavigationViewItem Content="图片转换" IconSource="PreviewLink" />
-            <ui:NavigationViewItem Content="字库生成" IconSource="FontSize" />
-            <ui:NavigationViewItem Content="数据预览" IconSource="Library" />
+            <ui:NavigationViewItem
+                Content="图片转换"
+                IconSource="PreviewLink"
+                IsSelected="True"
+                Tag="ImageConvert" />
+            <ui:NavigationViewItem
+                Content="字库生成"
+                IconSource="FontSize"
+                Tag="FontConvert" />
+            <ui:NavigationViewItem
+                Content="数据预览"
+                IconSource="Library"
+                Tag="DataViewer" />
         </ui:NavigationView.MenuItems>
 
     </ui:NavigationView>
