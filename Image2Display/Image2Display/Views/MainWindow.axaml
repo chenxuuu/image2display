@@ -18,23 +18,23 @@
     mc:Ignorable="d">
     <Window.Styles>
         <Style Selector="TextBlock">
-            <Setter Property="FontFamily" Value="微软雅黑,Segoe MDL2 Assets" />
+            <Setter Property="FontFamily" Value="微软雅黑,Helvetica Neue,Segoe Fluent,Segoe MDL2 Assets" />
         </Style>
     </Window.Styles>
     <Design.DataContext>
         <!--
-            This only sets the DataContext for the previewer in an IDE,
-            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        This only sets the DataContext for the previewer in an IDE,
+        to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
         -->
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
     <ui:NavigationView
-        Name="MainNavigationView"
         Content="{Binding NavigationViewContent}"
         IsPaneOpen="False"
         OpenPaneLength="130"
-        PaneDisplayMode="Auto">
+        PaneDisplayMode="Auto"
+        SelectionChanged="MainNavigationView_SelectionChanged">
         <ui:NavigationView.MenuItems>
             <ui:NavigationViewItem
                 Content="图片转换"
