@@ -26,7 +26,7 @@ jobs:
             dotnetarch: arm
       fail-fast: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: environment prepare
         run: |
           sudo apt-get update
@@ -40,7 +40,7 @@ jobs:
           DOTNETARCH: ${{ matrix.dotnetarch }}
         run: |
           cd Image2Display/Image2Display
-          dotnet publish -r $DOTNETOS-$DOTNETARCH --configuration Release -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained true
+          dotnet publish -r $DOTNETOS-$DOTNETARCH --configuration Release -p:PublishSingleFile=true --self-contained true
           mkdir pkg
           mv bin/Release/net7.0/$DOTNETOS-$DOTNETARCH/publish/* pkg/
 
