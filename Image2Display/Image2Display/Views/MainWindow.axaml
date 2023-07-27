@@ -23,8 +23,8 @@
     </Window.Styles>
     <Design.DataContext>
         <!--
-        This only sets the DataContext for the previewer in an IDE,
-        to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
         -->
         <vm:MainWindowViewModel />
     </Design.DataContext>
@@ -32,21 +32,21 @@
     <ui:NavigationView
         Content="{Binding NavigationViewContent}"
         IsPaneOpen="False"
-        OpenPaneLength="130"
+        OpenPaneLength="{DynamicResource MainOpenPaneLength}"
         PaneDisplayMode="Auto"
         SelectionChanged="MainNavigationView_SelectionChanged">
         <ui:NavigationView.MenuItems>
             <ui:NavigationViewItem
-                Content="图片转换"
+                Content="{DynamicResource ImageConvert}"
                 IconSource="PreviewLink"
                 IsSelected="True"
                 Tag="ImageConvert" />
             <ui:NavigationViewItem
-                Content="字库生成"
+                Content="{DynamicResource FontConvert}"
                 IconSource="FontSize"
                 Tag="FontConvert" />
             <ui:NavigationViewItem
-                Content="数据预览"
+                Content="{DynamicResource DataViewer}"
                 IconSource="Library"
                 Tag="DataViewer" />
         </ui:NavigationView.MenuItems>
