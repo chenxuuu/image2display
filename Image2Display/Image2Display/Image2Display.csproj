@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaResource Remove="Assets\Languages\en-us.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\icon\code.png" />
     <None Remove="Assets\icon\font.png" />
     <None Remove="Assets\icon\image.png" />
@@ -29,5 +33,12 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="FluentAvaloniaUI" Version="2.0.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <AvaloniaXaml Update="Assets\Languages\en-US.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
   </ItemGroup>
 </Project>

@@ -14,4 +14,13 @@
     <Application.Styles>
         <sty:FluentAvaloniaTheme />
     </Application.Styles>
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="/Assets/Languages/zh-CN.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <SolidColorBrush x:Key="Warning">Yellow</SolidColorBrush>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

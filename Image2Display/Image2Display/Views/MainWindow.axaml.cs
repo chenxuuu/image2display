@@ -1,6 +1,9 @@
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Markup.Xaml.Styling;
 using FluentAvalonia.UI.Controls;
 using Image2Display.ViewModels;
+using System;
 using System.Diagnostics;
 
 namespace Image2Display.Views;

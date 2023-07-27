@@ -1,0 +1,9 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="ImageConvert">图片转换</system:String>
+    <system:String x:Key="FontConvert">字库生成</system:String>
+    <system:String x:Key="DataViewer">数据预览</system:String>
+    <system:Double x:Key="MainOpenPaneLength">130</system:Double>
+</ResourceDictionary>
