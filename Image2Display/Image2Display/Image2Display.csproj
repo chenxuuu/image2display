@@ -2,10 +2,11 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <ApplicationIcon>Assets\I2D-logo.ico</ApplicationIcon>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,16 +18,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\I2D-logo.ico" />
     <None Remove="Assets\icon\code.png" />
     <None Remove="Assets\icon\font.png" />
     <None Remove="Assets\icon\image.png" />
+    <None Remove="Assets\logo-pure.png" />
+    <None Remove="Assets\logo.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\I2D-logo.ico" />
   </ItemGroup>
 
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.0.1" />
     <PackageReference Include="Avalonia.Desktop" Version="11.0.1" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.1" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.1" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.1" />
@@ -42,5 +49,13 @@
     <AvaloniaXaml Update="Assets\Languages\en-US.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
