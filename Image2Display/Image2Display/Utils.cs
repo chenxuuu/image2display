@@ -58,22 +58,29 @@ namespace Image2Display
         public static void Initial()
         {
             //初始化语言
-            ChangeLanguage(Settings.Language);
+            ChangeLanguage();
         }
 
         /// <summary>
         /// 设置语言
         /// </summary>
         /// <param name="language">语言代码，如zh-cn</param>
-        public static void ChangeLanguage(string language)
+        public static void ChangeLanguage(string language = "en-US", bool test = false)
         {
             var file = $"avares://Image2Display/Assets/Languages/{language}.axaml";
-            if (File.Exists(language))
-                file = language;
+            if (test)
+                file = $"avares://I2D_Test/{language}.axaml";
             var data =
                 new ResourceInclude(new Uri(file, UriKind.Absolute));
             data.Source = new Uri(file, UriKind.Absolute);
-            Application.Current!.Resources.MergedDictionaries[0] = data;
+            try
+            {
+                Application.Current!.Resources.MergedDictionaries[0] = data;
+            }
+            catch
+            {
+                ChangeLanguage();
+            }
         }
 
         /// <summary>
