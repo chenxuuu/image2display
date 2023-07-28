@@ -5,7 +5,22 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignWidth="580"
     mc:Ignorable="d">
-    Settings
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="10">
+            <TextBlock Text="设置" FontSize="30" FontWeight="Bold"/>
+            <TabControl>
+                <TabItem Header="通用"/>
+                <TabItem Header="关于">
+                    <StackPanel>
+                        <TextBlock Text="LOGO" FontSize="30" Height="120" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Image2Display" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="版本：xxxxxx" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
