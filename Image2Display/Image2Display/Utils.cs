@@ -58,7 +58,7 @@ namespace Image2Display
         public static void Initial()
         {
             //初始化语言
-            ChangeLanguage();
+            ChangeLanguage(Settings.Language);
         }
 
         /// <summary>
