@@ -2,11 +2,15 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <ApplicationIcon>Assets\I2D-logo.ico</ApplicationIcon>
-    <Nullable>enable</Nullable>
+	  <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+	  <ApplicationManifest>app.manifest</ApplicationManifest>
+	  <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+	  <ApplicationIcon>Assets\I2D-logo.ico</ApplicationIcon>
+	  <Nullable>enable</Nullable>
+	  <Authors>chenxuuu</Authors>
+	  <Company>https://github.com/chenxuuu/image2display</Company>
+	  <Description>Image data conversion tool</Description>
+	  <Version>0.0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +26,7 @@
     <None Remove="Assets\icon\code.png" />
     <None Remove="Assets\icon\font.png" />
     <None Remove="Assets\icon\image.png" />
-    <None Remove="Assets\logo-pure.png" />
+    <None Remove="Assets\logo.png" />
     <None Remove="Assets\logo.svg" />
   </ItemGroup>
 
@@ -49,6 +53,16 @@
     <AvaloniaXaml Update="Assets\Languages\en-US.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
+    <AvaloniaXaml Update="Views\SettingsView.axaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Update="Views\SettingsView.axaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 
