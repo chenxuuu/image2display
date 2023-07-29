@@ -91,5 +91,23 @@ namespace Image2Display
             string jsonString = JsonSerializer.Serialize(Settings);
             File.WriteAllText(_settingsPath, jsonString);
         }
+
+        /// <summary>
+        /// 打开网页链接
+        /// </summary>
+        /// <param name="url">网址</param>
+        public static void OpenWebLink(string url)
+        {
+            try
+            {
+                var psi = new ProcessStartInfo
+                {
+                    FileName = url,
+                    UseShellExecute = true
+                };
+                Process.Start(psi);
+            }
+            catch { }
+        }
     }
 }

@@ -4,20 +4,84 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Image2Display.ViewModels"
     d:DesignHeight="450"
     d:DesignWidth="580"
+    x:DataType="vm:SettingsViewModel"
     mc:Ignorable="d">
-    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                  VerticalScrollBarVisibility="Auto">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="10">
-            <TextBlock Text="设置" FontSize="30" FontWeight="Bold"/>
+            <TextBlock
+                FontSize="30"
+                FontWeight="Bold"
+                Text="{DynamicResource Settings}" />
             <TabControl>
-                <TabItem Header="通用"/>
-                <TabItem Header="关于">
+                <TabItem Header="{DynamicResource General}">
+                    <StackPanel Margin="10,15,0,15">
+                        <TextBlock Margin="0,5" Text="{DynamicResource DisplayLanguage}" />
+                        <ComboBox
+                            Margin="0,5"
+                            ItemsSource="{Binding LanguagesList}"
+                            SelectedIndex="{Binding LanguagesSelected}" />
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="{DynamicResource About}">
                     <StackPanel>
-                        <TextBlock Text="LOGO" FontSize="30" Height="120" FontWeight="Bold" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Image2Display" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                        <TextBlock Text="版本：xxxxxx" HorizontalAlignment="Center"/>
+                        <Image
+                            Width="100"
+                            Margin="10"
+                            HorizontalAlignment="Center"
+                            Source="/Assets/logo.png" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Text="Image2Display" />
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock
+                                Margin="0,0,10,0"
+                                Foreground="Gray"
+                                Text="{DynamicResource Version}" />
+                            <TextBlock Foreground="Gray" Text="{Binding Version}" />
+                        </StackPanel>
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            IsVisible="{Binding HasNewVersion}"
+                            Orientation="Horizontal">
+                            <TextBlock
+                                Margin="0,0,10,0"
+                                Foreground="Gray"
+                                Text="{DynamicResource NewVersionFound}" />
+                            <TextBlock Foreground="Gray" Text="{Binding NewVersion}" />
+                        </StackPanel>
+                        <TextBlock
+                            Margin="0,5,0,20"
+                            HorizontalAlignment="Center"
+                            Text="{DynamicResource Description}" />
+                        <Button
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            Command="{Binding CheckUpdateCommand}"
+                            Content="{DynamicResource CheckUpdate}"
+                            IsVisible="{Binding !HasNewVersion}" />
+                        <Button
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            Command="{Binding UpdateCommand}"
+                            Content="{DynamicResource DownloadPage}"
+                            IsVisible="{Binding HasNewVersion}" />
+                        <Button
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            Command="{Binding OpenUrlCommand}"
+                            CommandParameter="https://github.com/chenxuuu/image2display"
+                            Content="{DynamicResource SourceCodePage}" />
+                        <Button
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            Command="{Binding OpenUrlCommand}"
+                            CommandParameter="https://github.com/chenxuuu/image2display/blob/master/LICENSE"
+                            Content="{DynamicResource LicensePage}" />
                     </StackPanel>
                 </TabItem>
             </TabControl>

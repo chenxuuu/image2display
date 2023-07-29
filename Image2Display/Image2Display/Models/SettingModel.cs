@@ -9,7 +9,7 @@ namespace Image2Display.Models
 {
     public class SettingModel
     {
-        private static string[] _supportLanguages = new string[] { "zh-CN", "en-US" };
+        public static readonly string[] SupportLanguages = new string[] { "zh-CN", "en-US" };
         private string? _language = null;
         /// <summary>
         /// 软件语言
@@ -21,7 +21,7 @@ namespace Image2Display.Models
                 if (_language is null)
                 {
                     var lang = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
-                    if(!_supportLanguages.Contains(lang))//不支持的语言一律用英语
+                    if(!SupportLanguages.Contains(lang))//不支持的语言一律用英语
                         _language = "en-US";
                     else
                         _language = lang;
