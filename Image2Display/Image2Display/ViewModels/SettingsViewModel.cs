@@ -30,6 +30,10 @@ namespace Image2Display.ViewModels
         [ObservableProperty]
         private string[] _languagesList = SettingModel.SupportLanguages;
 
+        /// <summary>
+        /// 被选中的语言index
+        /// 不会在别处被更改，所以不需要notify
+        /// </summary>
         public int LanguagesSelected
         {
             get
@@ -49,6 +53,7 @@ namespace Image2Display.ViewModels
             {
                 Utils.Settings.Language = LanguagesList[value];
                 Utils.ChangeLanguage(Utils.Settings.Language);
+                Utils.SaveSettings();
             }
         }
 
