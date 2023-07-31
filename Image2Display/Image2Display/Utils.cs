@@ -1,6 +1,8 @@
 ﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml.Styling;
 using HarfBuzzSharp;
+using Image2Display.Helpers;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -93,10 +95,31 @@ namespace Image2Display
         }
 
         /// <summary>
+        /// 获取当前语言的实际数据
+        /// </summary>
+        /// <param name="name">数据名称</param>
+        /// <returns>数据</returns>
+        public static T GetI18n<T>(string name)
+        {
+            try
+            {
+                Application.Current!.TryFindResource(name, out object value);
+                return (T)value;
+            }
+            catch
+            {
+                if (typeof(T) == typeof(string))
+                    return (T)(object)"??";
+                else
+                    return default!;
+            }
+        }
+
+        /// <summary>
         /// 打开网页链接
         /// </summary>
         /// <param name="url">网址</param>
-        public static void OpenWebLink(string url)
+        public static async Task OpenWebLink(string url)
         {
             try
             {
@@ -107,7 +130,10 @@ namespace Image2Display
                 };
                 Process.Start(psi);
             }
-            catch { }
+            catch
+            {
+                await DialogHelper.ShowUnableToOpenLinkDialog(new Uri(url));
+            }
         }
     }
 }

@@ -2,6 +2,8 @@
 using Avalonia.Markup.Xaml.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FluentAvalonia.UI.Controls;
+using Image2Display.Helpers;
 using Image2Display.Models;
 using System;
 using System.Collections.Generic;
@@ -87,23 +89,25 @@ namespace Image2Display.ViewModels
                     HasNewVersion = true;
                 }
             }
-            catch //(Exception ex)
+            catch (Exception ex)
             {
-                //暂时先不管
+                await DialogHelper.ShowNotifyDialog(Utils.GetI18n<string>("Error"), 
+                    $"{Utils.GetI18n<string>("CheckUpdateFail")}\r\n{ex}",
+                    Symbol.Earth);
             }
         }
 
         [RelayCommand]
-        private void Update()
+        private async Task Update()
         {
             if (HasNewVersion)
-                OpenUrl($"https://github.com/chenxuuu/Image2Display/releases/tag/{NewVersion}");
+                await OpenUrl($"https://github.com/chenxuuu/Image2Display/releases/tag/{NewVersion}");
         }
 
         [RelayCommand]
-        private void OpenUrl(string url)
+        private async Task OpenUrl(string url)
         {
-            Utils.OpenWebLink(url);
+            await Utils.OpenWebLink(url);
         }
     }
 }

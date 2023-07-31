@@ -17,4 +17,10 @@
     <system:String x:Key="DownloadPage">Go to new version download page</system:String>
     <system:String x:Key="SourceCodePage">Source code page</system:String>
     <system:String x:Key="LicensePage">License page</system:String>
+    <system:String x:Key="CopyLink">Copy Link</system:String>
+    <system:String x:Key="OhNo">Oh No!</system:String>
+    <system:String x:Key="OpenLinkFail">It looks like your platform doesn't support Process.Start and we are unable to open a link.</system:String>
+    <system:String x:Key="Copied">Copied!</system:String>
+    <system:String x:Key="Error">Error</system:String>
+    <system:String x:Key="CheckUpdateFail">Check update failed.</system:String>
 </ResourceDictionary>

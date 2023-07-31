@@ -17,4 +17,10 @@
     <system:String x:Key="DownloadPage">前往软件下载页面</system:String>
     <system:String x:Key="SourceCodePage">项目开源地址</system:String>
     <system:String x:Key="LicensePage">查看开源协议</system:String>
+    <system:String x:Key="CopyLink">复制链接</system:String>
+    <system:String x:Key="OhNo">有点问题</system:String>
+    <system:String x:Key="OpenLinkFail">看起来你的环境不支持直接打开网页链接。</system:String>
+    <system:String x:Key="Copied">已复制！</system:String>
+    <system:String x:Key="Error">错误</system:String>
+    <system:String x:Key="CheckUpdateFail">更新检查失败，请确保网络连接正常</system:String>
 </ResourceDictionary>
