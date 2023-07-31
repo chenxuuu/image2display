@@ -88,20 +88,20 @@ jobs:
         cd Image2Display-linux-arm
         chmod +x ./Image2Display
         cd ..
-        tar -cvf Image2Display-linux-arm.tar Image2Display-linux-arm/
+        tar zcvf Image2Display-linux-arm.tar.gz Image2Display-linux-arm/
         cd Image2Display-linux-arm64
         chmod +x ./Image2Display
         cd ..
-        tar -cvf Image2Display-linux-arm64.tar Image2Display-linux-arm64/
+        tar zcvf Image2Display-linux-arm64.tar.gz Image2Display-linux-arm64/
         cd Image2Display-linux-x64
         chmod +x ./Image2Display
         cd ..
-        tar -cvf Image2Display-linux-x64.tar Image2Display-linux-x64/
+        tar zcvf Image2Display-linux-x64.tar.gz Image2Display-linux-x64/
         cd Image2Display-osx-x64
         chmod +x ./Image2Display
         cd ..
-        tar -cvf Image2Display-osx-arm64.tar Image2Display-osx-x64/
-        tar -cvf Image2Display-osx-x64.tar Image2Display-osx-x64/
+        tar zcvf Image2Display-osx-arm64.tar.gz Image2Display-osx-x64/
+        tar zcvf Image2Display-osx-x64.tar.gz Image2Display-osx-x64/
         zip -r Image2Display-win-arm64.zip Image2Display-win-arm64/
         zip -r Image2Display-win-x64.zip Image2Display-win-x64/
         zip -r Image2Display-win-x86.zip Image2Display-win-x86/
@@ -109,5 +109,5 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
-        artifacts: "Image2Display-linux-arm.tar,Image2Display-linux-arm64.tar,Image2Display-linux-x64.tar,Image2Display-osx-arm64.tar,Image2Display-osx-x64.tar,Image2Display-win-arm64.zip,Image2Display-win-x64.zip,Image2Display-win-x86.zip"
+        artifacts: "Image2Display-linux-arm.tar.gz,Image2Display-linux-arm64.tar.gz,Image2Display-linux-x64.tar.gz,Image2Display-osx-arm64.tar.gz,Image2Display-osx-x64.tar.gz,Image2Display-win-arm64.zip,Image2Display-win-x64.zip,Image2Display-win-x86.zip"
 
