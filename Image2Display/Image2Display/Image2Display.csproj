@@ -26,6 +26,7 @@
     <None Remove="Assets\icon\code.png" />
     <None Remove="Assets\icon\font.png" />
     <None Remove="Assets\icon\image.png" />
+    <None Remove="Assets\image.png" />
     <None Remove="Assets\logo.png" />
     <None Remove="Assets\logo.svg" />
   </ItemGroup>
