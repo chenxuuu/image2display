@@ -68,14 +68,14 @@ namespace Image2Display.ViewModels
                 var jo = JsonSerializer.Deserialize<JsonObject>(data);
                 var ver = (string)jo!["tag_name"]!;
 
-                var vo = Utils.Version.Split('.');
-                var vl = ver.Split('.');
+                var vLocal = Utils.Version.Split('.');
+                var vNet = ver.Split('.');
                 var hasNew = false;
                 for (int i = 0; i < 3; i++)
                 {
-                    if (int.Parse(vl[i]) > int.Parse(vo[i]))
+                    if (int.Parse(vLocal[i]) > int.Parse(vNet[i]))
                         break;
-                    else if (int.Parse(vl[i]) < int.Parse(vo[i]))
+                    else if (int.Parse(vLocal[i]) < int.Parse(vNet[i]))
                     {
                         hasNew = true;
                         break;
@@ -97,7 +97,7 @@ namespace Image2Display.ViewModels
         private void Update()
         {
             if (HasNewVersion)
-                OpenUrl($"https://github.com/chenxuuu/llcom/releases/tag/{NewVersion}");
+                OpenUrl($"https://github.com/chenxuuu/Image2Display/releases/tag/{NewVersion}");
         }
 
         [RelayCommand]
