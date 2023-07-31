@@ -1,0 +1,113 @@
+name: release
+
+on:
+  push:
+    tags:
+    - '*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # build and publish in parallel: linux-arm,linux-x64,win-x86,win-x64,win-arm,osx-x64
+        dotnetos: [linux, win, osx]
+        dotnetarch: [x86, x64, arm, arm64]
+        exclude:
+          - dotnetos: linux
+            dotnetarch: x86
+          - dotnetos: osx
+            dotnetarch: x86
+          - dotnetos: osx
+            dotnetarch: arm
+          - dotnetos: win
+            dotnetarch: arm
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v3
+      - name: environment prepare
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y apt-transport-https
+          sudo apt-get update
+          sudo apt-get install -y dotnet-sdk-7.0
+          sudo apt-get install -y p7zip-full
+      - name: build
+        env:
+          DOTNETOS: ${{ matrix.dotnetos }}
+          DOTNETARCH: ${{ matrix.dotnetarch }}
+        run: |
+          cd Image2Display/Image2Display
+          dotnet publish -r $DOTNETOS-$DOTNETARCH --configuration Release -p:PublishSingleFile=true --self-contained true
+          mkdir pkg
+          mv bin/Release/net7.0/$DOTNETOS-$DOTNETARCH/publish/* pkg/
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Image2Display-${{ matrix.dotnetos }}-${{ matrix.dotnetarch }}
+          path: Image2Display/Image2Display/pkg/
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: [build]
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: Image2Display-linux-arm
+        path: Image2Display-linux-arm/
+    - uses: actions/download-artifact@v3
+      with:
+        name: Image2Display-linux-arm64
+        path: Image2Display-linux-arm64/
+    - uses: actions/download-artifact@v3
+      with:
+        name: Image2Display-linux-x64
+        path: Image2Display-linux-x64/
+    - uses: actions/download-artifact@v3
+      with:
+        name: Image2Display-osx-x64
+        path: Image2Display-osx-x64/
+    - uses: actions/download-artifact@v3
+      with:
+        name: Image2Display-win-arm64
+        path: Image2Display-win-arm64/
+    - uses: actions/download-artifact@v3
+      with:
+        name: Image2Display-win-x64
+        path: Image2Display-win-x64/
+    - uses: actions/download-artifact@v3
+      with:
+        name: Image2Display-win-x86
+        path: Image2Display-win-x86/
+
+    - name: Create Release Asset
+      run: |
+        cd Image2Display-linux-arm
+        chmod +x ./Image2Display
+        cd ..
+        tar -cvf Image2Display-linux-arm.tar Image2Display-linux-arm/
+        cd Image2Display-linux-arm64
+        chmod +x ./Image2Display
+        cd ..
+        tar -cvf Image2Display-linux-arm64.tar Image2Display-linux-arm64/
+        cd Image2Display-linux-x64
+        chmod +x ./Image2Display
+        cd ..
+        tar -cvf Image2Display-linux-x64.tar Image2Display-linux-x64/
+        cd Image2Display-osx-x64
+        chmod +x ./Image2Display
+        cd ..
+        tar -cvf Image2Display-osx-arm64.tar Image2Display-osx-x64/
+        tar -cvf Image2Display-osx-x64.tar Image2Display-osx-x64/
+        zip -r Image2Display-win-arm64.zip Image2Display-win-arm64/
+        zip -r Image2Display-win-x64.zip Image2Display-win-x64/
+        zip -r Image2Display-win-x86.zip Image2Display-win-x86/
+
+    - uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        artifacts: "Image2Display-linux-arm.tar,Image2Display-linux-arm64.tar,Image2Display-linux-x64.tar,Image2Display-osx-arm64.tar,Image2Display-osx-x64.tar,Image2Display-win-arm64.zip,Image2Display-win-x64.zip,Image2Display-win-x86.zip"
+
