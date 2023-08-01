@@ -3,6 +3,8 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Avalonia.Xaml.Interactivity"
+    xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Image2Display.ViewModels"
     d:DesignHeight="450"
@@ -23,12 +25,15 @@
         <Grid>
             <!--  空图片  -->
             <Image
+                Name="ImportImage"
                 Width="100"
                 Classes="ImageMask"
                 Source="/Assets/image.png">
-                <!--<Image.InputBindings>
-                    <MouseBinding Command="{Binding ImportImageCommand}" MouseAction="LeftClick" />
-                </Image.InputBindings>-->
+                <i:Interaction.Behaviors>
+                    <ia:EventTriggerBehavior EventName="PointerPressed" SourceObject="{Binding #ImportImage}">
+                        <ia:InvokeCommandAction Command="{Binding ImportImageCommand}" />
+                    </ia:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
             </Image>
         </Grid>
     </Grid>

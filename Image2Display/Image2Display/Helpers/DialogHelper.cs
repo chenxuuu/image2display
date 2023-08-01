@@ -11,6 +11,8 @@ using FluentAvalonia.UI.Controls.Primitives;
 using Avalonia.Controls.Primitives;
 using Avalonia.Threading;
 using Avalonia;
+using Image2Display.ViewModels;
+using Avalonia.Platform.Storage;
 
 namespace Image2Display.Helpers
 {
@@ -105,6 +107,51 @@ namespace Image2Display.Helpers
             }
 
             await td.ShowAsync(true);
+        }
+
+        /// <summary>
+        /// 打开文件选择框
+        /// </summary>
+        /// <param name="type">已知的FilePickerFileType类型枚举</param>
+        /// <param name="multiple">是否允许多选文件，默认禁止</param>
+        /// <returns>文件列表</returns>
+        public static async Task<IReadOnlyList<IStorageFile>> ShowOpenFileDialogAsync
+        (
+            FilePickerFileType type,
+            bool multiple = false
+        )
+        {
+            var options = new FilePickerOpenOptions
+            {
+                AllowMultiple = multiple,
+                FileTypeFilter = new List<FilePickerFileType> { type }
+            };
+            var app = Application.Current!.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+            var m = app!.MainWindow;
+            return await m!.StorageProvider.OpenFilePickerAsync(options);
+        }
+
+        /// <summary>
+        /// 打开文件选择框
+        /// </summary>
+        /// <param name="explain">文件类型解释</param>
+        /// <param name="types">文件拓展名列表，如"*.txt"</param>
+        /// <param name="multiple">是否允许多选文件，默认禁止</param>
+        /// <returns>文件列表</returns>
+        public static async Task<IReadOnlyList<IStorageFile>> ShowOpenFileDialogAsync
+        (
+            string explain,
+            IEnumerable<string> types,
+            bool multiple = false
+        )
+        {
+            FilePickerFileType list = new(explain)
+            {
+                Patterns = types.ToArray(),
+                AppleUniformTypeIdentifiers = new[] { "public.image" },
+                MimeTypes = new[] { "application/octet-stream" }
+            };
+            return await ShowOpenFileDialogAsync(list, multiple);
         }
     }
 }
