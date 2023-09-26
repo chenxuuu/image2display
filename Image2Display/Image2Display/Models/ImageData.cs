@@ -3,13 +3,14 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Image2Display.Models
 {
-    public class ImageData
+    public class ImageData : IDisposable
     {
         /// <summary>
         /// 图片的原始数据
@@ -63,14 +64,13 @@ namespace Image2Display.Models
         /// <param name="width">目标宽度</param>
         /// <param name="height">目标高度</param>
         /// <returns>是否成功</returns>
-        public bool Resize(int width, int height)
+        public bool Stretch(int width, int height)
         {
             if (width < 0 || height < 0)
                 return false;
             Raw.Mutate(ctx => ctx.Resize(width, height));
             return true;
         }
-
 
         /// <summary>
         /// 拓展图片大小（向右下方拓展空白区域）
@@ -86,6 +86,23 @@ namespace Image2Display.Models
             n.Mutate(ctx => ctx.DrawImage(Raw, new Point(0, 0), 1));
             Raw = n;
             return true;
+        }
+
+        /// <summary>
+        /// 获取Stream，用于显示或保存
+        /// </summary>
+        /// <returns>获取到的Stream</returns>
+        public Stream GetStream()
+        {
+            var ms = new MemoryStream();
+            Raw.SaveAsPng(ms);
+            ms.Seek(0, SeekOrigin.Begin);
+            return ms;
+        }
+
+        public void Dispose()
+        {
+            Raw?.Dispose();
         }
     }
 }

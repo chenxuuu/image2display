@@ -39,10 +39,10 @@ namespace I2D_Test
         [InlineData(1, 1)]
         [InlineData(100, 2000)]
         [InlineData(1000, 20)]
-        public void Resize(int w, int h)
+        public void Stretch(int w, int h)
         {
             var img = new ImageData(1000, 1000);
-            Assert.True(img.Resize(w, h));
+            Assert.True(img.Stretch(w, h));
         }
 
         [Theory]
