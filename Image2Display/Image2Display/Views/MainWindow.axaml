@@ -18,10 +18,10 @@
     mc:Ignorable="d">
     <Window.Styles>
         <Style Selector="TextBlock">
-            <Setter Property="FontFamily" Value="微软雅黑,Helvetica Neue,Segoe Fluent,Segoe MDL2 Assets" />
+            <Setter Property="FontFamily" Value="Microsoft YaHei,Helvetica Neue,Segoe Fluent,Segoe MDL2 Assets" />
         </Style>
         <Style Selector="Button">
-            <Setter Property="FontFamily" Value="微软雅黑,Helvetica Neue,Segoe Fluent,Segoe MDL2 Assets" />
+            <Setter Property="FontFamily" Value="Microsoft YaHei,Helvetica Neue,Segoe Fluent,Segoe MDL2 Assets" />
         </Style>
     </Window.Styles>
     <Design.DataContext>
