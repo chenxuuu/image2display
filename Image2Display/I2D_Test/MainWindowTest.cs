@@ -26,7 +26,7 @@ namespace I2D_Test
             {
                 DataContext = mvm,
             };
-            string[] pageList = new string[] { "ImageConvert", "FontConvert", "DataViewer", "Settings" };
+            string[] pageList = new string[] { "ImageConvert", "FontConvert", "DataViewer","Theme", "Settings" };
             for (int i = 0; i < 10; i++)
                 for (int j = 0; j < pageList.Length; j++)
                     mvm.ChangePage(pageList[j]);

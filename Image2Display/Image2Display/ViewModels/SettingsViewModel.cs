@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Markup.Xaml.Styling;
+using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentAvalonia.UI.Controls;
@@ -32,6 +33,9 @@ namespace Image2Display.ViewModels
         [ObservableProperty]
         private string[] _languagesList = SettingModel.SupportLanguages;
 
+        [ObservableProperty]
+        private string[] _themeList = SettingModel.Themes;
+
         /// <summary>
         /// 被选中的语言index
         /// 不会在别处被更改，所以不需要notify
@@ -55,6 +59,38 @@ namespace Image2Display.ViewModels
             {
                 Utils.Settings.Language = LanguagesList[value];
                 Utils.ChangeLanguage(Utils.Settings.Language);
+                Utils.SaveSettings();
+            }
+        }
+
+        /// <summary>
+        /// 被选中的主题index
+        /// 不会在别处被更改，所以不需要notify
+        /// </summary>
+        public int ThemeSelected
+        {
+            get
+            {
+                int index = 0;
+                for (int i = 0; i < ThemeList.Length; i++)
+                {
+                    if (ThemeList[i] == Utils.Settings.Theme)
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+                return index;
+            }
+            set
+            {
+                Utils.Settings.Theme = ThemeList[value];
+                Application.Current!.RequestedThemeVariant = Utils.Settings.Theme switch
+                {
+                    "Light" => ThemeVariant.Light,
+                    "Dark" => ThemeVariant.Dark,
+                    _ => ThemeVariant.Default,
+                };
                 Utils.SaveSettings();
             }
         }

@@ -2,6 +2,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="TitleText">I2D取模</system:String>
     <system:String x:Key="ImageConvert">图片转换</system:String>
     <system:String x:Key="FontConvert">字库生成</system:String>
     <system:String x:Key="DataViewer">数据预览</system:String>
@@ -9,6 +10,7 @@
     <system:String x:Key="Settings">设置</system:String>
     <system:String x:Key="General">通用</system:String>
     <system:String x:Key="DisplayLanguage">显示语言</system:String>
+    <system:String x:Key="DisplayTheme">主题模式</system:String>
     <system:String x:Key="About">关于</system:String>
     <system:String x:Key="Version">版本</system:String>
     <system:String x:Key="NewVersionFound">有新版本</system:String>

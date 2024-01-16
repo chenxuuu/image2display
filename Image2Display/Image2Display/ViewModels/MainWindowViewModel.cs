@@ -44,6 +44,7 @@ public partial class MainWindowViewModel : ViewModelBase
             "ImageConvert" => ImageConvert,
             "FontConvert" => FontConvert,
             "DataViewer" => DataViewer,
+            "Theme" => NavigationViewContent,
             _ => Settings
         };
     }

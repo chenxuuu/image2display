@@ -8,20 +8,21 @@
     xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
     xmlns:vm="using:Image2Display.ViewModels"
     Title="Image2Display"
-    Width="700"
-    Height="450"
-    d:DesignHeight="450"
-    d:DesignWidth="600"
+    Width="1000"
+    Height="660"
+    d:DesignHeight="660"
+    d:DesignWidth="1000"
     x:DataType="vm:MainWindowViewModel"
     Icon="/Assets/I2D-logo.ico"
+    RequestedThemeVariant="Default"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.Styles>
         <Style Selector="TextBlock">
-            <Setter Property="FontFamily" Value="Microsoft YaHei,Helvetica Neue,Segoe Fluent,Segoe MDL2 Assets" />
+            <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
         </Style>
         <Style Selector="Button">
-            <Setter Property="FontFamily" Value="Microsoft YaHei,Helvetica Neue,Segoe Fluent,Segoe MDL2 Assets" />
+            <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
         </Style>
     </Window.Styles>
     <Design.DataContext>
@@ -34,10 +35,17 @@
 
     <ui:NavigationView
         Content="{Binding NavigationViewContent}"
-        IsPaneOpen="False"
+        IsPaneOpen="True"
         OpenPaneLength="{DynamicResource MainOpenPaneLength}"
-        PaneDisplayMode="Auto"
+        PaneDisplayMode="Left"
+        PaneTitle="{DynamicResource TitleText}"
         SelectionChanged="MainNavigationView_SelectionChanged">
+        <ui:NavigationView.Styles>
+            <!--  修复折叠图标不显示的bug  -->
+            <Style Selector="#IconHost TextBlock">
+                <Setter Property="FontFamily" Value="Helvetica Neue,Segoe Fluent,Segoe MDL2 Assets" />
+            </Style>
+        </ui:NavigationView.Styles>
         <ui:NavigationView.MenuItems>
             <ui:NavigationViewItem
                 Content="{DynamicResource ImageConvert}"
@@ -53,8 +61,5 @@
                 IconSource="Library"
                 Tag="DataViewer" />
         </ui:NavigationView.MenuItems>
-
     </ui:NavigationView>
-
-
 </Window>

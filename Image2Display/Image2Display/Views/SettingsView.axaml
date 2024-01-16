@@ -23,6 +23,11 @@
                             Margin="0,5"
                             ItemsSource="{Binding LanguagesList}"
                             SelectedIndex="{Binding LanguagesSelected}" />
+                        <TextBlock Margin="0,5" Text="{DynamicResource DisplayTheme}" />
+                        <ComboBox
+                            Margin="0,5"
+                            ItemsSource="{Binding ThemeList}"
+                            SelectedIndex="{Binding ThemeSelected}" />
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="{DynamicResource About}">

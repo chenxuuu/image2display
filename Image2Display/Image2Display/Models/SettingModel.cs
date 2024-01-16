@@ -33,5 +33,26 @@ namespace Image2Display.Models
                 _language = value;
             }
         }
+
+        public static readonly string[] Themes = new string[] { "Default", "Light", "Dark" };
+        private string? _theme = null;
+        /// <summary>
+        /// 软件语言
+        /// </summary>
+        public string Theme
+        {
+            get
+            {
+                if (_theme is null)
+                {
+                    _theme = "Default";
+                }
+                return _theme!;
+            }
+            set
+            {
+                _theme = value;
+            }
+        }
     }
 }
