@@ -42,11 +42,11 @@ namespace I2D_Test
             Utils.Settings.Language = "zh-CN";
             Utils.SaveSettings();
             Assert.Equal("zh-CN", Utils.Settings.Language);
-            Utils.Settings.Theme = "Light";
+            Utils.Settings.Theme = 1;
             Utils.SaveSettings();
-            Utils.Settings.Theme = "Dark";
+            Utils.Settings.Theme = 2;
             Utils.SaveSettings();
-            Assert.Equal("Dark", Utils.Settings.Theme);
+            Assert.Equal(2, Utils.Settings.Theme);
         }
     }
 }
