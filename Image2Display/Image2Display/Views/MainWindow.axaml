@@ -34,7 +34,6 @@
     </Design.DataContext>
 
     <ui:NavigationView
-        Content="{Binding NavigationViewContent}"
         IsPaneOpen="True"
         OpenPaneLength="{DynamicResource MainOpenPaneLength}"
         PaneDisplayMode="Left"
@@ -61,5 +60,8 @@
                 IconSource="Library"
                 Tag="DataViewer" />
         </ui:NavigationView.MenuItems>
+        <ui:NavigationView.Content>
+            <ui:Frame x:Name="ContentFrame" />
+        </ui:NavigationView.Content>
     </ui:NavigationView>
 </Window>

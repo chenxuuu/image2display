@@ -33,9 +33,6 @@ namespace Image2Display.ViewModels
         [ObservableProperty]
         private string[] _languagesList = SettingModel.SupportLanguages;
 
-        [ObservableProperty]
-        private string[] _themeList = SettingModel.Themes;
-
         /// <summary>
         /// 被选中的语言index
         /// 不会在别处被更改，所以不需要notify
@@ -71,24 +68,15 @@ namespace Image2Display.ViewModels
         {
             get
             {
-                int index = 0;
-                for (int i = 0; i < ThemeList.Length; i++)
-                {
-                    if (ThemeList[i] == Utils.Settings.Theme)
-                    {
-                        index = i;
-                        break;
-                    }
-                }
-                return index;
+                return Utils.Settings.Theme;
             }
             set
             {
-                Utils.Settings.Theme = ThemeList[value];
+                Utils.Settings.Theme = value;
                 Application.Current!.RequestedThemeVariant = Utils.Settings.Theme switch
                 {
-                    "Light" => ThemeVariant.Light,
-                    "Dark" => ThemeVariant.Dark,
+                    1 => ThemeVariant.Light,
+                    2 => ThemeVariant.Dark,
                     _ => ThemeVariant.Default,
                 };
                 Utils.SaveSettings();

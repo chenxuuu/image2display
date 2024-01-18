@@ -10,5 +10,6 @@ public partial class ImageConvertView : UserControl
     public ImageConvertView()
     {
         InitializeComponent();
+        this.DataContext = new ViewModels.ImageConvertViewModel();
     }
 }

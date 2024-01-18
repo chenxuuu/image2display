@@ -11,6 +11,9 @@
     <system:String x:Key="General">通用</system:String>
     <system:String x:Key="DisplayLanguage">显示语言</system:String>
     <system:String x:Key="DisplayTheme">主题模式</system:String>
+    <system:String x:Key="ThemeDefault">跟随系统</system:String>
+    <system:String x:Key="ThemeLight">浅色</system:String>
+    <system:String x:Key="ThemeDark">深色</system:String>
     <system:String x:Key="About">关于</system:String>
     <system:String x:Key="Version">版本</system:String>
     <system:String x:Key="NewVersionFound">有新版本</system:String>

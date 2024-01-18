@@ -9,5 +9,6 @@ public partial class SettingsView : UserControl
     public SettingsView()
     {
         InitializeComponent();
+        this.DataContext = new ViewModels.SettingsViewModel();
     }
 }

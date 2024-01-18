@@ -9,5 +9,6 @@ public partial class DataViewerView : UserControl
     public DataViewerView()
     {
         InitializeComponent();
+        this.DataContext = new ViewModels.DataViewerViewModel();
     }
 }

@@ -20,14 +20,19 @@
                     <StackPanel Margin="10,15,0,15">
                         <TextBlock Margin="0,5" Text="{DynamicResource DisplayLanguage}" />
                         <ComboBox
+                            Width="150"
                             Margin="0,5"
                             ItemsSource="{Binding LanguagesList}"
                             SelectedIndex="{Binding LanguagesSelected}" />
                         <TextBlock Margin="0,5" Text="{DynamicResource DisplayTheme}" />
                         <ComboBox
+                            Width="150"
                             Margin="0,5"
-                            ItemsSource="{Binding ThemeList}"
-                            SelectedIndex="{Binding ThemeSelected}" />
+                            SelectedIndex="{Binding ThemeSelected}">
+                            <ComboBoxItem Content="{DynamicResource ThemeDefault}" />
+                            <ComboBoxItem Content="{DynamicResource ThemeLight}" />
+                            <ComboBoxItem Content="{DynamicResource ThemeDark}" />
+                        </ComboBox>
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="{DynamicResource About}">

@@ -18,6 +18,13 @@ public partial class MainWindow : Window
     private void MainNavigationView_SelectionChanged(object? sender, FluentAvalonia.UI.Controls.NavigationViewSelectionChangedEventArgs e)
     {
         var tag = (string)((NavigationViewItem)e.SelectedItem).Tag!;
-        ((MainWindowViewModel)this.DataContext!).ChangePage(tag!);
+        var type = tag switch
+        {
+            "ImageConvert" => typeof(ImageConvertView),
+            "FontConvert" => typeof(FontConvertView),
+            "DataViewer" => typeof(DataViewerView),
+            _ => typeof(SettingsView)
+        };
+        ContentFrame.Navigate(type);
     }
 }

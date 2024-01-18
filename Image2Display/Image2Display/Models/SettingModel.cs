@@ -9,7 +9,7 @@ namespace Image2Display.Models
 {
     public class SettingModel
     {
-        public static readonly string[] SupportLanguages = new string[] { "zh-CN", "en-US" };
+        public static readonly string[] SupportLanguages = ["zh-CN", "en-US"];
         private string? _language = null;
         /// <summary>
         /// 软件语言
@@ -34,25 +34,12 @@ namespace Image2Display.Models
             }
         }
 
-        public static readonly string[] Themes = new string[] { "Default", "Light", "Dark" };
-        private string? _theme = null;
         /// <summary>
-        /// 软件语言
+        /// 软件主题色
+        /// 0:跟随系统
+        /// 1:浅色
+        /// 2:深色
         /// </summary>
-        public string Theme
-        {
-            get
-            {
-                if (_theme is null)
-                {
-                    _theme = "Default";
-                }
-                return _theme!;
-            }
-            set
-            {
-                _theme = value;
-            }
-        }
+        public int Theme { get; set; } = 0;
     }
 }

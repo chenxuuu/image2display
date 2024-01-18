@@ -9,5 +9,6 @@ public partial class FontConvertView : UserControl
     public FontConvertView()
     {
         InitializeComponent();
+        this.DataContext = new ViewModels.FontConvertViewModel();
     }
 }
