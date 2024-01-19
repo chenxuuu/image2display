@@ -12,19 +12,12 @@
     Height="660"
     d:DesignHeight="660"
     d:DesignWidth="1000"
+    x:CompileBindings="True"
     x:DataType="vm:MainWindowViewModel"
     Icon="/Assets/I2D-logo.ico"
     RequestedThemeVariant="Default"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Window.Styles>
-        <Style Selector="TextBlock">
-            <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
-        </Style>
-        <Style Selector="Button">
-            <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
-        </Style>
-    </Window.Styles>
     <Design.DataContext>
         <!--
             This only sets the DataContext for the previewer in an IDE,
@@ -34,10 +27,12 @@
     </Design.DataContext>
 
     <ui:NavigationView
-        IsPaneOpen="True"
+        AlwaysShowHeader="False"
+        IsPaneOpen="False"
+        IsPaneToggleButtonVisible="True"
+        IsSettingsVisible="False"
         OpenPaneLength="{DynamicResource MainOpenPaneLength}"
-        PaneDisplayMode="Left"
-        PaneTitle="{DynamicResource TitleText}"
+        PaneDisplayMode="Auto"
         SelectionChanged="MainNavigationView_SelectionChanged">
         <ui:NavigationView.Styles>
             <!--  修复折叠图标不显示的bug  -->
@@ -48,18 +43,24 @@
         <ui:NavigationView.MenuItems>
             <ui:NavigationViewItem
                 Content="{DynamicResource ImageConvert}"
-                IconSource="PreviewLink"
+                IconSource="ImageEdit"
                 IsSelected="True"
                 Tag="ImageConvert" />
             <ui:NavigationViewItem
                 Content="{DynamicResource FontConvert}"
-                IconSource="FontSize"
+                IconSource="Font"
                 Tag="FontConvert" />
             <ui:NavigationViewItem
                 Content="{DynamicResource DataViewer}"
-                IconSource="Library"
+                IconSource="OpenFile"
                 Tag="DataViewer" />
         </ui:NavigationView.MenuItems>
+        <ui:NavigationView.FooterMenuItems>
+            <ui:NavigationViewItem
+                Content="{DynamicResource Settings}"
+                IconSource="Setting"
+                Tag="SettingViewer" />
+        </ui:NavigationView.FooterMenuItems>
         <ui:NavigationView.Content>
             <ui:Frame x:Name="ContentFrame" />
         </ui:NavigationView.Content>

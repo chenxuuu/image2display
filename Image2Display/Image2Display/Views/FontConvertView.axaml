@@ -4,10 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Image2Display.ViewModels"
     d:DesignHeight="450"
     d:DesignWidth="580"
-    mc:Ignorable="d"
-    xmlns:vm="using:Image2Display.ViewModels"
-    x:DataType="vm:FontConvertViewModel">
+    x:CompileBindings="True"
+    x:DataType="vm:FontConvertViewModel"
+    mc:Ignorable="d">
     <TextBlock Text="{DynamicResource FontConvert}" />
 </UserControl>

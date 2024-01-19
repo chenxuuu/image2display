@@ -4,97 +4,91 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
     xmlns:vm="using:Image2Display.ViewModels"
-    d:DesignHeight="450"
-    d:DesignWidth="580"
+    d:DesignHeight="660"
+    d:DesignWidth="900"
+    x:CompileBindings="True"
     x:DataType="vm:SettingsViewModel"
     mc:Ignorable="d">
-    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="10">
-            <TextBlock
-                FontSize="30"
-                FontWeight="Bold"
-                Text="{DynamicResource Settings}" />
-            <TabControl>
-                <TabItem Header="{DynamicResource General}">
-                    <StackPanel Margin="10,15,0,15">
-                        <TextBlock Margin="0,5" Text="{DynamicResource DisplayLanguage}" />
-                        <ComboBox
-                            Width="150"
-                            Margin="0,5"
-                            ItemsSource="{Binding LanguagesList}"
-                            SelectedIndex="{Binding LanguagesSelected}" />
-                        <TextBlock Margin="0,5" Text="{DynamicResource DisplayTheme}" />
-                        <ComboBox
-                            Width="150"
-                            Margin="0,5"
-                            SelectedIndex="{Binding ThemeSelected}">
-                            <ComboBoxItem Content="{DynamicResource ThemeDefault}" />
-                            <ComboBoxItem Content="{DynamicResource ThemeLight}" />
-                            <ComboBoxItem Content="{DynamicResource ThemeDark}" />
-                        </ComboBox>
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="{DynamicResource About}">
-                    <StackPanel>
-                        <Image
-                            Width="100"
-                            Margin="10"
-                            HorizontalAlignment="Center"
-                            Source="/Assets/logo.png" />
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            FontSize="20"
-                            FontWeight="Bold"
-                            Text="Image2Display" />
-                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                            <TextBlock
-                                Margin="0,0,10,0"
-                                Foreground="Gray"
-                                Text="{DynamicResource Version}" />
-                            <TextBlock Foreground="Gray" Text="{Binding Version}" />
-                        </StackPanel>
+    <ScrollViewer
+        Margin="20"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel Spacing="8">
+            <Grid
+                Margin="0,0,0,10"
+                ColumnDefinitions="*,Auto"
+                RowDefinitions="*,Auto">
+                <StackPanel Orientation="Horizontal">
+                    <Image
+                        Height="78"
+                        DockPanel.Dock="Left"
+                        RenderOptions.BitmapInterpolationMode="HighQuality"
+                        Source="/Assets/logo.png" />
+                    <StackPanel Margin="12,0" Spacing="0">
+                        <TextBlock Text="Image2Display" />
+                        <TextBlock IsVisible="{Binding !HasNewVersion}" Text="{Binding Version}" />
                         <StackPanel
-                            HorizontalAlignment="Center"
                             IsVisible="{Binding HasNewVersion}"
-                            Orientation="Horizontal">
-                            <TextBlock
-                                Margin="0,0,10,0"
-                                Foreground="Gray"
-                                Text="{DynamicResource NewVersionFound}" />
-                            <TextBlock Foreground="Gray" Text="{Binding NewVersion}" />
+                            Orientation="Horizontal"
+                            Spacing="10">
+                            <TextBlock Margin="0,0,5,0" Text="{DynamicResource NewVersionFound}" />
+                            <TextBlock Text="{Binding NewVersion}" />
                         </StackPanel>
+                        <TextBlock Text="{DynamicResource Description}" />
                         <TextBlock
-                            Margin="0,5,0,20"
-                            HorizontalAlignment="Center"
-                            Text="{DynamicResource Description}" />
-                        <Button
-                            Margin="5"
-                            HorizontalAlignment="Center"
-                            Command="{Binding CheckUpdateCommand}"
-                            Content="{DynamicResource CheckUpdate}"
-                            IsVisible="{Binding !HasNewVersion}" />
-                        <Button
-                            Margin="5"
-                            HorizontalAlignment="Center"
-                            Command="{Binding UpdateCommand}"
-                            Content="{DynamicResource DownloadPage}"
-                            IsVisible="{Binding HasNewVersion}" />
-                        <Button
-                            Margin="5"
-                            HorizontalAlignment="Center"
-                            Command="{Binding OpenUrlCommand}"
-                            CommandParameter="https://github.com/chenxuuu/image2display"
-                            Content="{DynamicResource SourceCodePage}" />
-                        <Button
-                            Margin="5"
-                            HorizontalAlignment="Center"
-                            Command="{Binding OpenUrlCommand}"
-                            CommandParameter="https://github.com/chenxuuu/image2display/blob/master/LICENSE"
-                            Content="{DynamicResource LicensePage}" />
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="https://github.com/chenxuuu/image2display"
+                            Theme="{StaticResource CaptionTextBlockStyle}" />
                     </StackPanel>
-                </TabItem>
-            </TabControl>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <Button
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        Command="{Binding OpenUrlCommand}"
+                        CommandParameter="https://github.com/chenxuuu/image2display"
+                        Content="{DynamicResource SourceCodePage}" />
+                    <Button
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        Command="{Binding CheckUpdateCommand}"
+                        Content="{DynamicResource CheckUpdate}"
+                        IsVisible="{Binding !HasNewVersion}" />
+                    <Button
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        Command="{Binding UpdateCommand}"
+                        Content="{DynamicResource DownloadPage}"
+                        IsVisible="{Binding HasNewVersion}" />
+                </StackPanel>
+            </Grid>
+
+            <ui:SettingsExpander
+                Description="{DynamicResource DisplayLanguageDesc}"
+                Header="{DynamicResource DisplayLanguage}"
+                IconSource="Character">
+                <ui:SettingsExpander.Footer>
+                    <ComboBox
+                        Width="150"
+                        ItemsSource="{Binding LanguagesList}"
+                        SelectedIndex="{Binding LanguagesSelected}" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Description="{DynamicResource DisplayThemeDesc}"
+                Header="{DynamicResource DisplayTheme}"
+                IconSource="DarkTheme">
+                <ui:SettingsExpander.Footer>
+                    <ComboBox Width="150" SelectedIndex="{Binding ThemeSelected}">
+                        <ComboBoxItem Content="{DynamicResource ThemeDefault}" />
+                        <ComboBoxItem Content="{DynamicResource ThemeLight}" />
+                        <ComboBoxItem Content="{DynamicResource ThemeDark}" />
+                    </ComboBox>
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

@@ -1,7 +1,9 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Chrome;
 using Avalonia.Markup.Xaml.Styling;
 using FluentAvalonia.UI.Controls;
+using FluentAvalonia.UI.Windowing;
 using Image2Display.ViewModels;
 using System;
 using System.Diagnostics;

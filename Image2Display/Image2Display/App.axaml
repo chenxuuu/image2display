@@ -11,24 +11,23 @@
         <local:ViewLocator />
     </Application.DataTemplates>
 
-    <Application.Styles>
-        <sty:FluentAvaloniaTheme PreferSystemTheme="True" />
-    </Application.Styles>
-
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="/Assets/Languages/zh-CN.axaml" />
+                <ResourceInclude Source="avares://Image2Display/Assets/Languages/zh-CN.axaml" />
+                <ResourceInclude Source="avares://Image2Display/Assets/Resources.axaml" />
             </ResourceDictionary.MergedDictionaries>
-            <SolidColorBrush x:Key="Warning">Yellow</SolidColorBrush>
         </ResourceDictionary>
         <FontFamily x:Key="MiSans">avares://Image2Display/Assets/MiSans-Normal.ttf#MiSans</FontFamily>
-        <Color x:Key="SystemAccentColor">#2d78d6</Color>
-        <Color x:Key="SystemAccentColorLight1">#3091e2</Color>
-        <Color x:Key="SystemAccentColorLight2">#5fafef</Color>
-        <Color x:Key="SystemAccentColorLight3">#91c5f0</Color>
-        <Color x:Key="SystemAccentColorDark1">#1f5aa2</Color>
-        <Color x:Key="SystemAccentColorDark2">#123d70</Color>
-        <Color x:Key="SystemAccentColorDark3">#0b2f56</Color>
     </Application.Resources>
+
+    <Application.Styles>
+        <sty:FluentAvaloniaTheme PreferSystemTheme="True" PreferUserAccentColor="True" />
+        <Style Selector="Button">
+            <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
+        </Style>
+        <Style Selector="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
+        </Style>
+    </Application.Styles>
 </Application>
