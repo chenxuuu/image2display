@@ -9,87 +9,10 @@
     xmlns:ui="using:FluentAvalonia.UI.Controls"
     xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
     xmlns:vm="using:Image2Display.ViewModels"
-    d:DesignHeight="450"
-    d:DesignWidth="580"
+    d:DesignHeight="660"
+    d:DesignWidth="900"
     x:CompileBindings="True"
     x:DataType="vm:ImageConvertViewModel"
     mc:Ignorable="d">
-    <Grid RowDefinitions="2*,*">
-        <Grid>
-            <Grid.Styles>
-                <!--  鼠标经过时变浅  -->
-                <Style Selector="Grid.ImageMask">
-                    <Setter Property="Opacity" Value="1" />
-                </Style>
-                <Style Selector="Grid.ImageMask:pointerover">
-                    <Setter Property="Opacity" Value="0.3" />
-                </Style>
-            </Grid.Styles>
-            <!--  图片显示区域  -->
-            <Grid
-                Name="ImportImageButton"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Classes="ImageMask"
-                IsVisible="{Binding ImageShow, Converter={x:Static ObjectConverters.IsNull}}"
-                RenderOptions.BitmapInterpolationMode="HighQuality">
-                <Image Width="200" Source="/Assets/image.png" />
-                <i:Interaction.Behaviors>
-                    <ia:EventTriggerBehavior EventName="PointerPressed" SourceObject="{Binding #ImportImageButton}">
-                        <ia:InvokeCommandAction Command="{Binding ImportImageCommand}" />
-                    </ia:EventTriggerBehavior>
-                </i:Interaction.Behaviors>
-            </Grid>
-            <Grid IsVisible="{Binding ImageShow, Converter={x:Static ObjectConverters.IsNotNull}}">
-                <Grid
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Background="{Binding BgColor}">
-                    <Border BorderBrush="Gray" BorderThickness="3">
-                        <Image
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            Source="{Binding ImageShow}" />
-                    </Border>
-                </Grid>
-            </Grid>
-            <ProgressBar
-                Height="20"
-                IsIndeterminate="True"
-                IsVisible="{Binding BitmapLoading}" />
-        </Grid>
-        <ScrollViewer Grid.Row="1">
-            <TabControl>
-                <TabItem Header="常规处理">
-                    <StackPanel
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Orientation="Horizontal">
-                        <Button Command="{Binding ClearImageCommand}" Content="清空图片" />
-                        <Button Command="{Binding ChangeBgColorCommand}" Content="透明图片切换背景色" />
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="二值化">
-                    <StackPanel
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Orientation="Horizontal">
-                        <ToggleSwitch OffContent="二值化已关闭" OnContent="二值化已开启" />
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="颜色处理">
-                    <StackPanel
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Orientation="Horizontal" />
-                </TabItem>
-                <TabItem Header="导出数据">
-                    <StackPanel
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Orientation="Horizontal" />
-                </TabItem>
-            </TabControl>
-        </ScrollViewer>
-    </Grid>
+    <Grid RowDefinitions="2*,*" />
 </UserControl>

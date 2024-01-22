@@ -10,6 +10,8 @@
     Title="Image2Display"
     Width="1000"
     Height="660"
+    MinWidth="660"
+    MinHeight="300"
     d:DesignHeight="660"
     d:DesignWidth="1000"
     x:CompileBindings="True"
@@ -32,7 +34,7 @@
         IsPaneToggleButtonVisible="True"
         IsSettingsVisible="False"
         OpenPaneLength="{DynamicResource MainOpenPaneLength}"
-        PaneDisplayMode="Auto"
+        PaneDisplayMode="Left"
         SelectionChanged="MainNavigationView_SelectionChanged">
         <ui:NavigationView.Styles>
             <!--  修复折叠图标不显示的bug  -->
@@ -62,7 +64,7 @@
                 Tag="SettingViewer" />
         </ui:NavigationView.FooterMenuItems>
         <ui:NavigationView.Content>
-            <ui:Frame x:Name="ContentFrame" />
+            <ui:Frame x:Name="ContentFrame" Margin="20" />
         </ui:NavigationView.Content>
     </ui:NavigationView>
 </Window>

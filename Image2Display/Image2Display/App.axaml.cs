@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using Image2Display.Models;
 using Image2Display.ViewModels;
 using Image2Display.Views;
 
@@ -26,6 +27,8 @@ public partial class App : Application
             BindingPlugins.DataValidators.RemoveAt(0);
             desktop.MainWindow = new MainWindow
             {
+                //开屏遮罩，目前用不到，等启动太慢了再加
+                //SplashScreen = new SplashScreen(),
                 DataContext = new MainWindowViewModel(),
             };
         }
