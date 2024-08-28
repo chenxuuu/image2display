@@ -23,11 +23,5 @@
 
     <Application.Styles>
         <sty:FluentAvaloniaTheme PreferSystemTheme="True" PreferUserAccentColor="True" />
-        <Style Selector="Button">
-            <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
-        </Style>
-        <Style Selector="TextBlock">
-            <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
-        </Style>
     </Application.Styles>
 </Application>
