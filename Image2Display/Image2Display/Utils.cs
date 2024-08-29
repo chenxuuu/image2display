@@ -34,8 +34,19 @@ namespace Image2Display
             }
         }
 
-        private static string _settingsPath = "settings.json";
-        public static Models.SettingModel? _settings = null;
+        /// <summary>
+        /// 用户配置文件路径
+        /// win：C:\Users\{username}\Image2Display
+        /// linux：/home/{username}/Image2Display
+        /// mac：/Users/{username}/Image2Display
+        /// </summary>
+        public readonly static string AppPath =
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Image2Display");
+        /// <summary>
+        /// 配置文件路径
+        /// </summary>
+        private static readonly string _settingsPath = Path.Combine(AppPath, "settings.json");
+        private static Models.SettingModel? _settings = null;
         /// <summary>
         /// 软件配置
         /// </summary>
@@ -59,6 +70,8 @@ namespace Image2Display
         /// </summary>
         public static void Initial()
         {
+            if (!Directory.Exists(AppPath))
+                Directory.CreateDirectory(AppPath);
             //初始化语言
             ChangeLanguage(Settings.Language);
         }
@@ -73,8 +86,10 @@ namespace Image2Display
             if (test)
                 file = $"avares://I2D_Test/{language}.axaml";
             var data =
-                new ResourceInclude(new Uri(file, UriKind.Absolute));
-            data.Source = new Uri(file, UriKind.Absolute);
+                new ResourceInclude(new Uri(file, UriKind.Absolute))
+                {
+                    Source = new Uri(file, UriKind.Absolute)
+                };
             try
             {
                 Application.Current!.Resources.MergedDictionaries[0] = data;
@@ -103,8 +118,8 @@ namespace Image2Display
         {
             try
             {
-                Application.Current!.TryFindResource(name, out object value);
-                return (T)value;
+                Application.Current!.TryFindResource(name, out object? value);
+                return (T)value!;
             }
             catch
             {
