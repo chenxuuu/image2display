@@ -18,7 +18,6 @@
                 <ResourceInclude Source="avares://Image2Display/Assets/Resources.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        <FontFamily x:Key="MiSans">avares://Image2Display/Assets/MiSans-Normal.ttf#MiSans</FontFamily>
     </Application.Resources>
 
     <Application.Styles>
