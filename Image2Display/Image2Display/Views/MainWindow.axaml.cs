@@ -35,6 +35,7 @@ public partial class MainWindow : AppWindow
         var type = tag switch
         {
             "ImageConvert" => typeof(ImageConvertView),
+            "ImageProcessing" => typeof(ImageProcessingView),
             "FontConvert" => typeof(FontConvertView),
             "DataViewer" => typeof(DataViewerView),
             _ => typeof(SettingsView)

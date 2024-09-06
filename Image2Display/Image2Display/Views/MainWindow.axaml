@@ -39,16 +39,20 @@
         <ui:NavigationView.MenuItems>
             <ui:NavigationViewItem
                 Content="{DynamicResource ImageConvert}"
-                IconSource="ImageEdit"
+                IconSource="ImageAltText"
                 IsSelected="True"
                 Tag="ImageConvert" />
+            <ui:NavigationViewItem
+                Content="{DynamicResource ImageProcessing}"
+                IconSource="ImageEdit"
+                Tag="ImageProcessing" />
             <ui:NavigationViewItem
                 Content="{DynamicResource FontConvert}"
                 IconSource="Font"
                 Tag="FontConvert" />
             <ui:NavigationViewItem
                 Content="{DynamicResource DataViewer}"
-                IconSource="OpenFile"
+                IconSource="PreviewLink"
                 Tag="DataViewer" />
         </ui:NavigationView.MenuItems>
         <ui:NavigationView.FooterMenuItems>

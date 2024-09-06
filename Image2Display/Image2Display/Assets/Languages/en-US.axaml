@@ -3,10 +3,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="TitleText">I2D Tool</system:String>
-    <system:String x:Key="ImageConvert">Image</system:String>
-    <system:String x:Key="FontConvert">Font</system:String>
-    <system:String x:Key="DataViewer">Import</system:String>
-    <system:Double x:Key="MainOpenPaneLength">130</system:Double>
+    <system:String x:Key="ImageConvert">Image to Data</system:String>
+    <system:String x:Key="ImageProcessing">Image Processing</system:String>
+    <system:String x:Key="FontConvert">Font to Data</system:String>
+    <system:String x:Key="DataViewer">Data Preview</system:String>
+    <system:Double x:Key="MainOpenPaneLength">180</system:Double>
     <system:String x:Key="Settings">Settings</system:String>
     <system:String x:Key="General">General</system:String>
     <system:String x:Key="DisplayLanguage">Display language</system:String>
