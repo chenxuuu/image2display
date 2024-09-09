@@ -12,7 +12,7 @@
     x:CompileBindings="True"
     x:DataType="vm:ImageProcessingViewModel"
     mc:Ignorable="d">
-    <Grid RowDefinitions="3*,5,4*">
+    <Grid RowDefinitions="3*,5,5*">
         <!--  分割线  -->
         <GridSplitter Grid.Row="1" ToolTip.Tip="调整上下部分宽度" />
         <!--  图片框  -->
@@ -65,12 +65,12 @@
                 <Viewbox>
                     <Image
                         Width="200"
-                        Margin="40"
+                        Margin="100"
                         Opacity="0.5"
-                        Source="/Assets/Images/emptyImage.png" />
+                        Source="/Assets/Images/unknowImage.png" />
                 </Viewbox>
+                <!--  后面还要放两张图片，代表原图与处理后的图片  -->
             </Border>
-            <!--  后面还要放两张图片，代表原图与处理后的图片  -->
         </Grid>
         <ScrollViewer
             Grid.Row="2"
@@ -145,12 +145,199 @@
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
                 </ui:SettingsExpander>
-                <!--  二值化处理  -->
+
+                <!--  图像缩放  -->
                 <ui:SettingsExpander
                     Margin="0,0,0,10"
-                    Description="仅使用黑、白两种颜色"
-                    Header="二值化处理"
-                    IconSource="CalendarMonthFilled">
+                    Description="缩放至目标分辨率"
+                    Header="图像缩放"
+                    IconSource="BackToWindow">
+                    <ui:SettingsExpanderItem Content="缩放图片">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch
+                                IsChecked="true"
+                                OffContent="禁用"
+                                OnContent="启用" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="当前图片尺寸信息" Description="裁剪前的原图尺寸">
+                        <ui:SettingsExpanderItem.Footer>
+                            <Grid
+                                Margin="0,0,20,0"
+                                ColumnDefinitions="auto,auto,auto"
+                                RowDefinitions="*,*">
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Right"
+                                    Text="宽度" />
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Text="114" />
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Text="px" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Right"
+                                    Text="高度" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Text="514" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Text="px" />
+                            </Grid>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="快速选择缩放倍数">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="150" SelectedIndex="0">
+                                <ComboBoxItem Content="手动缩放" />
+                                <ComboBoxItem Content="30%" />
+                                <ComboBoxItem Content="50%" />
+                                <ComboBoxItem Content="80%" />
+                                <ComboBoxItem Content="150%" />
+                                <ComboBoxItem Content="200%" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="保持宽高比" Description="会自动计算宽或高的值">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch
+                                IsChecked="true"
+                                OffContent="禁用"
+                                OnContent="启用" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="拉伸图片" Description="如果关闭则是裁切多余部分">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch
+                                IsChecked="true"
+                                OffContent="裁切"
+                                OnContent="拉伸" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="缩放至该分辨率">
+                        <ui:SettingsExpanderItem.Footer>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="宽度" />
+                                <TextBox
+                                    MinWidth="80"
+                                    Margin="0,0,10,0"
+                                    Text="0" />
+                                <TextBlock VerticalAlignment="Center" Text="高度" />
+                                <TextBox MinWidth="80" Text="0" />
+                            </StackPanel>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="插值算法" Description="像素化效果可以用最近邻插值">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="150" SelectedIndex="0">
+                                <ComboBoxItem Content="最近邻插值" />
+                                <ComboBoxItem Content="双线性插值" />
+                                <ComboBoxItem Content="双三次插值" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander>
+
+                <!--  颜色处理  -->
+                <ui:SettingsExpander
+                    Margin="0,0,0,10"
+                    Description="基本的亮度和对比度调整"
+                    Header="颜色处理"
+                    IconSource="ColorFill">
+                    <ui:SettingsExpanderItem Content="保留透明色">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch
+                                IsChecked="true"
+                                OffContent="禁用"
+                                OnContent="启用" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="将透明颜色转换为">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ui:ColorPickerButton ShowAcceptDismissButtons="False" Color="Red" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="亮度">
+                        <ui:SettingsExpanderItem.Footer>
+                            <Slider
+                                Width="200"
+                                Maximum="200"
+                                Minimum="0"
+                                Value="100" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="对比度">
+                        <ui:SettingsExpanderItem.Footer>
+                            <Slider
+                                Width="200"
+                                Maximum="200"
+                                Minimum="0"
+                                Value="100" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="饱和度">
+                        <ui:SettingsExpanderItem.Footer>
+                            <Slider
+                                Width="200"
+                                Maximum="200"
+                                Minimum="0"
+                                Value="100" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="反色">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch
+                                IsChecked="true"
+                                OffContent="禁用"
+                                OnContent="启用" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander>
+
+                <!--  旋转和翻转  -->
+                <ui:SettingsExpander
+                    Margin="0,0,0,10"
+                    Description="旋转图像方向和镜像处理"
+                    Header="旋转和镜像"
+                    IconSource="Orientation">
+                    <ui:SettingsExpanderItem Content="旋转图片">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="150" SelectedIndex="0">
+                                <ComboBoxItem Content="不旋转" />
+                                <ComboBoxItem Content="90%" />
+                                <ComboBoxItem Content="180%" />
+                                <ComboBoxItem Content="270%" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="镜像处理">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="150" SelectedIndex="0">
+                                <ComboBoxItem Content="不镜像" />
+                                <ComboBoxItem Content="水平镜像" />
+                                <ComboBoxItem Content="垂直镜像" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander>
+
+                <!--  颜色量化  -->
+                <ui:SettingsExpander
+                    Margin="0,0,0,10"
+                    Description="使用更低位数的调色板"
+                    Header="颜色量化"
+                    IconSource="DarkTheme">
                     <ui:SettingsExpanderItem Content="图片二值化处理">
                         <ui:SettingsExpanderItem.Footer>
                             <ToggleSwitch
@@ -168,12 +355,34 @@
                                 Value="50" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="反转颜色">
+                    <ui:SettingsExpanderItem Content="黑白反转">
                         <ui:SettingsExpanderItem.Footer>
                             <ToggleSwitch
                                 IsChecked="true"
                                 OffContent="禁用"
                                 OnContent="启用" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="量化目标颜色数" Description="透明通道颜色请去颜色处理选项卡更改">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="150" SelectedIndex="0">
+                                <ComboBoxItem Content="维持当前" />
+                                <ComboBoxItem Content="256色，16位" />
+                                <ComboBoxItem Content="16色，8位" />
+                                <ComboBoxItem Content="8色，4位" />
+                                <ComboBoxItem Content="4色，2位" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="抖动算法">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="150" SelectedIndex="0">
+                                <ComboBoxItem Content="Floyd-Steinberg" />
+                                <ComboBoxItem Content="Jarvis-Judice-Ninke" />
+                                <ComboBoxItem Content="Stucki" />
+                                <ComboBoxItem Content="Atkinson" />
+                                <ComboBoxItem Content="Burkes" />
+                            </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
                 </ui:SettingsExpander>
