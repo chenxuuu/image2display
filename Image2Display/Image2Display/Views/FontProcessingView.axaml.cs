@@ -5,11 +5,10 @@ using Image2Display.ViewModels;
 
 namespace Image2Display.Views;
 
-public partial class ImageProcessingView : UserControl
+public partial class FontProcessingView : UserControl
 {
-    public ImageProcessingView()
+    public FontProcessingView()
     {
         InitializeComponent();
-        this.DataContext = new ViewModels.ImageProcessingViewModel();
     }
 }

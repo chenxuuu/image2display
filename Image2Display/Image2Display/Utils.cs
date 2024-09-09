@@ -1,6 +1,8 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml.Styling;
+using Avalonia.Styling;
 using HarfBuzzSharp;
 using Image2Display.Helpers;
 using Microsoft.Extensions.Configuration;
@@ -74,6 +76,13 @@ namespace Image2Display
                 Directory.CreateDirectory(AppPath);
             //初始化语言
             ChangeLanguage(Settings.Language);
+            //恢复设置的主题色
+            Application.Current!.RequestedThemeVariant = Utils.Settings.Theme switch
+            {
+                1 => ThemeVariant.Light,
+                2 => ThemeVariant.Dark,
+                _ => ThemeVariant.Default,
+            };
         }
 
         /// <summary>
@@ -149,6 +158,26 @@ namespace Image2Display
             {
                 await DialogHelper.ShowUnableToOpenLinkDialog(new Uri(url));
             }
+        }
+
+        /// <summary>
+        /// 主页面切换到目标选项卡
+        /// </summary>
+        /// <param name="target"></param>
+        public static void SwitchPage(string target)
+        {
+            var type = target switch
+            {
+                "ImageConvert" => typeof(Views.ImageConvertView),
+                "ImageProcessing" => typeof(Views.ImageProcessingView),
+                "FontConvert" => typeof(Views.FontConvertView),
+                "FontProcessing" => typeof(Views.FontProcessingView),
+                "DataViewer" => typeof(Views.DataViewerView),
+                _ => typeof(Views.SettingsView)
+            };
+            var app = Application.Current!.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+            var mw = app!.MainWindow as Views.MainWindow;
+            mw!.ContentFrame.Navigate(type);
         }
     }
 }

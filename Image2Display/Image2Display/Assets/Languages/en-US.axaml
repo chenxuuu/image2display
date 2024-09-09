@@ -2,12 +2,16 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
-    <system:String x:Key="TitleText">I2D Tool</system:String>
-    <system:String x:Key="ImageConvert">Image to Data</system:String>
+    <system:String x:Key="TitleText">Image2Display Modulation Tool</system:String>
+    <system:String x:Key="ImageTitle">Image Modulation</system:String>
     <system:String x:Key="ImageProcessing">Image Processing</system:String>
-    <system:String x:Key="FontConvert">Font to Data</system:String>
-    <system:String x:Key="DataViewer">Data Preview</system:String>
-    <system:Double x:Key="MainOpenPaneLength">180</system:Double>
+    <system:String x:Key="ImageConvert">Generate Image Data</system:String>
+    <system:String x:Key="FontTitle">Font Modulation</system:String>
+    <system:String x:Key="FontProcessing">Font Processing</system:String>
+    <system:String x:Key="FontConvert">Generate Font Data</system:String>
+    <system:String x:Key="ViewerTitle">Restore Data</system:String>
+    <system:String x:Key="DataViewer">Import Existing Data</system:String>
+    <system:Double x:Key="MainOpenPaneLength">210</system:Double>
     <system:String x:Key="Settings">Settings</system:String>
     <system:String x:Key="General">General</system:String>
     <system:String x:Key="DisplayLanguage">Display language</system:String>

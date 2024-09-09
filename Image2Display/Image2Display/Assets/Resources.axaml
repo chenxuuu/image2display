@@ -1,4 +1,36 @@
 <ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ui="using:FluentAvalonia.UI.Controls" />
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+    <DrawingBrush
+        x:Key="CheckerBoardBrush"
+        DestinationRect="0 0 30 30"
+        Opacity="0.03"
+        Stretch="None"
+        TileMode="Tile">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="White">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,0,30,30" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="White">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="30,30,30,30" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="Black">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="30,0,30,30" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="Black">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,30,30,30" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+</ResourceDictionary>

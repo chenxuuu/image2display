@@ -18,6 +18,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaResource Remove="Assets\Icons\**" />
+    <AvaloniaXaml Remove="Assets\Icons\**" />
+    <Compile Remove="Assets\Icons\**" />
+    <EmbeddedResource Remove="Assets\Icons\**" />
+    <None Remove="Assets\Icons\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AvaloniaResource Remove="Assets\Languages\en-us.axaml" />
     <AvaloniaResource Remove="Assets\Resources.axaml" />
   </ItemGroup>
@@ -74,11 +82,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Assets\Icons\" />
   </ItemGroup>
 
 
