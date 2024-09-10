@@ -14,7 +14,7 @@
     mc:Ignorable="d">
     <Grid RowDefinitions="3*,5,5*">
         <!--  分割线  -->
-        <GridSplitter Grid.Row="1" ToolTip.Tip="调整上下部分宽度" />
+        <GridSplitter Grid.Row="1" ToolTip.Tip="{DynamicResource AdjustWidthTip}" />
         <!--  图片框  -->
         <Grid Grid.Row="0" Background="{StaticResource CheckerBoardBrush}">
             <!--  一堆按钮  -->
@@ -28,7 +28,7 @@
                     Height="40"
                     Margin="0,10,0,0"
                     Padding="0"
-                    ToolTip.Tip="按住对比图片">
+                    ToolTip.Tip="{DynamicResource HoldToCompare}">
                     <ui:SymbolIcon FontSize="20" Symbol="Switch" />
                 </Button>
                 <Button
@@ -36,7 +36,7 @@
                     Height="40"
                     Margin="0,10,0,0"
                     Padding="0"
-                    ToolTip.Tip="加载新图片">
+                    ToolTip.Tip="{DynamicResource LoadNewImage}">
                     <ui:SymbolIcon FontSize="20" Symbol="OpenFolder" />
                 </Button>
                 <Button
@@ -44,7 +44,7 @@
                     Height="40"
                     Margin="0,10,0,0"
                     Padding="0"
-                    ToolTip.Tip="另存为新文件">
+                    ToolTip.Tip="{DynamicResource SaveAsNewFile}">
                     <ui:SymbolIcon FontSize="20" Symbol="Save" />
                 </Button>
                 <Button
@@ -52,7 +52,7 @@
                     Height="40"
                     Margin="0,10,0,0"
                     Padding="0"
-                    ToolTip.Tip="立即进行取模操作">
+                    ToolTip.Tip="{DynamicResource PerformModulation}">
                     <ui:SymbolIcon FontSize="20" Symbol="Accept" />
                 </Button>
             </StackPanel>
@@ -80,18 +80,18 @@
                 <!--  图像裁剪  -->
                 <ui:SettingsExpander
                     Margin="0,0,0,10"
-                    Description="只保留需要的目标区域"
-                    Header="图像裁剪"
+                    Description="{DynamicResource DescriptionKeepTargetArea}"
+                    Header="{DynamicResource ImageCropping}"
                     IconSource="Crop">
-                    <ui:SettingsExpanderItem Content="裁剪图片">
+                    <ui:SettingsExpanderItem Content="{DynamicResource CropImage}">
                         <ui:SettingsExpanderItem.Footer>
                             <ToggleSwitch
                                 IsChecked="true"
-                                OffContent="禁用"
-                                OnContent="启用" />
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="当前图片尺寸信息" Description="裁剪前的原图尺寸">
+                    <ui:SettingsExpanderItem Content="{DynamicResource CurrentImageSizeInfo}" Description="{DynamicResource OriginalImageSize}">
                         <ui:SettingsExpanderItem.Footer>
                             <Grid
                                 Margin="0,0,20,0"
@@ -102,7 +102,7 @@
                                     Grid.Column="0"
                                     Margin="0,0,5,0"
                                     HorizontalAlignment="Right"
-                                    Text="宽度" />
+                                    Text="{DynamicResource Width}" />
                                 <TextBlock
                                     Grid.Row="0"
                                     Grid.Column="1"
@@ -116,7 +116,7 @@
                                     Grid.Column="0"
                                     Margin="0,0,5,0"
                                     HorizontalAlignment="Right"
-                                    Text="高度" />
+                                    Text="{DynamicResource Height}" />
                                 <TextBlock
                                     Grid.Row="1"
                                     Grid.Column="1"
@@ -128,7 +128,7 @@
                             </Grid>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="裁剪区域左上角坐标 (x,y)">
+                    <ui:SettingsExpanderItem Content="{DynamicResource CropTopLeftCoordinates}">
                         <ui:SettingsExpanderItem.Footer>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox MinWidth="80" Text="0" />
@@ -136,7 +136,7 @@
                             </StackPanel>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="裁剪区域右下角坐标 (x,y)">
+                    <ui:SettingsExpanderItem Content="{DynamicResource CropBottomRightCoordinates}">
                         <ui:SettingsExpanderItem.Footer>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox MinWidth="80" Text="100" />
@@ -149,18 +149,18 @@
                 <!--  图像缩放  -->
                 <ui:SettingsExpander
                     Margin="0,0,0,10"
-                    Description="缩放至目标分辨率"
-                    Header="图像缩放"
+                    Description="{DynamicResource DescriptionScaleToResolution}"
+                    Header="{DynamicResource ImageScaling}"
                     IconSource="BackToWindow">
-                    <ui:SettingsExpanderItem Content="缩放图片">
+                    <ui:SettingsExpanderItem Content="{DynamicResource ScaleImage}">
                         <ui:SettingsExpanderItem.Footer>
                             <ToggleSwitch
                                 IsChecked="true"
-                                OffContent="禁用"
-                                OnContent="启用" />
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="当前图片尺寸信息" Description="裁剪前的原图尺寸">
+                    <ui:SettingsExpanderItem Content="{DynamicResource CurrentImageSizeInfo}" Description="{DynamicResource OriginalImageSize}">
                         <ui:SettingsExpanderItem.Footer>
                             <Grid
                                 Margin="0,0,20,0"
@@ -171,7 +171,7 @@
                                     Grid.Column="0"
                                     Margin="0,0,5,0"
                                     HorizontalAlignment="Right"
-                                    Text="宽度" />
+                                    Text="{DynamicResource Width}" />
                                 <TextBlock
                                     Grid.Row="0"
                                     Grid.Column="1"
@@ -185,7 +185,7 @@
                                     Grid.Column="0"
                                     Margin="0,0,5,0"
                                     HorizontalAlignment="Right"
-                                    Text="高度" />
+                                    Text="{DynamicResource Height}" />
                                 <TextBlock
                                     Grid.Row="1"
                                     Grid.Column="1"
@@ -197,10 +197,10 @@
                             </Grid>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="快速选择缩放倍数">
+                    <ui:SettingsExpanderItem Content="{DynamicResource QuickSelectScale}">
                         <ui:SettingsExpanderItem.Footer>
                             <ComboBox Width="150" SelectedIndex="0">
-                                <ComboBoxItem Content="手动缩放" />
+                                <ComboBoxItem Content="{DynamicResource ManualScale}" />
                                 <ComboBoxItem Content="30%" />
                                 <ComboBoxItem Content="50%" />
                                 <ComboBoxItem Content="80%" />
@@ -209,15 +209,15 @@
                             </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="保持宽高比" Description="会自动计算宽或高的值">
+                    <ui:SettingsExpanderItem Content="{DynamicResource MaintainAspectRatio}" Description="{DynamicResource AutoCalculateWidthOrHeight}">
                         <ui:SettingsExpanderItem.Footer>
                             <ToggleSwitch
                                 IsChecked="true"
-                                OffContent="禁用"
-                                OnContent="启用" />
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="拉伸图片" Description="如果关闭则是裁切多余部分">
+                    <ui:SettingsExpanderItem Content="{DynamicResource StretchImage}" Description="{DynamicResource CropExtraParts}">
                         <ui:SettingsExpanderItem.Footer>
                             <ToggleSwitch
                                 IsChecked="true"
@@ -225,25 +225,25 @@
                                 OnContent="拉伸" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="缩放至该分辨率">
+                    <ui:SettingsExpanderItem Content="{DynamicResource ScaleToResolution}">
                         <ui:SettingsExpanderItem.Footer>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock VerticalAlignment="Center" Text="宽度" />
+                                <TextBlock VerticalAlignment="Center" Text="{DynamicResource Width}" />
                                 <TextBox
                                     MinWidth="80"
                                     Margin="0,0,10,0"
                                     Text="0" />
-                                <TextBlock VerticalAlignment="Center" Text="高度" />
+                                <TextBlock VerticalAlignment="Center" Text="{DynamicResource Height}" />
                                 <TextBox MinWidth="80" Text="0" />
                             </StackPanel>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="插值算法" Description="像素化效果可以用最近邻插值">
+                    <ui:SettingsExpanderItem Content="{DynamicResource InterpolationAlgorithm}" Description="{DynamicResource NearestNeighbor}">
                         <ui:SettingsExpanderItem.Footer>
                             <ComboBox Width="150" SelectedIndex="0">
-                                <ComboBoxItem Content="最近邻插值" />
-                                <ComboBoxItem Content="双线性插值" />
-                                <ComboBoxItem Content="双三次插值" />
+                                <ComboBoxItem Content="{DynamicResource NearestNeighbor}" />
+                                <ComboBoxItem Content="{DynamicResource Bilinear}" />
+                                <ComboBoxItem Content="{DynamicResource Bicubic}" />
                             </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
@@ -252,23 +252,23 @@
                 <!--  颜色处理  -->
                 <ui:SettingsExpander
                     Margin="0,0,0,10"
-                    Description="基本的亮度和对比度调整"
-                    Header="颜色处理"
+                    Description="{DynamicResource DescriptionBasicBrightnessContrast}"
+                    Header="{DynamicResource ColorProcessing}"
                     IconSource="ColorFill">
-                    <ui:SettingsExpanderItem Content="保留透明色">
+                    <ui:SettingsExpanderItem Content="{DynamicResource PreserveTransparency}">
                         <ui:SettingsExpanderItem.Footer>
                             <ToggleSwitch
                                 IsChecked="true"
-                                OffContent="禁用"
-                                OnContent="启用" />
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="将透明颜色转换为">
+                    <ui:SettingsExpanderItem Content="{DynamicResource ConvertTransparentColor}">
                         <ui:SettingsExpanderItem.Footer>
                             <ui:ColorPickerButton ShowAcceptDismissButtons="False" Color="Red" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="亮度">
+                    <ui:SettingsExpanderItem Content="{DynamicResource Brightness}">
                         <ui:SettingsExpanderItem.Footer>
                             <Slider
                                 Width="200"
@@ -277,7 +277,7 @@
                                 Value="100" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="对比度">
+                    <ui:SettingsExpanderItem Content="{DynamicResource Contrast}">
                         <ui:SettingsExpanderItem.Footer>
                             <Slider
                                 Width="200"
@@ -286,7 +286,7 @@
                                 Value="100" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="饱和度">
+                    <ui:SettingsExpanderItem Content="{DynamicResource Saturation}">
                         <ui:SettingsExpanderItem.Footer>
                             <Slider
                                 Width="200"
@@ -295,12 +295,12 @@
                                 Value="100" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="反色">
+                    <ui:SettingsExpanderItem Content="{DynamicResource InvertColors}">
                         <ui:SettingsExpanderItem.Footer>
                             <ToggleSwitch
                                 IsChecked="true"
-                                OffContent="禁用"
-                                OnContent="启用" />
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
                 </ui:SettingsExpander>
@@ -308,25 +308,25 @@
                 <!--  旋转和翻转  -->
                 <ui:SettingsExpander
                     Margin="0,0,0,10"
-                    Description="旋转图像方向和镜像处理"
-                    Header="旋转和镜像"
+                    Description="{DynamicResource DescriptionRotateImageAndMirror}"
+                    Header="{DynamicResource RotationAndMirroring}"
                     IconSource="Orientation">
-                    <ui:SettingsExpanderItem Content="旋转图片">
+                    <ui:SettingsExpanderItem Content="{DynamicResource RotateImage}">
                         <ui:SettingsExpanderItem.Footer>
                             <ComboBox Width="150" SelectedIndex="0">
-                                <ComboBoxItem Content="不旋转" />
+                                <ComboBoxItem Content="{DynamicResource NoRotation}" />
                                 <ComboBoxItem Content="90%" />
                                 <ComboBoxItem Content="180%" />
                                 <ComboBoxItem Content="270%" />
                             </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="镜像处理">
+                    <ui:SettingsExpanderItem Content="{DynamicResource MirrorProcessing}">
                         <ui:SettingsExpanderItem.Footer>
                             <ComboBox Width="150" SelectedIndex="0">
-                                <ComboBoxItem Content="不镜像" />
-                                <ComboBoxItem Content="水平镜像" />
-                                <ComboBoxItem Content="垂直镜像" />
+                                <ComboBoxItem Content="{DynamicResource NoMirroring}" />
+                                <ComboBoxItem Content="{DynamicResource HorizontalMirror}" />
+                                <ComboBoxItem Content="{DynamicResource VerticalMirror}" />
                             </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
@@ -335,18 +335,18 @@
                 <!--  颜色量化  -->
                 <ui:SettingsExpander
                     Margin="0,0,0,10"
-                    Description="使用更低位数的调色板"
-                    Header="颜色量化"
+                    Description="{DynamicResource DescriptionUseLowerBitPalette}"
+                    Header="{DynamicResource ColorQuantization}"
                     IconSource="DarkTheme">
-                    <ui:SettingsExpanderItem Content="图片二值化处理">
+                    <ui:SettingsExpanderItem Content="{DynamicResource ImageBinarization}">
                         <ui:SettingsExpanderItem.Footer>
                             <ToggleSwitch
                                 IsChecked="true"
-                                OffContent="禁用"
-                                OnContent="启用" />
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="阈值">
+                    <ui:SettingsExpanderItem Content="{DynamicResource Threshold}">
                         <ui:SettingsExpanderItem.Footer>
                             <Slider
                                 Width="200"
@@ -355,38 +355,37 @@
                                 Value="50" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="黑白反转">
+                    <ui:SettingsExpanderItem Content="{DynamicResource BlackAndWhiteInversion}">
                         <ui:SettingsExpanderItem.Footer>
                             <ToggleSwitch
                                 IsChecked="true"
-                                OffContent="禁用"
-                                OnContent="启用" />
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="量化目标颜色数" Description="透明通道颜色请去颜色处理选项卡更改">
+                    <ui:SettingsExpanderItem Content="{DynamicResource TargetColorQuantization}" Description="{DynamicResource ChangeTransparentColorInColorTab}">
                         <ui:SettingsExpanderItem.Footer>
                             <ComboBox Width="150" SelectedIndex="0">
-                                <ComboBoxItem Content="维持当前" />
-                                <ComboBoxItem Content="256色，16位" />
-                                <ComboBoxItem Content="16色，8位" />
-                                <ComboBoxItem Content="8色，4位" />
-                                <ComboBoxItem Content="4色，2位" />
+                                <ComboBoxItem Content="{DynamicResource MaintainCurrent}" />
+                                <ComboBoxItem Content="{DynamicResource Colors256}" />
+                                <ComboBoxItem Content="{DynamicResource Colors16}" />
+                                <ComboBoxItem Content="{DynamicResource Colors8}" />
+                                <ComboBoxItem Content="{DynamicResource Colors4}" />
                             </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="抖动算法">
+                    <ui:SettingsExpanderItem Content="{DynamicResource DitheringAlgorithm}">
                         <ui:SettingsExpanderItem.Footer>
                             <ComboBox Width="150" SelectedIndex="0">
-                                <ComboBoxItem Content="Floyd-Steinberg" />
-                                <ComboBoxItem Content="Jarvis-Judice-Ninke" />
-                                <ComboBoxItem Content="Stucki" />
-                                <ComboBoxItem Content="Atkinson" />
-                                <ComboBoxItem Content="Burkes" />
+                                <ComboBoxItem Content="{DynamicResource FloydSteinberg}" />
+                                <ComboBoxItem Content="{DynamicResource JarvisJudiceNinke}" />
+                                <ComboBoxItem Content="{DynamicResource Stucki}" />
+                                <ComboBoxItem Content="{DynamicResource Atkinson}" />
+                                <ComboBoxItem Content="{DynamicResource Burkes}" />
                             </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
                 </ui:SettingsExpander>
-
             </StackPanel>
         </ScrollViewer>
     </Grid>
