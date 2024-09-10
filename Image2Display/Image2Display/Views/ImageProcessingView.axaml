@@ -418,7 +418,7 @@
                         Description="{DynamicResource ChangeTransparentColorInColorTab}"
                         IsVisible="{Binding !Binarization}">
                         <ui:SettingsExpanderItem.Footer>
-                            <ComboBox Width="200" SelectedIndex="{Binding !Quantization}">
+                            <ComboBox Width="200" SelectedIndex="{Binding Quantization}">
                                 <ComboBoxItem Content="{DynamicResource MaintainCurrent}" />
                                 <ComboBoxItem Content="{DynamicResource Colors256}" />
                                 <ComboBoxItem Content="{DynamicResource Colors16}" />
@@ -427,15 +427,26 @@
                             </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="{DynamicResource DitheringAlgorithm}">
+                    <ui:SettingsExpanderItem Content="{DynamicResource DitheringAlgorithm}" IsVisible="{Binding Binarization}">
                         <ui:SettingsExpanderItem.Footer>
-                            <ComboBox Width="200" SelectedIndex="{Binding QuantizationAlgorithm}">
+                            <ComboBox Width="200" SelectedIndex="{Binding DitheringAlgorithm}">
                                 <ComboBoxItem Content="{DynamicResource DitheringAlgorithmDisable}" />
                                 <ComboBoxItem Content="{DynamicResource FloydSteinberg}" />
+                                <ComboBoxItem Content="{DynamicResource Bayer4x4}" />
                                 <ComboBoxItem Content="{DynamicResource JarvisJudiceNinke}" />
                                 <ComboBoxItem Content="{DynamicResource Stucki}" />
                                 <ComboBoxItem Content="{DynamicResource Atkinson}" />
-                                <ComboBoxItem Content="{DynamicResource Burkes}" />
+                                <ComboBoxItem Content="{DynamicResource Burks}" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource QuantizationAlgorithm}" IsVisible="{Binding !Binarization}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="200" SelectedIndex="{Binding QuantizationAlgorithm}">
+                                <ComboBoxItem Content="Octree" />
+                                <ComboBoxItem Content="Web Safe Palette" />
+                                <ComboBoxItem Content="Xiaolin Wu" />
+                                <ComboBoxItem Content="Werner Palette" />
                             </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>

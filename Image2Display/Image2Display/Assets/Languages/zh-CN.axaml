@@ -80,10 +80,12 @@
     <system:String x:Key="DitheringAlgorithm">抖动算法</system:String>
     <system:String x:Key="DitheringAlgorithmDisable">不启用</system:String>
     <system:String x:Key="FloydSteinberg">Floyd-Steinberg</system:String>
+    <system:String x:Key="Bayer4x4">Bayer4x4</system:String>
     <system:String x:Key="JarvisJudiceNinke">Jarvis-Judice-Ninke</system:String>
     <system:String x:Key="Stucki">Stucki</system:String>
     <system:String x:Key="Atkinson">Atkinson</system:String>
-    <system:String x:Key="Burkes">Burkes</system:String>
+    <system:String x:Key="Burks">Burks</system:String>
+    <system:String x:Key="QuantizationAlgorithm">量化算法</system:String>
 
     <!--  设置页  -->
     <system:String x:Key="Settings">设置</system:String>

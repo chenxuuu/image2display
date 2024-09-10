@@ -2,6 +2,8 @@
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Processing.Processors.Dithering;
+using SixLabors.ImageSharp.Processing.Processors.Quantization;
 using SixLabors.ImageSharp.Processing.Processors.Transforms;
 using System;
 using System.Collections.Generic;
@@ -151,6 +153,84 @@ namespace Image2Display.Models
             if (vertical)
                 Raw.Mutate(ctx => ctx.Flip(FlipMode.Vertical));
             return true;
+        }
+
+        public bool BinPalette(byte Threshold)
+        {
+            var th = (float)Threshold / 0x100f;
+            Raw.Mutate(ctx => ctx.BinaryThreshold(th,BinaryThresholdMode.MaxChroma));
+            return true;
+        }
+
+        public bool BinDither(IDither dither)
+        {
+            Raw.Mutate(ctx => ctx.Grayscale().BinaryDither(dither));
+            return true;
+        }
+
+        //降颜色位数
+        public bool ReduceColor(int colorCount, IQuantizer quantizer)
+        {
+            switch(quantizer)
+            {
+                case OctreeQuantizer _:
+                    var qo = new OctreeQuantizer(new QuantizerOptions
+                    {
+                        MaxColors = colorCount
+                    });
+                    Raw.Mutate(ctx => ctx.Quantize(qo));
+                    break;
+                case WuQuantizer _:
+                    var qw = new WuQuantizer(new QuantizerOptions
+                    {
+                        MaxColors = colorCount
+                    });
+                    Raw.Mutate(ctx => ctx.Quantize(qw));
+                    break;
+                case WebSafePaletteQuantizer _:
+                    var qws = new WebSafePaletteQuantizer(new QuantizerOptions
+                    {
+                        MaxColors = colorCount
+                    });
+                    Raw.Mutate(ctx => ctx.Quantize(qws));
+                    break;
+                case WernerPaletteQuantizer _:
+                    var qwe = new WernerPaletteQuantizer(new QuantizerOptions
+                    {
+                        MaxColors = colorCount
+                    });
+                    Raw.Mutate(ctx => ctx.Quantize(qwe));
+                    break;
+                default:
+                    return false;
+            }  
+            return true;
+        }
+
+        private static Color[] GetPalette(int colorBits)
+        {
+            int colorsPerChannel = 1 << (colorBits / 3);
+            int totalColors = colorsPerChannel * colorsPerChannel * colorsPerChannel;
+
+            Color[] palette = new Color[totalColors];
+            int index = 0;
+
+            for (int r = 0; r < colorsPerChannel; r++)
+            {
+                for (int g = 0; g < colorsPerChannel; g++)
+                {
+                    for (int b = 0; b < colorsPerChannel; b++)
+                    {
+                        byte red = (byte)(r * 255 / (colorsPerChannel - 1));
+                        byte green = (byte)(g * 255 / (colorsPerChannel - 1));
+                        byte blue = (byte)(b * 255 / (colorsPerChannel - 1));
+
+                        palette[index++] = Color.FromRgb(red, green, blue);
+                    }
+                }
+            }
+
+            return palette;
         }
 
         /// <summary>

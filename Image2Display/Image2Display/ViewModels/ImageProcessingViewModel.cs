@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static Image2Display.Models.ImageProcessingConfig;
 
 namespace Image2Display.ViewModels
 {
@@ -119,18 +120,21 @@ namespace Image2Display.ViewModels
         [NotifyPropertyChangedFor(nameof(BinarizationThresholdShow))]
         private bool _binarization = false;
         [ObservableProperty]
-        private int _binarizationThreshold = 128;
+        private byte _binarizationThreshold = 128;
         [ObservableProperty]
         private bool _binarizationInversion = false;
         [ObservableProperty]
-        private int _quantization = 0;
-        [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(BinarizationThresholdShow))]
-        private int _quantizationAlgorithm = 0;
+        private int _ditheringAlgorithm = 0;
         public bool BinarizationThresholdShow
         {
-            get => Binarization && QuantizationAlgorithm == 0;
+            get => Binarization && DitheringAlgorithm == 0;
         }
+
+        [ObservableProperty]
+        private int _quantization = 0;
+        [ObservableProperty]
+        private int _quantizationAlgorithm = 0;
 
         //图片展示
         [ObservableProperty]
@@ -411,6 +415,60 @@ namespace Image2Display.ViewModels
                 var v = MirrorProcessing == 2;
                 if (!img.Flip(h, v))
                     return (null, "Flip failed");
+            }
+
+
+            //颜色量化
+
+            if (Binarization)
+            {
+                if(DitheringAlgorithm == 0)
+                {
+                    if (!img.BinPalette(BinarizationThreshold))
+                        return (null, "Binarization failed");
+                }
+                else
+                {
+                    //抖动算法
+                    var dither = DitheringAlgorithm switch
+                    {
+                        1 => KnownDitherings.FloydSteinberg,
+                        2 => KnownDitherings.Bayer4x4,
+                        3 => KnownDitherings.JarvisJudiceNinke,
+                        4 => KnownDitherings.Stucki,
+                        5 => KnownDitherings.Atkinson,
+                        6 => KnownDitherings.Burks,
+                        _ => KnownDitherings.FloydSteinberg
+                    };
+                    if (!img.BinDither(dither))
+                        return (null, "Binarization failed");
+                }
+                if(BinarizationInversion)
+                {
+                    if (!img.Invert())
+                        return (null, "Invert failed");
+                }
+            }
+            else if(Quantization != 0)
+            {
+                var colorCount = Quantization switch
+                {
+                    1 => 256,
+                    2 => 16,
+                    3 => 8,
+                    4 => 4,
+                    _ => 0,
+                };
+                var quantizer = QuantizationAlgorithm switch
+                {
+                    0 => KnownQuantizers.Octree,
+                    1 => KnownQuantizers.WebSafe,
+                    2 => KnownQuantizers.Wu,
+                    3 => KnownQuantizers.Werner,
+                    _ => KnownQuantizers.Octree,
+                };
+                if (!img.ReduceColor(colorCount, quantizer))
+                    return (null, "Quantization failed");
             }
 
             return (new ImageData(img),null);

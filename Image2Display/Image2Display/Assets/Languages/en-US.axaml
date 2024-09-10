@@ -78,10 +78,12 @@
     <system:String x:Key="DitheringAlgorithm">Dithering Algorithm</system:String>
     <system:String x:Key="DitheringAlgorithmDisable">None</system:String>
     <system:String x:Key="FloydSteinberg">Floyd-Steinberg</system:String>
+    <system:String x:Key="Bayer4x4">Bayer4x4</system:String>
     <system:String x:Key="JarvisJudiceNinke">Jarvis-Judice-Ninke</system:String>
     <system:String x:Key="Stucki">Stucki</system:String>
     <system:String x:Key="Atkinson">Atkinson</system:String>
-    <system:String x:Key="Burkes">Burkes</system:String>
+    <system:String x:Key="Burks">Burks</system:String>
+    <system:String x:Key="QuantizationAlgorithm">Quantization Algorithm</system:String>
 
     <system:String x:Key="Settings">Settings</system:String>
     <system:String x:Key="General">General</system:String>
