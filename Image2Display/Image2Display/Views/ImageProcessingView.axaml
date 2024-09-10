@@ -242,6 +242,7 @@
                                 <ComboBoxItem Content="30%" />
                                 <ComboBoxItem Content="50%" />
                                 <ComboBoxItem Content="80%" />
+                                <ComboBoxItem Content="120%" />
                                 <ComboBoxItem Content="150%" />
                                 <ComboBoxItem Content="200%" />
                             </ComboBox>
@@ -286,8 +287,13 @@
                         <ui:SettingsExpanderItem.Footer>
                             <ComboBox Width="200" SelectedIndex="{Binding ScaleAlgorithm}">
                                 <ComboBoxItem Content="{DynamicResource NearestNeighbor}" />
-                                <ComboBoxItem Content="{DynamicResource Bilinear}" />
                                 <ComboBoxItem Content="{DynamicResource Bicubic}" />
+                                <ComboBoxItem Content="{DynamicResource Triangle}" />
+                                <ComboBoxItem Content="{DynamicResource Box}" />
+                                <ComboBoxItem Content="Lanczos2" />
+                                <ComboBoxItem Content="Lanczos3" />
+                                <ComboBoxItem Content="Lanczos5" />
+                                <ComboBoxItem Content="Lanczos8" />
                             </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>

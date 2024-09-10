@@ -24,9 +24,9 @@
     <system:String x:Key="CropImage">Crop Image</system:String>
     <system:String x:Key="Disable">Disable</system:String>
     <system:String x:Key="Enable">Enable</system:String>
-    <system:String x:Key="CurrentImageSizeInfo">Current Image Size Info</system:String>
+    <system:String x:Key="CurrentImageSizeInfo">Image Size Info Before Processing</system:String>
     <system:String x:Key="OriginalImageSize">Original Image Size Before Cropping</system:String>
-    <system:String x:Key="CropedImageSizeImageSize">Image Size Before Cropping (if exist)</system:String>
+    <system:String x:Key="CropedImageSize">Image Size Before Cropping (if exist)</system:String>
     <system:String x:Key="Width">Width</system:String>
     <system:String x:Key="Height">Height</system:String>
     <system:String x:Key="CropTopLeftCoordinates">Top Left Coordinates of Crop Area (x,y)</system:String>
@@ -44,8 +44,9 @@
     <system:String x:Key="ScaleToResolution">Scale to Resolution</system:String>
     <system:String x:Key="InterpolationAlgorithm">Interpolation Algorithm</system:String>
     <system:String x:Key="NearestNeighbor">Nearest Neighbor</system:String>
-    <system:String x:Key="Bilinear">Bilinear Interpolation</system:String>
     <system:String x:Key="Bicubic">Bicubic Interpolation</system:String>
+    <system:String x:Key="Triangle">Triangle</system:String>
+    <system:String x:Key="Box">Box</system:String>
     <system:String x:Key="ColorProcessing">Color Processing</system:String>
     <system:String x:Key="DescriptionBasicBrightnessContrast">Basic Brightness and Contrast Adjustment</system:String>
     <system:String x:Key="PreserveTransparency">Preserve Transparency</system:String>

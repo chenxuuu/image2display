@@ -26,9 +26,9 @@
     <system:String x:Key="CropImage">裁剪图片</system:String>
     <system:String x:Key="Disable">禁用</system:String>
     <system:String x:Key="Enable">启用</system:String>
-    <system:String x:Key="CurrentImageSizeInfo">当前图片尺寸信息</system:String>
+    <system:String x:Key="CurrentImageSizeInfo">处理前的图片尺寸信息</system:String>
     <system:String x:Key="OriginalImageSize">裁剪前的原图尺寸</system:String>
-    <system:String x:Key="CropedImageSizeImageSize">裁剪后的（如有）原图尺寸</system:String>
+    <system:String x:Key="CropedImageSize">裁剪后的（如有）原图尺寸</system:String>
     <system:String x:Key="Width">宽度</system:String>
     <system:String x:Key="Height">高度</system:String>
     <system:String x:Key="CropTopLeftCoordinates">裁剪区域左上角坐标 (x,y)</system:String>
@@ -46,8 +46,9 @@
     <system:String x:Key="ScaleToResolution">缩放至该分辨率</system:String>
     <system:String x:Key="InterpolationAlgorithm">插值算法</system:String>
     <system:String x:Key="NearestNeighbor">最近邻插值</system:String>
-    <system:String x:Key="Bilinear">双线性插值</system:String>
     <system:String x:Key="Bicubic">双三次插值</system:String>
+    <system:String x:Key="Triangle">三角形插值</system:String>
+    <system:String x:Key="Box">盒式采样</system:String>
     <system:String x:Key="ColorProcessing">颜色处理</system:String>
     <system:String x:Key="DescriptionBasicBrightnessContrast">基本的亮度和对比度调整</system:String>
     <system:String x:Key="PreserveTransparency">保留透明色</system:String>

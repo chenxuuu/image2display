@@ -1,6 +1,8 @@
 ﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Processing.Processors.Transforms;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -68,17 +70,20 @@ namespace Image2Display.Models
             return true;
         }
 
-        /// <summary>
-        /// 调整图片大小（会被拉伸）
-        /// </summary>
-        /// <param name="width">目标宽度</param>
-        /// <param name="height">目标高度</param>
-        /// <returns>是否成功</returns>
-        public bool Stretch(int width, int height)
+        public bool Resize(int width, int height, bool stretch = false, IResampler? algorithm = null)
         {
-            if (width < 0 || height < 0)
+            if (width <= 0 || height <= 0)
                 return false;
-            Raw.Mutate(ctx => ctx.Resize(width, height));
+
+            algorithm ??= KnownResamplers.NearestNeighbor;
+
+            Raw.Mutate(ctx => ctx.Resize(new ResizeOptions
+            {
+                Size = new Size(width, height),
+                Mode = stretch ? ResizeMode.Stretch : ResizeMode.Crop,
+                Sampler = algorithm
+            }));
+
             return true;
         }
 
@@ -95,6 +100,56 @@ namespace Image2Display.Models
             var n = new Image<Rgba32>(width, height);
             n.Mutate(ctx => ctx.DrawImage(Raw, new Point(0, 0), 1));
             Raw = n;
+            return true;
+        }
+
+        public bool AddBackGround(int width, int height, Rgba32 color)
+        {
+            if (width < Width || height < Height)//不能小于当前尺寸
+                return false;
+            var n = new Image<Rgba32>(width, height);
+            n.Mutate(ctx => ctx.Fill(color));
+            n.Mutate(ctx => ctx.DrawImage(Raw, new Point(0, 0), 1));
+            Raw = n;
+            return true;
+        }
+
+        public bool SetBrightness(float value)
+        {
+            Raw.Mutate(ctx => ctx.Brightness(value));
+            return true;
+        }
+
+        public bool SetContrast(float value)
+        {
+            Raw.Mutate(ctx => ctx.Contrast(value));
+            return true;
+        }
+
+        public bool SetSaturation(float value)
+        {
+            Raw.Mutate(ctx => ctx.Saturate(value));
+            return true;
+        }
+
+        public bool Invert()
+        {
+            Raw.Mutate(ctx => ctx.Invert());
+            return true;
+        }
+
+        public bool Rotate(float degree)
+        {
+            Raw.Mutate(ctx => ctx.Rotate(degree));
+            return true;
+        }
+
+        public bool Flip(bool horizontal, bool vertical)
+        {
+            if (horizontal)
+                Raw.Mutate(ctx => ctx.Flip(FlipMode.Horizontal));
+            if (vertical)
+                Raw.Mutate(ctx => ctx.Flip(FlipMode.Vertical));
             return true;
         }
 

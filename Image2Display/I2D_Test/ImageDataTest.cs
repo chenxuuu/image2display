@@ -37,16 +37,6 @@ namespace I2D_Test
 
         [Theory]
         [InlineData(1, 1)]
-        [InlineData(100, 2000)]
-        [InlineData(1000, 20)]
-        public void Stretch(int w, int h)
-        {
-            var img = new ImageData(1000, 1000);
-            Assert.True(img.Stretch(w, h));
-        }
-
-        [Theory]
-        [InlineData(1, 1)]
         [InlineData(100, 100)]
         [InlineData(1000, 20)]
         public void Expand(int w, int h)

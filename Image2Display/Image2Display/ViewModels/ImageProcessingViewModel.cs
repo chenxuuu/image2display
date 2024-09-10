@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Image2Display.Helpers;
 using Image2Display.Models;
+using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -179,6 +180,8 @@ namespace Image2Display.ViewModels
             //之前可能存在的数据需要释放
             RealOriginalImage?.Dispose();
             RealProcessedImage?.Dispose();
+            RealOriginalImage = null;
+            RealProcessedImage = null;
 
             //读取图片，导入到OriginalImage内
             RealOriginalImage = new ImageData(files[0].Path.LocalPath);
@@ -198,6 +201,8 @@ namespace Image2Display.ViewModels
             CropY1 = 0;
             CropX2 = ImageWidth - 1;
             CropY2 = ImageHeight - 1;
+            ScaleWidth = ImageWidth;
+            ScaleHeight = ImageHeight;
         }
 
         [RelayCommand]
@@ -297,7 +302,7 @@ namespace Image2Display.ViewModels
         private (ImageData?,string?) ProcessImage()
         {
             if(RealOriginalImage == null)
-                return (null,"image data is null");
+                return (null,"Image data is null");
 
             //备份一份图片用于处理
             using var img = new ImageData(RealOriginalImage);
@@ -305,9 +310,108 @@ namespace Image2Display.ViewModels
             if (CropImage)
             {
                 if(!img.Crop(CropX1, CropY1, CropX2 - CropX1, CropY2 - CropY1))
-                    return (null, "crop failed");
+                    return (null, "Crop failed");
+            }
+            //缩放
+            if (ImageScaling)
+            {
+                int targetW, targetH;
+                if(QuickScale != 0)
+                {
+                    double scale = QuickScale switch
+                    {
+                        1 => 0.3,
+                        2 => 0.5,
+                        3 => 0.8,
+                        4 => 1.2,
+                        5 => 1.5,
+                        6 => 2,
+                        _ => 1,
+                    };
+                    (targetW, targetH) = ((int)(ImageWidthCroped * scale), (int)(ImageHeightCroped * scale));
+                }
+                else
+                {
+                    targetW = ScaleWidth;
+                    targetH = ScaleHeight;
+                    //保持宽高比
+                    if (KeepAspectRatio)
+                    {
+                        double scale = Math.Min((double)targetW / ImageWidthCroped, (double)targetH / ImageHeightCroped);
+                        targetW = (int)(ImageWidthCroped * scale);
+                        targetH = (int)(ImageHeightCroped * scale);
+                    }
+                }
+                var Sampler = ScaleAlgorithm switch
+                {
+                    1 => KnownResamplers.Bicubic,
+                    2 => KnownResamplers.Triangle,
+                    3 => KnownResamplers.Box,
+                    4 => KnownResamplers.Lanczos2,
+                    5 => KnownResamplers.Lanczos3,
+                    6 => KnownResamplers.Lanczos5,
+                    7 => KnownResamplers.Lanczos8,
+                    _ => KnownResamplers.NearestNeighbor,
+                };
+                if (!img.Resize(targetW, targetH, Stretch, Sampler))
+                    return (null, "Resize failed");
             }
 
+            //颜色处理
+
+            if(!PreserveTransparency)
+            {
+                if(!img.AddBackGround(
+                    img.Width,
+                    img.Height, 
+                    new SixLabors.ImageSharp.PixelFormats.Rgba32(
+                        TransparencyColor.R,
+                        TransparencyColor.G,
+                        TransparencyColor.B)
+                    ))
+                    return (null, "Replace Transparency failed");
+            }
+            if(Brightness != 100)
+            {
+                if (!img.SetBrightness(Brightness/ 100.0f))
+                    return (null, "Set brightness failed");
+            }
+            if (Contrast != 100)
+            {
+                if (!img.SetContrast(Contrast / 100.0f))
+                    return (null, "Set contrast failed");
+            }
+            if (Saturation != 100)
+            {
+                if (!img.SetSaturation(Saturation / 100.0f))
+                    return (null, "Set saturation failed");
+            }
+            if (InvertColors)
+            {
+                if (!img.Invert())
+                    return (null, "Invert failed");
+            }
+
+            //旋转和翻转
+            if (RotateImage != 0)
+            {
+                var degree = RotateImage switch
+                {
+                    1 => 90,
+                    2 => 180,
+                    3 => 270,
+                    _ => 0,
+                };
+                if (!img.Rotate(degree))
+                    return (null, "Rotate failed");
+            }
+            if (MirrorProcessing != 0)
+            {
+                var h = MirrorProcessing == 1;
+                var v = MirrorProcessing == 2;
+                if (!img.Flip(h, v))
+                    return (null, "Flip failed");
+            }
 
             return (new ImageData(img),null);
         }
