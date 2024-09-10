@@ -39,6 +39,16 @@ namespace Image2Display.Models
         /// <param name="path">文件路径</param>
         public ImageData(string path) => Raw = Image.Load<Rgba32>(path);
 
+        /// <summary>
+        /// 从已有图片数据导入图片
+        /// </summary>
+        /// <param name="img"></param>
+        public ImageData(ImageData img)
+        {
+            using var stream = img.GetStream();
+            Raw = Image.Load<Rgba32>(stream);
+        }
+
 
         /// <summary>
         /// 裁剪图片区域
@@ -103,6 +113,7 @@ namespace Image2Display.Models
         public void Dispose()
         {
             Raw?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

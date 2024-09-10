@@ -16,6 +16,7 @@
 
     <!--  图像处理  -->
     <system:String x:Key="AdjustWidthTip">调整上下部分宽度</system:String>
+    <system:String x:Key="ProcessError">处理错误</system:String>
     <system:String x:Key="HoldToCompare">按住对比图片</system:String>
     <system:String x:Key="LoadNewImage">加载新图片</system:String>
     <system:String x:Key="SaveAsNewFile">另存为新文件</system:String>
@@ -32,13 +33,14 @@
     <system:String x:Key="Height">高度</system:String>
     <system:String x:Key="CropTopLeftCoordinates">裁剪区域左上角坐标 (x,y)</system:String>
     <system:String x:Key="CropBottomRightCoordinates">裁剪区域右下角坐标 (x,y)</system:String>
+    <system:String x:Key="CropStart0">坐标从(0,0)开始，左上角为(0,0)</system:String>
     <system:String x:Key="ImageScaling">图像缩放</system:String>
     <system:String x:Key="DescriptionScaleToResolution">缩放至目标分辨率</system:String>
     <system:String x:Key="ScaleImage">缩放图片</system:String>
     <system:String x:Key="QuickSelectScale">快速选择缩放倍数</system:String>
     <system:String x:Key="ManualScale">手动缩放</system:String>
     <system:String x:Key="MaintainAspectRatio">保持宽高比</system:String>
-    <system:String x:Key="AutoCalculateWidthOrHeight">会自动计算宽或高的值</system:String>
+    <system:String x:Key="AutoCalculateWidthOrHeight">将会在设定范围内维持宽高比</system:String>
     <system:String x:Key="StretchImage">拉伸图片</system:String>
     <system:String x:Key="CropExtraParts">如果关闭则是裁切多余部分</system:String>
     <system:String x:Key="ScaleToResolution">缩放至该分辨率</system:String>

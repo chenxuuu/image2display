@@ -14,6 +14,7 @@
     <system:Double x:Key="MainOpenPaneLength">210</system:Double>
 
     <system:String x:Key="AdjustWidthTip">Adjust the upper and lower width</system:String>
+    <system:String x:Key="ProcessError">Process Error</system:String>
     <system:String x:Key="HoldToCompare">Hold to compare images</system:String>
     <system:String x:Key="LoadNewImage">Load new image</system:String>
     <system:String x:Key="SaveAsNewFile">Save as a new file</system:String>
@@ -30,13 +31,14 @@
     <system:String x:Key="Height">Height</system:String>
     <system:String x:Key="CropTopLeftCoordinates">Top Left Coordinates of Crop Area (x,y)</system:String>
     <system:String x:Key="CropBottomRightCoordinates">Bottom Right Coordinates of Crop Area (x,y)</system:String>
+    <system:String x:Key="CropStart0">Coordinates start from (0,0), Top Left corner is (0,0)</system:String>
     <system:String x:Key="ImageScaling">Image Scaling</system:String>
     <system:String x:Key="DescriptionScaleToResolution">Scale to Target Resolution</system:String>
     <system:String x:Key="ScaleImage">Scale Image</system:String>
     <system:String x:Key="QuickSelectScale">Quick Select Scale Factor</system:String>
     <system:String x:Key="ManualScale">Manual Scale</system:String>
     <system:String x:Key="MaintainAspectRatio">Maintain Aspect Ratio</system:String>
-    <system:String x:Key="AutoCalculateWidthOrHeight">Automatically calculate width or height</system:String>
+    <system:String x:Key="AutoCalculateWidthOrHeight">The aspect ratio will be maintained within the set range</system:String>
     <system:String x:Key="StretchImage">Stretch Image</system:String>
     <system:String x:Key="CropExtraParts">If disabled, crop extra parts</system:String>
     <system:String x:Key="ScaleToResolution">Scale to Resolution</system:String>

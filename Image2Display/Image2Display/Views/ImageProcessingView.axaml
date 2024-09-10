@@ -91,6 +91,15 @@
                     </Grid>
                 </Grid>
             </Border>
+            <Viewbox>
+                <ui:ProgressRing Margin="10" IsVisible="{Binding IsProcessing}" />
+            </Viewbox>
+            <ui:InfoBar
+                Title="{DynamicResource ProcessError}"
+                Margin="20"
+                IsOpen="{Binding IsError}"
+                Message="{Binding ErrorMessage}"
+                Severity="Error" />
         </Grid>
         <ScrollViewer
             Grid.Row="2"
@@ -151,7 +160,10 @@
                             </Grid>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="{DynamicResource CropTopLeftCoordinates}" IsVisible="{Binding CropImage}">
+                    <ui:SettingsExpanderItem
+                        Content="{DynamicResource CropTopLeftCoordinates}"
+                        Description="{DynamicResource CropStart0}"
+                        IsVisible="{Binding CropImage}">
                         <ui:SettingsExpanderItem.Footer>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox MinWidth="80" Text="{Binding CropX1}" />
@@ -270,10 +282,7 @@
                             </StackPanel>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem
-                        Content="{DynamicResource InterpolationAlgorithm}"
-                        Description="{DynamicResource NearestNeighbor}"
-                        IsVisible="{Binding ImageScaling}">
+                    <ui:SettingsExpanderItem Content="{DynamicResource InterpolationAlgorithm}" IsVisible="{Binding ImageScaling}">
                         <ui:SettingsExpanderItem.Footer>
                             <ComboBox Width="200" SelectedIndex="{Binding ScaleAlgorithm}">
                                 <ComboBoxItem Content="{DynamicResource NearestNeighbor}" />
