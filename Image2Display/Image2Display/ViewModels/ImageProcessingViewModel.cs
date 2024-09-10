@@ -1,9 +1,13 @@
 ﻿using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Image2Display.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -92,6 +96,56 @@ namespace Image2Display.ViewModels
         public bool BinarizationThresholdShow
         {
             get => Binarization && QuantizationAlgorithm == 0;
+        }
+
+        //图片展示
+        [ObservableProperty]
+        private bool _isShowOriginalImage = false;
+        [ObservableProperty]
+        private Bitmap? _originalImage = null;
+        [ObservableProperty]
+        private Bitmap? _processedImage = null;
+
+        //开启一个定时器，用于更新显示原图的变量
+        private System.Timers.Timer ShowOriginalImageTimer = new();
+
+        [RelayCommand]
+        private void ShowOriginalImage()
+        {
+            IsShowOriginalImage = true;
+            ShowOriginalImageTimer.Stop();
+            ShowOriginalImageTimer.Start();
+        }
+
+        [RelayCommand]
+        private async Task OpenImageFile()
+        {
+            var files = await DialogHelper.ShowOpenFileDialogAsync(FilePickerFileTypes.ImageAll, false);
+            if (files.Count == 0)
+                return;
+            //读取图片，导入到OriginalImage内
+            OriginalImage = new Bitmap(Path.GetFullPath(files[0].Path.LocalPath));
+            ProcessedImage = new Bitmap(Path.GetFullPath(files[0].Path.LocalPath));
+        }
+
+        [RelayCommand]
+        private async Task SaveImageFile()
+        {
+            //保存图片
+            var path = await DialogHelper.ShowSaveFileDialogAsync("png");
+            if (path == null)
+                return;
+            ProcessedImage?.Save(path);
+        }
+
+        /// <summary>
+        /// 初始化ImageProcessingViewModel
+        /// </summary>
+        public ImageProcessingViewModel()
+        {
+            ShowOriginalImageTimer.Elapsed += (_,_) => IsShowOriginalImage = false;
+            ShowOriginalImageTimer.Interval = 50;
+            ShowOriginalImageTimer.AutoReset = false;
         }
     }
 }

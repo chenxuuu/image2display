@@ -153,5 +153,20 @@ namespace Image2Display.Helpers
             };
             return await ShowOpenFileDialogAsync(list, multiple);
         }
+
+        public static async Task<string?> ShowSaveFileDialogAsync(string ext)
+        {
+            var options = new FilePickerSaveOptions
+            {
+                SuggestedFileName = "image",
+                FileTypeChoices = [ FilePickerFileTypes.ImagePng ]
+            };
+            var app = Application.Current!.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+            var m = app!.MainWindow;
+            var file = await m!.StorageProvider.SaveFilePickerAsync(options);
+            if (file == null)
+                return null;
+            return file.Path.LocalPath;
+        }
     }
 }
