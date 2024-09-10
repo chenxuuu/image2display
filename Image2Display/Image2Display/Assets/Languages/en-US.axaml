@@ -25,6 +25,7 @@
     <system:String x:Key="Enable">Enable</system:String>
     <system:String x:Key="CurrentImageSizeInfo">Current Image Size Info</system:String>
     <system:String x:Key="OriginalImageSize">Original Image Size Before Cropping</system:String>
+    <system:String x:Key="CropedImageSizeImageSize">Image Size Before Cropping (if exist)</system:String>
     <system:String x:Key="Width">Width</system:String>
     <system:String x:Key="Height">Height</system:String>
     <system:String x:Key="CropTopLeftCoordinates">Top Left Coordinates of Crop Area (x,y)</system:String>
@@ -72,6 +73,7 @@
     <system:String x:Key="Colors8">8 Colors, 4-bit</system:String>
     <system:String x:Key="Colors4">4 Colors, 2-bit</system:String>
     <system:String x:Key="DitheringAlgorithm">Dithering Algorithm</system:String>
+    <system:String x:Key="DitheringAlgorithmDisable">None</system:String>
     <system:String x:Key="FloydSteinberg">Floyd-Steinberg</system:String>
     <system:String x:Key="JarvisJudiceNinke">Jarvis-Judice-Ninke</system:String>
     <system:String x:Key="Stucki">Stucki</system:String>
