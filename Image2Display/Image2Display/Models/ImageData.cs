@@ -187,18 +187,10 @@ namespace Image2Display.Models
                     });
                     Raw.Mutate(ctx => ctx.Quantize(qw));
                     break;
-                case WebSafePaletteQuantizer _:
-                    var qws = new WebSafePaletteQuantizer(new QuantizerOptions
-                    {
-                        MaxColors = colorCount
-                    });
+                case WebSafePaletteQuantizer qws:
                     Raw.Mutate(ctx => ctx.Quantize(qws));
                     break;
-                case WernerPaletteQuantizer _:
-                    var qwe = new WernerPaletteQuantizer(new QuantizerOptions
-                    {
-                        MaxColors = colorCount
-                    });
+                case WernerPaletteQuantizer qwe:
                     Raw.Mutate(ctx => ctx.Quantize(qwe));
                     break;
                 default:
