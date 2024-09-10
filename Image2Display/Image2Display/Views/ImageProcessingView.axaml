@@ -416,7 +416,7 @@
                     <ui:SettingsExpanderItem
                         Content="{DynamicResource TargetColorQuantization}"
                         Description="{DynamicResource ChangeTransparentColorInColorTab}"
-                        IsVisible="{Binding !Binarization}">
+                        IsVisible="{Binding IsQuantizationComboBoxShow}">
                         <ui:SettingsExpanderItem.Footer>
                             <ComboBox Width="200" SelectedIndex="{Binding Quantization}">
                                 <ComboBoxItem Content="{DynamicResource MaintainCurrent}" />

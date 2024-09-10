@@ -117,7 +117,7 @@ namespace Image2Display.ViewModels
 
         //颜色量化
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(BinarizationThresholdShow))]
+        [NotifyPropertyChangedFor(nameof(BinarizationThresholdShow),nameof(IsQuantizationComboBoxShow))]
         private bool _binarization = false;
         [ObservableProperty]
         private byte _binarizationThreshold = 128;
@@ -133,7 +133,12 @@ namespace Image2Display.ViewModels
 
         [ObservableProperty]
         private int _quantization = 0;
+        public bool IsQuantizationComboBoxShow
+        {
+            get => !Binarization && QuantizationAlgorithm != 1 && QuantizationAlgorithm != 3;
+        }
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsQuantizationComboBoxShow))]
         private int _quantizationAlgorithm = 0;
 
         //图片展示
