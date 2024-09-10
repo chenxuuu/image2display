@@ -1,6 +1,6 @@
 # (WIP)Image2display
 
-中文 | [English](./README_EN.md)
+[Chinese](./README.md) | English
 
 <p align="center">
     <br>
@@ -14,16 +14,16 @@
     <img alt="GitHub Test" src="https://github.com/chenxuuu/image2display/actions/workflows/test.yml/badge.svg">
 </p>
 
-跨平台的图片与字体数据处理工具，用于生成单片机可用的数据。基本目标为替代image2lcd与PCtoLCD
+A cross-platform image and font data processing tool for generating data usable by microcontrollers.
 
-支持Win10+、linux、OSX
+Supports Win10+, Linux, OSX
 
-## 下载
+## Download
 
-所有正式版本：[GitHub Releases](https://github.com/chenxuuu/image2display/releases/latest)
+All official versions: [GitHub Releases](https://github.com/chenxuuu/image2display/releases/latest)
 
-CI快照版：[GitHub Action](https://nightly.link/chenxuuu/image2display/workflows/build/master)
+CI snapshot version: [GitHub Action](https://nightly.link/chenxuuu/image2display/workflows/build/master)
 
-## 功能
+## Features
 
-[待定，开发中，欢迎参与](https://github.com/chenxuuu/image2display/issues/1)
+[TBD, in development, contributions welcome](https://github.com/chenxuuu/image2display/issues/1)
