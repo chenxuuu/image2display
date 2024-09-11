@@ -14,5 +14,7 @@
     x:CompileBindings="True"
     x:DataType="vm:ImageConvertViewModel"
     mc:Ignorable="d">
-    <Grid RowDefinitions="2*,*" />
+    <Grid RowDefinitions="2*,*">
+        <Button Command="{Binding TestCommand}" Content="test" />
+    </Grid>
 </UserControl>

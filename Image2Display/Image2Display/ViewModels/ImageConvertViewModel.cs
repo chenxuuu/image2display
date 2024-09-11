@@ -16,72 +16,36 @@ namespace Image2Display.ViewModels
 {
     public partial class ImageConvertViewModel : ViewModelBase
     {
-        private ImageData? _imageData;
-
-        [ObservableProperty]
-        public Bitmap? _imageShow = null;
-        [ObservableProperty]
-        private bool _bitmapLoading = false;
-        [ObservableProperty]
-        public IImmutableSolidColorBrush? _bgColor = Brushes.White;
-
-
-        //刷新图片
-        private async Task RefreshImage()
+        public ImageConvertViewModel()
         {
-            if(_imageData == null)
+            if (Utils.ImageDataTemp != null)
             {
-                ImageShow?.Dispose();
-                ImageShow = null;
-                return;
-            }
-            BitmapLoading = true;
-            await Task.Run(() =>
-            {
-                ImageShow = ImageHelper.LoadFromImageData(_imageData!);
-            });
-            BitmapLoading = false;
-        }
-
-        [RelayCommand]
-        private async Task ImportImage()
-        {
-            var r = await DialogHelper.ShowOpenFileDialogAsync(FilePickerFileTypes.ImageAll);
-            if (r is null || r.Count == 0)
-                return;
-
-            var file = r.First();
-            try
-            {
-                _imageData = new ImageData(file.Path.LocalPath);
-                await RefreshImage();
-            }
-            catch(Exception e)
-            {
-                Debug.WriteLine(e.Message);
-                return;
-            }
-        }
-
-        [RelayCommand]
-        private async Task ClearImage()
-        {
-            _imageData?.Dispose();
-            _imageData = null;
-            await RefreshImage();
-        }
-
-        [RelayCommand]
-        private void ChangeBgColor()
-        {
-            if(BgColor == Brushes.White)
-            {
-                BgColor = Brushes.Black;
+                ImportImage(Utils.ImageDataTemp);
+                Utils.ImageDataTemp = null;
             }
             else
             {
-                BgColor = Brushes.White;
+                Utils.ImportImageAction = ImportImage;
             }
+        }
+
+        private void ImportImage(ImageData img)
+        {
+            Image = img;
+        }
+
+        private ImageData? Image = null;
+
+
+        [RelayCommand]
+        private void Test()
+        {
+            if (Image == null)
+            {
+                Debug.WriteLine("Image is null");
+                return;
+            }
+            Debug.WriteLine($"{Image.Width},{Image.Height}");
         }
     }
 }

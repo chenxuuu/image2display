@@ -192,19 +192,22 @@ namespace Image2Display.ViewModels
             RealOriginalImage = null;
             RealProcessedImage = null;
 
-            //读取图片，导入到OriginalImage内
-            RealOriginalImage = new ImageData(files[0].Path.LocalPath);
-            ImageWidth = RealOriginalImage.Width;
-            ImageHeight = RealOriginalImage.Height;
-            //复制图片数据到Processed
-            RealProcessedImage = new ImageData(RealOriginalImage);
+            await Task.Run(() =>
+            {
+                //读取图片，导入到OriginalImage内
+                RealOriginalImage = new ImageData(files[0].Path.LocalPath);
+                ImageWidth = RealOriginalImage.Width;
+                ImageHeight = RealOriginalImage.Height;
+                //复制图片数据到Processed
+                RealProcessedImage = new ImageData(RealOriginalImage);
 
-            //刷新到UI
-            RefreshOriginalImage();
-            RefreshProcessedImage();
+                //刷新到UI
+                RefreshOriginalImage();
+                RefreshProcessedImage();
+            });
 
             //初始化其他变量
-            ImageWidth = RealOriginalImage.Width;
+            ImageWidth = RealOriginalImage!.Width;
             ImageHeight = RealOriginalImage.Height;
             CropX1 = 0;
             CropY1 = 0;
@@ -217,11 +220,29 @@ namespace Image2Display.ViewModels
         [RelayCommand]
         private async Task SaveImageFile()
         {
+            if (ProcessedImage == null)
+                return;
             //保存图片
             var path = await DialogHelper.ShowSaveFileDialogAsync("png");
             if (path == null)
                 return;
             ProcessedImage?.Save(path);
+        }
+
+        [RelayCommand]
+        private async Task SentImage2ConvertPage()
+        {
+            if (RealProcessedImage == null)
+                return;
+            IsProcessing = true;
+            //传递图片
+            await Task.Run(() =>
+            {
+                var img = new ImageData(RealProcessedImage);
+                Utils.SetImage2ConvertPage(img);
+            });
+            IsProcessing = false;
+            Utils.SwitchPage?.Invoke(2);
         }
 
         /// <summary>

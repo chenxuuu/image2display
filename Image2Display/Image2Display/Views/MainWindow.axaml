@@ -29,6 +29,7 @@
     </Design.DataContext>
 
     <ui:NavigationView
+        Name="MainNavigationView"
         AlwaysShowHeader="False"
         IsPaneOpen="False"
         IsPaneToggleButtonVisible="False"

@@ -66,6 +66,7 @@
                     Height="40"
                     Margin="10,10,0,0"
                     Padding="0"
+                    Command="{Binding SentImage2ConvertPageCommand}"
                     ToolTip.Tip="{DynamicResource PerformModulation}">
                     <ui:SymbolIcon FontSize="20" Symbol="Accept" />
                 </Button>

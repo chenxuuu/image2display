@@ -5,6 +5,7 @@ using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Styling;
 using HarfBuzzSharp;
 using Image2Display.Helpers;
+using Image2Display.Models;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -164,20 +165,23 @@ namespace Image2Display
         /// 主页面切换到目标选项卡
         /// </summary>
         /// <param name="target"></param>
-        public static void SwitchPage(string target)
+        public static Action<int>? SwitchPage = null;
+
+        /// <summary>
+        /// 中转图片数据
+        /// </summary>
+        public static ImageData? ImageDataTemp = null;
+        /// <summary>
+        /// 主动传递图片数据的方法，用于跨页面传递
+        /// </summary>
+        public static Action<ImageData>? ImportImageAction = null;
+
+        public static void SetImage2ConvertPage(ImageData img)
         {
-            var type = target switch
-            {
-                "ImageConvert" => typeof(Views.ImageConvertView),
-                "ImageProcessing" => typeof(Views.ImageProcessingView),
-                "FontConvert" => typeof(Views.FontConvertView),
-                "FontProcessing" => typeof(Views.FontProcessingView),
-                "DataViewer" => typeof(Views.DataViewerView),
-                _ => typeof(Views.SettingsView)
-            };
-            var app = Application.Current!.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
-            var mw = app!.MainWindow as Views.MainWindow;
-            mw!.ContentFrame.Navigate(type);
+            if (ImportImageAction is null)//如果没有设置传递方法，则说明还没初始化
+                ImageDataTemp = img;
+            else//直接传递
+                ImportImageAction(img);
         }
     }
 }
