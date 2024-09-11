@@ -11,7 +11,7 @@
     <system:String x:Key="FontConvert">Generate Font Data</system:String>
     <system:String x:Key="ViewerTitle">Restore Data</system:String>
     <system:String x:Key="DataViewer">Import Existing Data</system:String>
-    <system:Double x:Key="MainOpenPaneLength">210</system:Double>
+    <system:Double x:Key="MainOpenPaneLength">205</system:Double>
 
     <system:String x:Key="AdjustWidthTip">Adjust the upper and lower width</system:String>
     <system:String x:Key="ProcessError">Process Error</system:String>
@@ -102,6 +102,17 @@
     <system:String x:Key="DownloadPage">Go to new version download page</system:String>
     <system:String x:Key="SourceCodePage">Source code page</system:String>
     <system:String x:Key="LicensePage">License page</system:String>
+    <system:String x:Key="SoftwareDescription">Software development information, project homepage, etc.</system:String>
+    <system:String x:Key="SoftwareHeader">About Software</system:String>
+    <system:String x:Key="OpenSourceAddress">Open Source Address</system:String>
+    <system:String x:Key="GoToHomePage">Go to Homepage</system:String>
+    <system:String x:Key="Feedback">Feedback and Suggestions</system:String>
+    <system:String x:Key="ClickToGo">Click to Go</system:String>
+    <system:String x:Key="DeveloperList">Developer List</system:String>
+    <system:String x:Key="MoreParticipants">Looking forward to more participants</system:String>
+    <system:String x:Key="FrameworksUsed">Frameworks Used</system:String>
+    <system:String x:Key="ThanksProjects">Thanks to the above projects</system:String>
+
     <system:String x:Key="CopyLink">Copy Link</system:String>
     <system:String x:Key="OhNo">Oh No!</system:String>
     <system:String x:Key="OpenLinkFail">It looks like your platform doesn't support Process.Start and we are unable to open a link.</system:String>

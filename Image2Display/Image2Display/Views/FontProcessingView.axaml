@@ -10,5 +10,11 @@
     x:CompileBindings="True"
     x:DataType="vm:FontProcessingViewModel"
     mc:Ignorable="d">
-    <TextBlock Text="{DynamicResource FontProcessing}" />
+    <Grid>
+        <TextBlock
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="40"
+            Text="TODO" />
+    </Grid>
 </UserControl>

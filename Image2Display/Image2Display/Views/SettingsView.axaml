@@ -86,6 +86,50 @@
                     </ComboBox>
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Margin="0,0,0,10"
+                Description="{DynamicResource SoftwareDescription}"
+                Header="{DynamicResource SoftwareHeader}"
+                IconSource="Globe"
+                IsExpanded="True">
+                <ui:SettingsExpanderItem Content="{DynamicResource OpenSourceAddress}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <Button
+                            Command="{Binding OpenUrlCommand}"
+                            CommandParameter="https://github.com/chenxuuu/image2display"
+                            Content="{DynamicResource GoToHomePage}" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+                <ui:SettingsExpanderItem Content="{DynamicResource Feedback}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <Button
+                            Command="{Binding OpenUrlCommand}"
+                            CommandParameter="https://github.com/chenxuuu/image2display/issues"
+                            Content="{DynamicResource ClickToGo}" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+                <ui:SettingsExpanderItem Content="{DynamicResource DeveloperList}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <StackPanel Margin="0,0,10,0">
+                            <TextBlock HorizontalAlignment="Right" Text="chenxuuu (晨旭)" />
+                            <TextBlock HorizontalAlignment="Right" Text="halfsweet (半糖)" />
+                            <TextBlock HorizontalAlignment="Right" Text="{DynamicResource MoreParticipants}" />
+                        </StackPanel>
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+                <ui:SettingsExpanderItem Content="{DynamicResource FrameworksUsed}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <StackPanel Margin="0,0,10,0">
+                            <TextBlock HorizontalAlignment="Right" Text=".Net Core" />
+                            <TextBlock HorizontalAlignment="Right" Text="AvaloniaUI" />
+                            <TextBlock HorizontalAlignment="Right" Text="FluentAvaloniaUI" />
+                            <TextBlock HorizontalAlignment="Right" Text="CommunityToolkit.Mvvm" />
+                            <TextBlock HorizontalAlignment="Right" Text="ImageSharp" />
+                            <TextBlock HorizontalAlignment="Right" Text="{DynamicResource ThanksProjects}" />
+                        </StackPanel>
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+            </ui:SettingsExpander>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
