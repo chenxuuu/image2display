@@ -226,6 +226,26 @@ namespace Image2Display.Models
         }
 
         /// <summary>
+        /// 获取图片内所有可能的颜色
+        /// </summary>
+        /// <returns>颜色列表</returns>
+        public List<Rgba32> GetColors()
+        {
+            List<Rgba32> colors = new();
+            //获取图片raw中所有可能的颜色
+            for (int y = 0; y < Raw.Height; y++)
+            {
+                for (int x = 0; x < Raw.Width; x++)
+                {
+                    var color = Raw[x, y];
+                    if (!colors.Contains(color))
+                        colors.Add(color);
+                }
+            }
+            return colors;
+        }
+
+        /// <summary>
         /// 获取Stream，用于显示或保存
         /// </summary>
         /// <returns>获取到的Stream</returns>

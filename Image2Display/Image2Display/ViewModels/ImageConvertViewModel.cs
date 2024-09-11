@@ -20,21 +20,37 @@ namespace Image2Display.ViewModels
         {
             if (Utils.ImageDataTemp != null)
             {
-                ImportImage(Utils.ImageDataTemp);
+                Image = Utils.ImageDataTemp;
                 Utils.ImageDataTemp = null;
+                ImportImage();
             }
-            else
+            Utils.ImportImageAction = (img) =>
             {
-                Utils.ImportImageAction = ImportImage;
-            }
-        }
-
-        private void ImportImage(ImageData img)
-        {
-            Image = img;
+                Image = img;
+                ImportImage();
+            };
         }
 
         private ImageData? Image = null;
+
+
+        /// <summary>
+        /// 导入图片后，获取信息
+        /// </summary>
+        private void ImportImage()
+        {
+            if(Image == null)
+            {
+                Debug.WriteLine("Image is null");
+                return;
+            }
+            var clolrList = Image.GetColors();
+            Debug.WriteLine($"Color Count: {clolrList.Count}");
+        }
+
+
+
+
 
 
         [RelayCommand]
