@@ -16,7 +16,12 @@
         <!--  分割线  -->
         <GridSplitter Grid.Row="1" ToolTip.Tip="{DynamicResource AdjustWidthTip}" />
         <!--  图片框  -->
-        <Grid Grid.Row="0" Background="{StaticResource CheckerBoardBrush}">
+        <Grid
+            Name="ImageGrid"
+            Grid.Row="0"
+            Background="{StaticResource CheckerBoardBrush}"
+            ClipToBounds="True"
+            PointerWheelChanged="Grid_PointerWheelChanged">
             <!--  一堆按钮  -->
             <Grid
                 Margin="0,0,10,10"
@@ -72,26 +77,28 @@
                 </Button>
             </Grid>
             <!--  空白图片  -->
-            <Border
-                Margin="10"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                BoxShadow="0 0 10 2 #7F7F7F7F">
-                <Grid>
-                    <Viewbox IsVisible="{Binding OriginalImage, Converter={x:Static ObjectConverters.IsNull}}">
-                        <Image
-                            Width="200"
-                            Margin="100"
-                            Opacity="0.5"
-                            Source="/Assets/Images/unknowImage.png" />
-                    </Viewbox>
-                    <!--  后面还要放两张图片，代表原图与处理后的图片  -->
-                    <Grid IsVisible="{Binding OriginalImage, Converter={x:Static ObjectConverters.IsNotNull}}">
-                        <Image IsVisible="{Binding IsShowOriginalImage}" Source="{Binding OriginalImage}" />
-                        <Image IsVisible="{Binding !IsShowOriginalImage}" Source="{Binding ProcessedImage}" />
+            <Viewbox Name="ImageViewbox" ZIndex="-1">
+                <Border
+                    Margin="10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    BoxShadow="0 0 10 2 #7F7F7F7F">
+                    <Grid>
+                        <Viewbox IsVisible="{Binding OriginalImage, Converter={x:Static ObjectConverters.IsNull}}">
+                            <Image
+                                Width="200"
+                                Margin="100"
+                                Opacity="0.5"
+                                Source="/Assets/Images/unknowImage.png" />
+                        </Viewbox>
+                        <!--  后面还要放两张图片，代表原图与处理后的图片  -->
+                        <Grid IsVisible="{Binding OriginalImage, Converter={x:Static ObjectConverters.IsNotNull}}">
+                            <Image IsVisible="{Binding IsShowOriginalImage}" Source="{Binding OriginalImage}" />
+                            <Image IsVisible="{Binding !IsShowOriginalImage}" Source="{Binding ProcessedImage}" />
+                        </Grid>
                     </Grid>
-                </Grid>
-            </Border>
+                </Border>
+            </Viewbox>
             <Viewbox>
                 <ui:ProgressRing Margin="10" IsVisible="{Binding IsProcessing}" />
             </Viewbox>
