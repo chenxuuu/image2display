@@ -29,10 +29,10 @@
                     VerticalAlignment="Center"
                     BoxShadow="0 0 5 1 #7F7F7F7F"
                     ToolTip.Tip="请前往图像处理页面，导入图片至此处">
-                    <Grid>
+                    <Panel>
                         <Image Opacity="0.5" Source="/Assets/Images/unknowImage.png" />
                         <!--  还要放一张真正导入的图片  -->
-                    </Grid>
+                    </Panel>
                 </Border>
             </Border>
             <StackPanel
@@ -51,7 +51,7 @@
                 BorderBrush="{DynamicResource SurfaceStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="{StaticResource OverlayCornerRadius}">
-                <Grid RowDefinitions="*,auto,*">
+                <Grid ClipToBounds="True" RowDefinitions="*,auto,*">
                     <Border
                         Grid.Row="1"
                         Height="1"
@@ -67,11 +67,11 @@
                                 <ContentControl
                                     Margin="0,0,0,-5"
                                     Content="{StaticResource ArrowsLineCanvasLRUD}"
-                                    IsVisible="True" />
+                                    IsVisible="False" />
                                 <ContentControl
                                     Margin="0,0,0,-5"
                                     Content="{StaticResource ArrowsLineCanvasRLUD}"
-                                    IsVisible="False" />
+                                    IsVisible="True" />
                                 <ContentControl
                                     Margin="0,0,0,-5"
                                     Content="{StaticResource ArrowsLineCanvasLRDU}"
@@ -104,13 +104,397 @@
                             HorizontalAlignment="Center"
                             Text="像素顺序" />
                     </Grid>
-                    <Grid Grid.Row="2" RowDefinitions="*,auto">
+                    <Panel Grid.Row="2">
+                        <StackPanel Margin="5,10,10,5" VerticalAlignment="Top">
+                            <Grid ColumnDefinitions="auto,*,*,*,*,*,*,*,*" RowDefinitions="auto,25">
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="7" />
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="8"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="0" />
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="9"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="Bit" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="0" />
+                                <Border
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Row="1"
+                                    Grid.Column="3"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Row="1"
+                                    Grid.Column="4"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Row="1"
+                                    Grid.Column="5"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Row="1"
+                                    Grid.Column="6"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Row="1"
+                                    Grid.Column="7"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Row="1"
+                                    Grid.Column="8"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,1,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                            </Grid>
+                            <Grid Height="25" ColumnDefinitions="auto,*,*,*,*,*,*,*,*">
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="1" />
+                                <Border
+                                    Grid.Column="1"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="2"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="3"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="4"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="5"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="6"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="7"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="8"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,1,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                            </Grid>
+                            <Grid Height="25" ColumnDefinitions="auto,*,*,*,*,*,*,*,*">
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="2" />
+                                <Border
+                                    Grid.Column="1"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="2"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="3"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="4"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="5"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="6"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="7"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="8"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,1,0">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                            </Grid>
+                            <Grid Height="25" ColumnDefinitions="auto,*,*,*,*,*,*,*,*">
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="3" />
+                                <Border
+                                    Grid.Column="1"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,1">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="2"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,1">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="3"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,1">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="4"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,1">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="5"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,1">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="6"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,1">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="7"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1,1,0,1">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                                <Border
+                                    Grid.Column="8"
+                                    Background="#7f7f7f7f"
+                                    BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                    BorderThickness="1">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="7" />
+                                </Border>
+                            </Grid>
+                            <TextBlock HorizontalAlignment="Left" Text="Byte" />
+                        </StackPanel>
                         <TextBlock
                             Grid.Row="1"
                             Margin="0,0,0,10"
                             HorizontalAlignment="Center"
-                            Text="字节序" />
-                    </Grid>
+                            VerticalAlignment="Bottom"
+                            Text="数据顺序" />
+                    </Panel>
                 </Grid>
             </Border>
             <StackPanel Grid.Row="3" Margin="10,0,10,10">
