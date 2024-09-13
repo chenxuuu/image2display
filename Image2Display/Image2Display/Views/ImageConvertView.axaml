@@ -27,11 +27,15 @@
                     Margin="5"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    BoxShadow="0 0 5 1 #7F7F7F7F"
-                    ToolTip.Tip="请前往图像处理页面，导入图片至此处">
+                    BoxShadow="0 0 5 1 #7F7F7F7F">
                     <Panel>
-                        <Image Opacity="0.5" Source="/Assets/Images/unknowImage.png" />
-                        <!--  还要放一张真正导入的图片  -->
+                        <Image
+                            IsVisible="{Binding RawImage, Converter={x:Static ObjectConverters.IsNull}}"
+                            Opacity="0.5"
+                            Source="/Assets/Images/unknowImage.png"
+                            ToolTip.Tip="{DynamicResource TooltipText}" />
+                        <!--  放一张真正导入的图片  -->
+                        <Image IsVisible="{Binding RawImage, Converter={x:Static ObjectConverters.IsNotNull}}" Source="{Binding RawImage}" />
                     </Panel>
                 </Border>
             </Border>
@@ -41,8 +45,8 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Orientation="Horizontal">
-                <TextBlock Text="图片颜色数量：" />
-                <TextBlock Text="233" />
+                <TextBlock Text="{DynamicResource ImageColorCountText}" />
+                <TextBlock Text="{Binding ImageColorCount}" />
             </StackPanel>
             <Border
                 Grid.Row="2"
@@ -67,46 +71,46 @@
                                 <ContentControl
                                     Margin="0,0,0,-5"
                                     Content="{StaticResource ArrowsLineCanvasLRUD}"
-                                    IsVisible="False" />
+                                    IsVisible="{Binding PixelWay[0]}" />
                                 <ContentControl
                                     Margin="0,0,0,-5"
                                     Content="{StaticResource ArrowsLineCanvasRLUD}"
-                                    IsVisible="True" />
+                                    IsVisible="{Binding PixelWay[1]}" />
                                 <ContentControl
                                     Margin="0,0,0,-5"
                                     Content="{StaticResource ArrowsLineCanvasLRDU}"
-                                    IsVisible="False" />
+                                    IsVisible="{Binding PixelWay[2]}" />
                                 <ContentControl
                                     Margin="0,0,0,-5"
                                     Content="{StaticResource ArrowsLineCanvasRLDU}"
-                                    IsVisible="False" />
+                                    IsVisible="{Binding PixelWay[3]}" />
                                 <ContentControl
                                     Margin="0,0,13,0"
                                     Content="{StaticResource ArrowsLineCanvasUDLR}"
-                                    IsVisible="False" />
+                                    IsVisible="{Binding PixelWay[4]}" />
                                 <ContentControl
                                     Margin="13,0,0,0"
                                     Content="{StaticResource ArrowsLineCanvasUDRL}"
-                                    IsVisible="False" />
+                                    IsVisible="{Binding PixelWay[6]}" />
                                 <ContentControl
                                     Margin="13,0,0,0"
                                     Content="{StaticResource ArrowsLineCanvasDURL}"
-                                    IsVisible="False" />
+                                    IsVisible="{Binding PixelWay[7]}" />
                                 <ContentControl
                                     Margin="0,0,13,0"
                                     Content="{StaticResource ArrowsLineCanvasDULR}"
-                                    IsVisible="False" />
+                                    IsVisible="{Binding PixelWay[5]}" />
                             </Grid>
                         </Viewbox>
                         <TextBlock
                             Grid.Row="1"
                             Margin="0,0,0,10"
                             HorizontalAlignment="Center"
-                            Text="像素顺序" />
+                            Text="{DynamicResource PixelOrderText}" />
                     </Grid>
                     <Panel Grid.Row="2">
-                        <StackPanel Margin="5,10,10,5" VerticalAlignment="Top">
-                            <Grid ColumnDefinitions="auto,*,*,*,*,*,*,*,*" RowDefinitions="auto,25">
+                        <StackPanel Margin="5,10,10,5" VerticalAlignment="Center">
+                            <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*" RowDefinitions="auto,25">
                                 <TextBlock
                                     Grid.Row="0"
                                     Grid.Column="1"
@@ -136,93 +140,96 @@
                                 <Border
                                     Grid.Row="1"
                                     Grid.Column="1"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[0]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,1,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[0]}" />
                                 </Border>
                                 <Border
                                     Grid.Row="1"
                                     Grid.Column="2"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[1]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,1,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[1]}" />
                                 </Border>
                                 <Border
                                     Grid.Row="1"
                                     Grid.Column="3"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[2]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,1,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[2]}" />
                                 </Border>
                                 <Border
                                     Grid.Row="1"
                                     Grid.Column="4"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[3]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,1,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[3]}" />
                                 </Border>
                                 <Border
                                     Grid.Row="1"
                                     Grid.Column="5"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[4]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,1,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[4]}" />
                                 </Border>
                                 <Border
                                     Grid.Row="1"
                                     Grid.Column="6"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[5]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,1,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[5]}" />
                                 </Border>
                                 <Border
                                     Grid.Row="1"
                                     Grid.Column="7"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[6]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,1,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[6]}" />
                                 </Border>
                                 <Border
                                     Grid.Row="1"
                                     Grid.Column="8"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[7]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,1,0">
+                                    BorderThickness="1,1,1,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[7]}" />
                                 </Border>
                             </Grid>
-                            <Grid Height="25" ColumnDefinitions="auto,*,*,*,*,*,*,*,*">
+                            <Grid
+                                Height="25"
+                                ColumnDefinitions="*,*,*,*,*,*,*,*,*"
+                                IsVisible="{Binding IsByteShow[0]}">
                                 <TextBlock
                                     Grid.Column="0"
                                     Margin="0,0,5,0"
@@ -231,86 +238,89 @@
                                     Text="1" />
                                 <Border
                                     Grid.Column="1"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[8]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[8]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="2"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[9]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[9]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="3"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[10]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[10]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="4"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[11]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[11]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="5"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[12]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[12]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="6"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[13]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[13]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="7"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[14]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[14]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="8"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[15]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,1,0">
+                                    BorderThickness="1,0,1,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[15]}" />
                                 </Border>
                             </Grid>
-                            <Grid Height="25" ColumnDefinitions="auto,*,*,*,*,*,*,*,*">
+                            <Grid
+                                Height="25"
+                                ColumnDefinitions="*,*,*,*,*,*,*,*,*"
+                                IsVisible="{Binding IsByteShow[1]}">
                                 <TextBlock
                                     Grid.Column="0"
                                     Margin="0,0,5,0"
@@ -319,86 +329,89 @@
                                     Text="2" />
                                 <Border
                                     Grid.Column="1"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[16]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[16]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="2"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[17]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[17]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="3"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[18]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[18]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="4"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[19]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[19]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="5"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[20]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[20]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="6"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[21]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[21]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="7"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[22]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,0">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[22]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="8"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[23]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,1,0">
+                                    BorderThickness="1,0,1,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[23]}" />
                                 </Border>
                             </Grid>
-                            <Grid Height="25" ColumnDefinitions="auto,*,*,*,*,*,*,*,*">
+                            <Grid
+                                Height="25"
+                                ColumnDefinitions="*,*,*,*,*,*,*,*,*"
+                                IsVisible="{Binding IsByteShow[2]}">
                                 <TextBlock
                                     Grid.Column="0"
                                     Margin="0,0,5,0"
@@ -407,83 +420,83 @@
                                     Text="3" />
                                 <Border
                                     Grid.Column="1"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[24]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,1">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[24]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="2"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[25]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,1">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[25]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="3"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[26]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,1">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[26]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="4"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[27]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,1">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[27]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="5"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[28]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,1">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[28]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="6"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[29]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,1">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[29]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="7"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[30]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1,1,0,1">
+                                    BorderThickness="1,0,0,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[30]}" />
                                 </Border>
                                 <Border
                                     Grid.Column="8"
-                                    Background="#7f7f7f7f"
+                                    Background="{Binding ByteColor[31]}"
                                     BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
-                                    BorderThickness="1">
+                                    BorderThickness="1,0,1,1">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Text="7" />
+                                        Text="{Binding ByteContent[31]}" />
                                 </Border>
                             </Grid>
                             <TextBlock HorizontalAlignment="Left" Text="Byte" />
@@ -493,42 +506,129 @@
                             Margin="0,0,0,10"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
-                            Text="数据顺序" />
+                            Text="{DynamicResource DataOrderText}" />
                     </Panel>
                 </Grid>
             </Border>
             <StackPanel Grid.Row="3" Margin="10,0,10,10">
-                <Button Margin="0,0,0,5" HorizontalAlignment="Stretch">
+                <Button
+                    Margin="0,0,0,5"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding CopyAsArrayDataCommand}">
                     <StackPanel Orientation="Horizontal">
                         <ui:SymbolIcon
                             Margin="0,0,10,0"
                             FontSize="20"
                             Symbol="ClipboardCode" />
-                        <TextBlock VerticalAlignment="Center" Text="复制为数组数据" />
+                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource CopyAsArrayData}" />
                     </StackPanel>
                 </Button>
-                <Button Margin="0,0,0,5" HorizontalAlignment="Stretch">
+                <Button
+                    Margin="0,0,0,5"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ExportAsArrayFileCommand}">
                     <StackPanel Orientation="Horizontal">
                         <ui:SymbolIcon
                             Margin="0,0,10,0"
                             FontSize="20"
                             Symbol="ViewAll" />
-                        <TextBlock VerticalAlignment="Center" Text="导出为数组文件" />
+                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource ExportAsArrayFile}" />
                     </StackPanel>
                 </Button>
-                <Button HorizontalAlignment="Stretch">
+                <Button HorizontalAlignment="Stretch" Command="{Binding ExportBinaryFileCommand}">
                     <StackPanel Orientation="Horizontal">
                         <ui:SymbolIcon
                             Margin="0,0,10,0"
                             FontSize="20"
                             Symbol="CalendarMonth" />
-                        <TextBlock VerticalAlignment="Center" Text="导出二进制文件" />
+                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource ExportBinaryFile}" />
                     </StackPanel>
                 </Button>
             </StackPanel>
         </Grid>
         <ScrollViewer Grid.Column="0">
-            <StackPanel />
+            <StackPanel Margin="20">
+                <!--  颜色相关配置  -->
+                <ui:SettingsExpander
+                    Margin="0,0,0,10"
+                    Description="{DynamicResource DescriptionText}"
+                    Header="{DynamicResource HeaderText}"
+                    IconSource="ColorFill"
+                    IsExpanded="True">
+                    <ui:SettingsExpanderItem Content="{DynamicResource ColorModeContent}" Description="{DynamicResource ColorModeDescription}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="250" SelectedIndex="{Binding ColorMode}">
+                                <ComboBoxItem Content="{DynamicResource FullColorMode}" />
+                                <ComboBoxItem Content="{DynamicResource PaletteMode}" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource ColorDepthContent}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="250" SelectedIndex="{Binding ColorDepth}">
+                                <ComboBoxItem Content="{DynamicResource TwoColor}" />
+                                <ComboBoxItem Content="{DynamicResource FourColor}" />
+                                <ComboBoxItem Content="{DynamicResource SixteenColor}" />
+                                <ComboBoxItem Content="{DynamicResource TwoHundredFiftySixColor}" />
+                                <ComboBoxItem Content="{DynamicResource SixtyFiveThousandColor}" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource FullColorStorageContent}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="250" SelectedIndex="{Binding FullColorStorage}">
+                                <ComboBoxItem Content="{DynamicResource RGB444}" />
+                                <ComboBoxItem Content="{DynamicResource RGB444High}" />
+                                <ComboBoxItem Content="{DynamicResource RGB565}" />
+                                <ComboBoxItem Content="{DynamicResource RGB555High}" />
+                                <ComboBoxItem Content="{DynamicResource RGB666}" />
+                                <ComboBoxItem Content="{DynamicResource RGB666High}" />
+                                <ComboBoxItem Content="{DynamicResource RGB888}" />
+                                <ComboBoxItem Content="{DynamicResource ARGB8888}" />
+                                <ComboBoxItem Content="{DynamicResource RGBA8888}" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander>
+                <!--  数据顺序  -->
+                <ui:SettingsExpander
+                    Margin="0,0,0,10"
+                    Description="{DynamicResource DataConfigurationDescription}"
+                    Header="{DynamicResource DataArrangementHeader}"
+                    IconSource="ImageAltText"
+                    IsExpanded="True">
+                    <ui:SettingsExpanderItem Content="{DynamicResource PixelTraversalOrderContent}" Description="{DynamicResource PixelTraversalOrderDescription}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="210" SelectedIndex="{Binding PixelTraversalOrder}">
+                                <ComboBoxItem Content="→ ↓" />
+                                <ComboBoxItem Content="← ↓" />
+                                <ComboBoxItem Content="→ ↑" />
+                                <ComboBoxItem Content="← ↑" />
+                                <ComboBoxItem Content="↓ →" />
+                                <ComboBoxItem Content="↑ →" />
+                                <ComboBoxItem Content="↓ ←" />
+                                <ComboBoxItem Content="↑ ←" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource ByteOrderContent}" Description="{DynamicResource ByteOrderDescription}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="210" SelectedIndex="{Binding ByteOrder}">
+                                <ComboBoxItem Content="{DynamicResource BigEndian}" />
+                                <ComboBoxItem Content="{DynamicResource LittleEndian}" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource ColorInternalOrderContent}" Description="{DynamicResource ColorInternalOrderDescription}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="210" SelectedIndex="{Binding ColorInternalOrder}">
+                                <ComboBoxItem Content="{DynamicResource MSB}" />
+                                <ComboBoxItem Content="{DynamicResource LSB}" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </UserControl>
