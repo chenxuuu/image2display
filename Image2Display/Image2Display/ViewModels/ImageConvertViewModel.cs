@@ -22,38 +22,70 @@ namespace Image2Display.ViewModels
         [ObservableProperty]
         private int _imageColorCount = 0;
 
-        [ObservableProperty]
-        private bool[] _pixelWay = [true, false, false, false, false, false, false, false];
-        [ObservableProperty]
-        private bool[] _isByteShow = [true, false, false];
-        [ObservableProperty]
-        private string[] _byteContent = [
-            "-", "-", "-", "-", "-", "-", "-", "-",
-            "-", "-", "-", "-", "-", "-", "-", "-",
-            "-", "-", "-", "-", "-", "-", "-", "-",
-            "-", "-", "-", "-", "-", "-", "-", "-",
-            ];
-        private static readonly SolidColorBrush GrayColor = new (new Color(0x7f, 0x7f, 0x7f, 0x7f));
-        [ObservableProperty]
-        private Brush[] _byteColor = [
-            GrayColor,GrayColor, GrayColor, GrayColor, GrayColor, GrayColor, GrayColor, GrayColor,
-            GrayColor,GrayColor, GrayColor, GrayColor, GrayColor, GrayColor, GrayColor, GrayColor,
-            GrayColor,GrayColor, GrayColor, GrayColor, GrayColor, GrayColor, GrayColor, GrayColor,
-            GrayColor,GrayColor, GrayColor, GrayColor, GrayColor, GrayColor, GrayColor, GrayColor,
-            ];
+        public bool[] PixelWay
+        {
+            get => [PixelTraversalOrder == 0, PixelTraversalOrder == 1, PixelTraversalOrder == 2, PixelTraversalOrder == 3,
+                        PixelTraversalOrder == 4, PixelTraversalOrder == 5, PixelTraversalOrder == 6, PixelTraversalOrder == 7];
+        }
+
+        public bool[] IsByteShow
+        {
+            get
+            {
+                if (ColorMode == 0)
+                {
+                    return FullColorStorage switch
+                    {
+                        <= 3 => [true, false, false],
+                        <= 5 => [true, true, false],
+                        <= 7 => [true, true, true],
+                        _ => throw new NotImplementedException(),
+                    };
+                }
+                else
+                {
+                    return ColorDepth switch
+                    {
+                        <= 3 => [false, false, false],
+                        4 => [true, false, false],
+                        _ => throw new NotImplementedException(),
+                    };
+                }
+            }
+        }
+
+        public string[] ByteContent => Helpers.ByteOrder.GetOrderChars(
+            ColorMode,ColorDepth,FullColorStorage,ByteOrder,ColorInternalOrder);
+        public SolidColorBrush[] ByteColor => Helpers.ByteOrder.GetOrderColors(
+            ColorMode, FullColorStorage, ByteOrder);
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsPaletteMode), nameof(IsByteShow), 
+            nameof(ByteContent), nameof(ByteColor),nameof(IsByteOrderShow))]
         private int _colorMode = 0;
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsByteShow), nameof(ByteContent), nameof(ByteColor),
+            nameof(IsByteOrderShow))]
         private int _colorDepth = 0;
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsByteShow), nameof(ByteContent), nameof(ByteColor),
+            nameof(IsByteOrderShow))]
         private int _fullColorStorage = 2;
+        //是调色板模式吗
+        public bool IsPaletteMode => ColorMode == 1;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(PixelWay))]
         private int _pixelTraversalOrder = 0;
+        //字节序有意义吗
+        public bool IsByteOrderShow => 
+            (ColorMode == 1 && (ColorDepth == 4)) ||
+            (ColorMode == 0 && FullColorStorage != 0);
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsByteShow), nameof(ByteContent), nameof(ByteColor))]
         private int _byteOrder = 0;
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsByteShow), nameof(ByteContent), nameof(ByteColor))]
         private int _colorInternalOrder = 0;
 
 

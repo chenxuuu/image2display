@@ -563,7 +563,7 @@
                             </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="{DynamicResource ColorDepthContent}">
+                    <ui:SettingsExpanderItem Content="{DynamicResource ColorDepthContent}" IsVisible="{Binding IsPaletteMode}">
                         <ui:SettingsExpanderItem.Footer>
                             <ComboBox Width="250" SelectedIndex="{Binding ColorDepth}">
                                 <ComboBoxItem Content="{DynamicResource TwoColor}" />
@@ -574,14 +574,13 @@
                             </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="{DynamicResource FullColorStorageContent}">
+                    <ui:SettingsExpanderItem Content="{DynamicResource FullColorStorageContent}" IsVisible="{Binding !IsPaletteMode}">
                         <ui:SettingsExpanderItem.Footer>
                             <ComboBox Width="250" SelectedIndex="{Binding FullColorStorage}">
                                 <ComboBoxItem Content="{DynamicResource RGB444}" />
                                 <ComboBoxItem Content="{DynamicResource RGB444High}" />
                                 <ComboBoxItem Content="{DynamicResource RGB565}" />
                                 <ComboBoxItem Content="{DynamicResource RGB555High}" />
-                                <ComboBoxItem Content="{DynamicResource RGB666}" />
                                 <ComboBoxItem Content="{DynamicResource RGB666High}" />
                                 <ComboBoxItem Content="{DynamicResource RGB888}" />
                                 <ComboBoxItem Content="{DynamicResource ARGB8888}" />
@@ -611,7 +610,10 @@
                             </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="{DynamicResource ByteOrderContent}" Description="{DynamicResource ByteOrderDescription}">
+                    <ui:SettingsExpanderItem
+                        Content="{DynamicResource ByteOrderContent}"
+                        Description="{DynamicResource ByteOrderDescription}"
+                        IsVisible="{Binding IsByteOrderShow}">
                         <ui:SettingsExpanderItem.Footer>
                             <ComboBox Width="210" SelectedIndex="{Binding ByteOrder}">
                                 <ComboBoxItem Content="{DynamicResource BigEndian}" />
