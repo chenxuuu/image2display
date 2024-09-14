@@ -94,15 +94,15 @@ public class ByteOrder
                 4 => byteOrder switch
                 {
                     0 => [
-                        EC,EC,EC,EC, EC,EC,RC,RC,
-                        RC,RC,RC,RC, GC,GC,GC,GC,
-                        GC,GC,BC,BC, BC,BC,BC,BC,
+                        EC,EC,RC,RC, RC,RC,RC,RC,
+                        EC,EC,GC,GC, GC,GC,GC,GC,
+                        EC,EC,BC,BC, BC,BC,BC,BC,
                         TC,TC,TC,TC, TC,TC,TC,TC,
                         ],
                     1 => [
-                        GC,GC,BC,BC, BC,BC,BC,BC,
-                        RC,RC,RC,RC, GC,GC,GC,GC,
-                        EC,EC,EC,EC, EC,EC,RC,RC,
+                        EC,EC,BC,BC, BC,BC,BC,BC,
+                        EC,EC,GC,GC, GC,GC,GC,GC,
+                        EC,EC,RC,RC, RC,RC,RC,RC,
                         TC,TC,TC,TC, TC,TC,TC,TC,
                         ],
                     _ => throw new NotImplementedException(),
@@ -110,6 +110,22 @@ public class ByteOrder
                 5 => byteOrder switch
                 {
                     0 => [
+                        RC,RC,RC,RC, RC,RC,EC,EC,
+                        GC,GC,GC,GC, GC,GC,EC,EC,
+                        BC,BC,BC,BC, BC,BC,EC,EC,
+                        TC,TC,TC,TC, TC,TC,TC,TC,
+                        ],
+                    1 => [
+                        BC,BC,BC,BC, BC,BC,EC,EC,
+                        GC,GC,GC,GC, GC,GC,EC,EC,
+                        RC,RC,RC,RC, RC,RC,EC,EC,
+                        TC,TC,TC,TC, TC,TC,TC,TC,
+                        ],
+                    _ => throw new NotImplementedException(),
+                },
+                6 => byteOrder switch
+                {
+                    0 => [
                         RC,RC,RC,RC, RC,RC,RC,RC,
                         GC,GC,GC,GC, GC,GC,GC,GC,
                         BC,BC,BC,BC, BC,BC,BC,BC,
@@ -123,7 +139,7 @@ public class ByteOrder
                         ],
                     _ => throw new NotImplementedException(),
                 },
-                6 => byteOrder switch
+                7 => byteOrder switch
                 {
                     0 => [
                         YC,YC,YC,YC, YC,YC,YC,YC,
@@ -139,7 +155,7 @@ public class ByteOrder
                         ],
                     _ => throw new NotImplementedException(),
                 },
-                7 => byteOrder switch
+                8 => byteOrder switch
                 {
                     0 => [
                         RC,RC,RC,RC, RC,RC,RC,RC,
@@ -391,41 +407,37 @@ public class ByteOrder
                 },
                 4 => internalOrder switch
                 {
-                    0 => byteOrder switch
-                    {
-                        0 => [
-                            "-", "-", "-", "-", "-", "-", "5", "4",
-                            "3", "2",  "1", "0", "5", "4", "3", "2",
-                            "1", "0",  "5", "4", "3", "2", "1", "0",
+                    0 => [
+                            "-", "-", "5", "4", "3", "2", "1", "0",
+                            "-", "-", "5", "4", "3", "2", "1", "0",
+                            "-", "-", "5", "4", "3", "2", "1", "0",
                             "0", "0",  "0", "0", "0", "0", "0", "0",
                         ],
-                        1 => [
-                            "1", "0",  "5", "4", "3", "2", "1", "0",
-                            "3", "2",  "1", "0", "5", "4", "3", "2",
-                            "-", "-", "-", "-", "-", "-", "5", "4",
+                    1 => [
+                            "-", "-", "0", "1", "2", "3", "4", "5",
+                            "-", "-", "0", "1", "2", "3", "4", "5",
+                            "-", "-", "0", "1", "2", "3", "4", "5",
                             "0", "0",  "0", "0", "0", "0", "0", "0",
                         ],
-                        _ => throw new NotImplementedException(),
-                    },
-                    1 => byteOrder switch
-                    {
-                        0 => [
-                            "-", "-", "-", "-", "-", "-", "0", "1",
-                            "2", "3",  "4", "5", "0", "1", "2", "3",
-                            "4", "5",  "0", "1", "2", "3", "4", "5",
-                            "0", "0",  "0", "0", "0", "0", "0", "0",
-                        ],
-                        1 => [
-                            "4", "5",  "0", "1", "2", "3", "4", "5",
-                            "2", "3",  "4", "5", "0", "1", "2", "3",
-                            "-", "-", "-", "-", "-", "-", "0", "1",
-                            "0", "0",  "0", "0", "0", "0", "0", "0",
-                        ],
-                        _ => throw new NotImplementedException(),
-                    },
                     _ => throw new NotImplementedException(),
                 },
-                <= 7 => internalOrder switch
+                5 => internalOrder switch
+                {
+                    0 => [
+                            "5", "4", "3", "2", "1", "0", "-", "-",
+                            "5", "4", "3", "2", "1", "0", "-", "-",
+                            "5", "4", "3", "2", "1", "0", "-", "-",
+                            "0", "0",  "0", "0", "0", "0", "0", "0",
+                        ],
+                    1 => [
+                            "0", "1", "2", "3", "4", "5", "-", "-",
+                            "0", "1", "2", "3", "4", "5", "-", "-",
+                            "0", "1", "2", "3", "4", "5", "-", "-",
+                            "0", "0",  "0", "0", "0", "0", "0", "0",
+                        ],
+                    _ => throw new NotImplementedException(),
+                },
+                <= 8 => internalOrder switch
                 {
                     0 => [
                             "7", "6", "5", "4", "3", "2", "1", "0",

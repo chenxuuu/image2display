@@ -587,6 +587,7 @@
                                 <ComboBoxItem Content="{DynamicResource RGB565}" />
                                 <ComboBoxItem Content="{DynamicResource RGB555High}" />
                                 <ComboBoxItem Content="{DynamicResource RGB666High}" />
+                                <ComboBoxItem Content="{DynamicResource RGB666Low}" />
                                 <ComboBoxItem Content="{DynamicResource RGB888}" />
                                 <ComboBoxItem Content="{DynamicResource ARGB8888}" />
                                 <ComboBoxItem Content="{DynamicResource RGBA8888}" />

@@ -114,6 +114,7 @@
     <system:String x:Key="RGB555High">16位色，RGB555高位填充</system:String>
     <system:String x:Key="RGB666">18位色，RGB666</system:String>
     <system:String x:Key="RGB666High">18位色，RGB666高位填充</system:String>
+    <system:String x:Key="RGB666Low">18位色，RGB666低位填充</system:String>
     <system:String x:Key="RGB888">24位色，RGB888</system:String>
     <system:String x:Key="ARGB8888">32位色，ARGB8888</system:String>
     <system:String x:Key="RGBA8888">32位色，RGBA8888</system:String>

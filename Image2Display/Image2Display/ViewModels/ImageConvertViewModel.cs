@@ -39,8 +39,8 @@ namespace Image2Display.ViewModels
                     {
                         0 => [25, 25, 0],
                         <= 3 => [25, 0, 0],
-                        <= 5 => [25, 25, 0],
-                        <= 7 => [25, 25, 25],
+                        <= 6 => [25, 25, 0],
+                        <= 8 => [25, 25, 25],
                         _ => throw new NotImplementedException(),
                     };
                 }
@@ -218,13 +218,16 @@ namespace Image2Display.ViewModels
                             4 => ColorData.GetRGB666HighEmptyImage(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
                                 ByteOrder == 1),
-                            5 => ColorData.GetRGB888Image(
+                            5 => ColorData.GetRGB666LowEmptyImage(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
                                 ByteOrder == 1),
-                            6 => ColorData.GetARGB8888Image(
+                            6 => ColorData.GetRGB888Image(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
                                 ByteOrder == 1),
-                            7 => ColorData.GetRGBA8888Image(
+                            7 => ColorData.GetARGB8888Image(
+                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
+                                ByteOrder == 1),
+                            8 => ColorData.GetRGBA8888Image(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
                                 ByteOrder == 1),
                             _ => throw new NotImplementedException(),

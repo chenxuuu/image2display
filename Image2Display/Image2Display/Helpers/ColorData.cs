@@ -305,11 +305,42 @@ public class ColorData
                 g = (byte)ReverseBits(g, 6);
                 b = (byte)ReverseBits(b, 6);
             }
-            byte temp1 = (byte)(r >> 4);
-            byte temp2 = (byte)(r << 4);
-            temp2 |= (byte)(g >> 2);
-            byte temp3 = (byte)(g << 6);
-            temp3 |= b;
+
+            if (isSmallEndian)
+            {
+                l.Add(b);
+                l.Add(g);
+                l.Add(r);
+            }
+            else
+            {
+                l.Add(r);
+                l.Add(g);
+                l.Add(b);
+            }
+        });
+
+        return l;
+    }
+
+    public static List<byte> GetRGB666LowEmptyImage(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian)
+    {
+        var l = new List<byte>();
+
+        IterateImg(img, rotate, (color) =>
+        {
+            byte r = (byte)(color.R >> 2);
+            byte g = (byte)(color.G >> 2);
+            byte b = (byte)(color.B >> 2);
+            if (reverseBits)
+            {
+                r = (byte)ReverseBits(r, 6);
+                g = (byte)ReverseBits(g, 6);
+                b = (byte)ReverseBits(b, 6);
+            }
+            byte temp1 = (byte)(r << 2);
+            byte temp2 = (byte)(g << 2);
+            byte temp3 = (byte)(b << 2);
 
             if (isSmallEndian)
             {

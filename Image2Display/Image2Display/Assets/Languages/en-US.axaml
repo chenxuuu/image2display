@@ -111,6 +111,7 @@
     <system:String x:Key="RGB555High">16-bit Color, RGB555 High Fill</system:String>
     <system:String x:Key="RGB666">18-bit Color, RGB666</system:String>
     <system:String x:Key="RGB666High">18-bit Color, RGB666 High Fill</system:String>
+    <system:String x:Key="RGB666Low">18-bit Color, RGB666 Low Fill</system:String>
     <system:String x:Key="RGB888">24-bit Color, RGB888</system:String>
     <system:String x:Key="ARGB8888">32-bit Color, ARGB8888</system:String>
     <system:String x:Key="RGBA8888">32-bit Color, RGBA8888</system:String>
