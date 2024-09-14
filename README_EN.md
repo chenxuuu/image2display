@@ -1,4 +1,4 @@
-# (WIP)Image2display
+# Image2display
 
 [Chinese](./README.md) | English
 
