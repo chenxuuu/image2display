@@ -28,7 +28,7 @@ namespace Image2Display.ViewModels
                         PixelTraversalOrder == 4, PixelTraversalOrder == 5, PixelTraversalOrder == 6, PixelTraversalOrder == 7];
         }
 
-        public bool[] IsByteShow
+        public int[] IsByteShow
         {
             get
             {
@@ -36,9 +36,10 @@ namespace Image2Display.ViewModels
                 {
                     return FullColorStorage switch
                     {
-                        <= 3 => [true, false, false],
-                        <= 5 => [true, true, false],
-                        <= 7 => [true, true, true],
+                        0 => [25, 25, 0],
+                        <= 3 => [25, 0, 0],
+                        <= 5 => [25, 25, 0],
+                        <= 7 => [25, 25, 25],
                         _ => throw new NotImplementedException(),
                     };
                 }
@@ -46,8 +47,8 @@ namespace Image2Display.ViewModels
                 {
                     return ColorDepth switch
                     {
-                        <= 3 => [false, false, false],
-                        4 => [true, false, false],
+                        <= 3 => [0, 0, 0],
+                        4 => [25, 0, 0],
                         _ => throw new NotImplementedException(),
                     };
                 }

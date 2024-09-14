@@ -227,9 +227,8 @@
                                 </Border>
                             </Grid>
                             <Grid
-                                Height="25"
-                                ColumnDefinitions="*,*,*,*,*,*,*,*,*"
-                                IsVisible="{Binding IsByteShow[0]}">
+                                Height="{Binding IsByteShow[0]}"
+                                ColumnDefinitions="*,*,*,*,*,*,*,*,*">
                                 <TextBlock
                                     Grid.Column="0"
                                     Margin="0,0,5,0"
@@ -318,9 +317,8 @@
                                 </Border>
                             </Grid>
                             <Grid
-                                Height="25"
-                                ColumnDefinitions="*,*,*,*,*,*,*,*,*"
-                                IsVisible="{Binding IsByteShow[1]}">
+                                Height="{Binding IsByteShow[1]}"
+                                ColumnDefinitions="*,*,*,*,*,*,*,*,*">
                                 <TextBlock
                                     Grid.Column="0"
                                     Margin="0,0,5,0"
@@ -409,9 +407,8 @@
                                 </Border>
                             </Grid>
                             <Grid
-                                Height="25"
-                                ColumnDefinitions="*,*,*,*,*,*,*,*,*"
-                                IsVisible="{Binding IsByteShow[2]}">
+                                Height="{Binding IsByteShow[2]}"
+                                ColumnDefinitions="*,*,*,*,*,*,*,*,*">
                                 <TextBlock
                                     Grid.Column="0"
                                     Margin="0,0,5,0"
