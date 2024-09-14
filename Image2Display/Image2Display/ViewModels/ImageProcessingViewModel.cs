@@ -223,7 +223,7 @@ namespace Image2Display.ViewModels
             if (ProcessedImage == null)
                 return;
             //保存图片
-            var path = await DialogHelper.ShowSaveFileDialogAsync("png");
+            var path = await DialogHelper.ShowSaveFileDialogAsync("image", FilePickerFileTypes.ImagePng);
             if (path == null)
                 return;
             ProcessedImage?.Save(path);

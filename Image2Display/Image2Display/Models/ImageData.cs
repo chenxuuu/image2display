@@ -19,7 +19,7 @@ namespace Image2Display.Models
         /// <summary>
         /// 图片的原始数据
         /// </summary>
-        private Image<Rgba32> Raw;
+        public Image<Rgba32> Raw;
 
         /// <summary>
         /// 图片宽度

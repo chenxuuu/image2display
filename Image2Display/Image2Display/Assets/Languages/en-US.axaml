@@ -71,10 +71,10 @@
     <system:String x:Key="TargetColorQuantization">Target Color Quantization</system:String>
     <system:String x:Key="ChangeTransparentColorInColorTab">Change Transparent Color in Color Processing Tab</system:String>
     <system:String x:Key="MaintainCurrent">Maintain Current</system:String>
-    <system:String x:Key="Colors256">256 Colors, 16-bit</system:String>
-    <system:String x:Key="Colors16">16 Colors, 8-bit</system:String>
-    <system:String x:Key="Colors8">8 Colors, 4-bit</system:String>
-    <system:String x:Key="Colors4">4 Colors, 2-bit</system:String>
+    <system:String x:Key="Colors256">16-bit, 65536 Colors</system:String>
+    <system:String x:Key="Colors16">8-bit, 256 Colors</system:String>
+    <system:String x:Key="Colors8">4-bit, 16 Colors</system:String>
+    <system:String x:Key="Colors4">2-bit, 4 Colors</system:String>
     <system:String x:Key="DitheringAlgorithm">Dithering Algorithm</system:String>
     <system:String x:Key="DitheringAlgorithmDisable">None</system:String>
     <system:String x:Key="FloydSteinberg">Floyd-Steinberg</system:String>
@@ -126,6 +126,12 @@
     <system:String x:Key="LittleEndian">Little Endian</system:String>
     <system:String x:Key="MSB">Most Significant Bit (MSB)</system:String>
     <system:String x:Key="LSB">Least Significant Bit (LSB)</system:String>
+    <system:String x:Key="SuccessTitle">Success</system:String>
+    <system:String x:Key="SuccessMessage">Data has been exported.</system:String>
+    <system:String x:Key="FailTitle">Export Failed</system:String>
+    <system:String x:Key="ExportPalette">Export Palette</system:String>
+    <system:String x:Key="ExportPaletteDescription">Export all colors used in the current image</system:String>
+    <system:String x:Key="ExportData">Export Data</system:String>
 
     <system:String x:Key="Settings">Settings</system:String>
     <system:String x:Key="General">General</system:String>

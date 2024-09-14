@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Input;
 using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Styling;
 using HarfBuzzSharp;
@@ -182,6 +183,34 @@ namespace Image2Display
                 ImageDataTemp = img;
             else//直接传递
                 ImportImageAction(img);
+        }
+
+        public static async Task<bool> CopyString(string txt)
+        {
+            try
+            {
+                TopLevel top;
+                var app = Application.Current!.ApplicationLifetime;
+                if (app is IClassicDesktopStyleApplicationLifetime desktop)
+                {
+                    top = desktop.MainWindow!;
+                }
+                else if (app is ISingleViewApplicationLifetime single)
+                {
+                    top = TopLevel.GetTopLevel(single.MainView)!;
+                }
+                else
+                    return false;
+                var clipboard = top.Clipboard;
+                var dataObject = new DataObject();
+                dataObject.Set(DataFormats.Text, txt);
+                await clipboard!.SetDataObjectAsync(dataObject);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

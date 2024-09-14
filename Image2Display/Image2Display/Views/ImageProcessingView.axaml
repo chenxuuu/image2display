@@ -93,8 +93,14 @@
                         </Viewbox>
                         <!--  后面还要放两张图片，代表原图与处理后的图片  -->
                         <Grid IsVisible="{Binding OriginalImage, Converter={x:Static ObjectConverters.IsNotNull}}">
-                            <Image IsVisible="{Binding IsShowOriginalImage}" Source="{Binding OriginalImage}" />
-                            <Image IsVisible="{Binding !IsShowOriginalImage}" Source="{Binding ProcessedImage}" />
+                            <Image
+                                IsVisible="{Binding IsShowOriginalImage}"
+                                RenderOptions.BitmapInterpolationMode="None"
+                                Source="{Binding OriginalImage}" />
+                            <Image
+                                IsVisible="{Binding !IsShowOriginalImage}"
+                                RenderOptions.BitmapInterpolationMode="None"
+                                Source="{Binding ProcessedImage}" />
                         </Grid>
                     </Grid>
                 </Border>
@@ -105,7 +111,7 @@
             <ui:InfoBar
                 Title="{DynamicResource ProcessError}"
                 Margin="20"
-                IsOpen="{Binding IsError}"
+                IsOpen="{Binding IsError, Mode=TwoWay}"
                 Message="{Binding ErrorMessage}"
                 Severity="Error" />
         </Grid>

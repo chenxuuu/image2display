@@ -154,12 +154,12 @@ namespace Image2Display.Helpers
             return await ShowOpenFileDialogAsync(list, multiple);
         }
 
-        public static async Task<string?> ShowSaveFileDialogAsync(string ext)
+        public static async Task<string?> ShowSaveFileDialogAsync(string name, FilePickerFileType ft)
         {
             var options = new FilePickerSaveOptions
             {
-                SuggestedFileName = "image",
-                FileTypeChoices = [ FilePickerFileTypes.ImagePng ]
+                SuggestedFileName = name,
+                FileTypeChoices = [ ft ]
             };
             var app = Application.Current!.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
             var m = app!.MainWindow;

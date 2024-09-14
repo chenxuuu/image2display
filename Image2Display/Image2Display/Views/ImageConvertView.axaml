@@ -35,7 +35,13 @@
                             Source="/Assets/Images/unknowImage.png"
                             ToolTip.Tip="{DynamicResource TooltipText}" />
                         <!--  放一张真正导入的图片  -->
-                        <Image IsVisible="{Binding RawImage, Converter={x:Static ObjectConverters.IsNotNull}}" Source="{Binding RawImage}" />
+                        <Image
+                            IsVisible="{Binding RawImage, Converter={x:Static ObjectConverters.IsNotNull}}"
+                            RenderOptions.BitmapInterpolationMode="None"
+                            Source="{Binding RawImage}" />
+                        <Viewbox>
+                            <ui:ProgressRing Margin="10" IsVisible="{Binding IsProcessing}" />
+                        </Viewbox>
                     </Panel>
                 </Border>
             </Border>
@@ -125,8 +131,8 @@
                                     Text="0" />
                                 <TextBlock
                                     Grid.Row="0"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="9"
+                                    Grid.Column="4"
+                                    Grid.ColumnSpan="2"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     Text="Bit" />
@@ -226,9 +232,7 @@
                                         Text="{Binding ByteContent[7]}" />
                                 </Border>
                             </Grid>
-                            <Grid
-                                Height="{Binding IsByteShow[0]}"
-                                ColumnDefinitions="*,*,*,*,*,*,*,*,*">
+                            <Grid Height="{Binding IsByteShow[0]}" ColumnDefinitions="*,*,*,*,*,*,*,*,*">
                                 <TextBlock
                                     Grid.Column="0"
                                     Margin="0,0,5,0"
@@ -316,9 +320,7 @@
                                         Text="{Binding ByteContent[15]}" />
                                 </Border>
                             </Grid>
-                            <Grid
-                                Height="{Binding IsByteShow[1]}"
-                                ColumnDefinitions="*,*,*,*,*,*,*,*,*">
+                            <Grid Height="{Binding IsByteShow[1]}" ColumnDefinitions="*,*,*,*,*,*,*,*,*">
                                 <TextBlock
                                     Grid.Column="0"
                                     Margin="0,0,5,0"
@@ -406,9 +408,7 @@
                                         Text="{Binding ByteContent[23]}" />
                                 </Border>
                             </Grid>
-                            <Grid
-                                Height="{Binding IsByteShow[2]}"
-                                ColumnDefinitions="*,*,*,*,*,*,*,*,*">
+                            <Grid Height="{Binding IsByteShow[2]}" ColumnDefinitions="*,*,*,*,*,*,*,*,*">
                                 <TextBlock
                                     Grid.Column="0"
                                     Margin="0,0,5,0"
@@ -571,6 +571,14 @@
                             </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem
+                        Content="{DynamicResource ExportPalette}"
+                        Description="{DynamicResource ExportPaletteDescription}"
+                        IsVisible="{Binding IsPaletteMode}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <Button Command="{Binding ExportColorsCommand}" Content="{DynamicResource ExportData}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
                     <ui:SettingsExpanderItem Content="{DynamicResource FullColorStorageContent}" IsVisible="{Binding !IsPaletteMode}">
                         <ui:SettingsExpanderItem.Footer>
                             <ComboBox Width="250" SelectedIndex="{Binding FullColorStorage}">
@@ -629,5 +637,19 @@
                 </ui:SettingsExpander>
             </StackPanel>
         </ScrollViewer>
+        <ui:InfoBar
+            Title="{DynamicResource SuccessTitle}"
+            Margin="20"
+            VerticalAlignment="Bottom"
+            IsOpen="{Binding IsShowSuccess, Mode=TwoWay}"
+            Message="{DynamicResource SuccessMessage}"
+            Severity="Success" />
+        <ui:InfoBar
+            Title="{DynamicResource FailTitle}"
+            Margin="20"
+            VerticalAlignment="Bottom"
+            IsOpen="{Binding IsShowFail, Mode=TwoWay}"
+            Message="{Binding FailMessage}"
+            Severity="Error" />
     </Grid>
 </UserControl>

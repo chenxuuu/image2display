@@ -9,6 +9,7 @@ using SixLabors.ImageSharp.PixelFormats;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -106,6 +107,16 @@ namespace Image2Display.ViewModels
             };
         }
 
+        [ObservableProperty]
+        private bool _isShowSuccess = false;
+        [ObservableProperty]
+        private bool _isShowFail = false;
+        [ObservableProperty]
+        private string _failMessage = "";
+        [ObservableProperty]
+        private bool _isProcessing = false;
+
+
         private ImageData? Image = null;
         private List<Rgba32> ImageColors = new List<Rgba32>();
 
@@ -127,23 +138,218 @@ namespace Image2Display.ViewModels
             RawImage = new Bitmap(stream);
         }
 
+        private void ShowSuccess()
+        {
+            IsShowFail = false;
+            IsShowSuccess = true;
+        }
+        private void ShowError(string msgZh, string msgEn)
+        {
+            if (Utils.Settings.Language.Contains("ZH", StringComparison.CurrentCultureIgnoreCase))
+                FailMessage = msgZh;
+            else
+                FailMessage = msgEn;
+            IsShowFail = true;
+            IsShowSuccess = false;
+        }
+        private bool CheckColorVilid()
+        {
+            if (Image == null)
+            {
+                ShowError("图片为空", "Image is null");
+                return false;
+            }
+            if (ColorMode == 1)
+            {
+                var maxCount = ColorDepth switch
+                {
+                    0 => 2,
+                    1 => 4,
+                    2 => 16,
+                    3 => 256,
+                    4 => 65536,
+                    _ => 0,
+                };
+                if (ImageColors.Count > maxCount)
+                {
+                    ShowError("颜色数量超过调色板容量", "Color count is more than palette capacity");
+                    return false;
+                }
+            }
+            return true;
+        }
 
+        private async Task<List<byte>?> GetExportData()
+        {
+            IsProcessing = true;
+            List<byte>? r = null;
+            try
+            {
+                await Task.Run(() =>
+                {
+                    if(ColorMode == 1)
+                    {
+                        r = ColorDepth switch
+                        {
+                            <= 3 => ColorData.Get1_2_4_8BitsImage(
+                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
+                                2 ^ ColorDepth, ImageColors),
+                            4 => ColorData.Get16BitsImage(
+                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
+                                ByteOrder == 1, ImageColors),
+                            _ => throw new NotImplementedException(),
+                        };
+                    }
+                    else
+                    {
+                        r = FullColorStorage switch
+                        {
+                            0 => ColorData.GetRGB444Image(
+                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1),
+                            1 => ColorData.GetRGB444HighEmptyImage(
+                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
+                                ByteOrder == 1),
+                            2 => ColorData.GetRGB565Image(
+                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
+                                ByteOrder == 1),
+                            3 => ColorData.GetRGB555HighEmptyImage(
+                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
+                                ByteOrder == 1),
+                            4 => ColorData.GetRGB666HighEmptyImage(
+                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
+                                ByteOrder == 1),
+                            5 => ColorData.GetRGB888Image(
+                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
+                                ByteOrder == 1),
+                            6 => ColorData.GetARGB8888Image(
+                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
+                                ByteOrder == 1),
+                            7 => ColorData.GetRGBA8888Image(
+                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
+                                ByteOrder == 1),
+                            _ => throw new NotImplementedException(),
+                        };
+                    }
+                });
+            }
+            catch(Exception e)
+            {
+                ShowError("导出失败" + e.Message, "Export failed" + e.Message);
+            }
+            IsProcessing = false;
+            return r;
+        }
+
+        private async Task<string> GetExportString(List<byte> data)
+        {
+            string r = "";
+            await Task.Run(() =>
+            {
+                r = ColorData.ListToCArray(data,Image!.Raw,
+                    PixelTraversalOrder, ColorInternalOrder == 1, ByteOrder == 1,
+                    ColorMode, ColorMode == 0 ? ColorDepth : FullColorStorage);
+            });
+            return r;
+        }
 
         [RelayCommand]
         private async Task CopyAsArrayData()
         {
-
+            if (!CheckColorVilid())
+                return;
+            var data = await GetExportData();
+            if (data == null)
+                return;
+            var str = await GetExportString(data);
+            if(await Utils.CopyString(str))
+            {
+                ShowSuccess();
+            }
+            else
+            {
+                ShowError("复制失败", "Copy failed");
+            }
         }
+
+        public static FilePickerFileType CFiles { get; } = new("C Files")
+        {
+            Patterns = ["*.c"],
+            AppleUniformTypeIdentifiers = ["public.source-code"],
+            MimeTypes = ["text/x-csrc"]
+        };
         [RelayCommand]
         private async Task ExportAsArrayFile()
         {
-
+            if (!CheckColorVilid())
+                return;
+            //保存数据
+            var path = await DialogHelper.ShowSaveFileDialogAsync("image_data", CFiles);
+            if (path == null)
+                return;
+            var data = await GetExportData();
+            if (data == null)
+                return;
+            var str = await GetExportString(data);
+            try
+            {
+                await File.WriteAllTextAsync(path, str);
+                ShowSuccess();
+            }
+            catch (Exception e)
+            {
+                ShowError("保存失败" + e.Message, "Save failed" + e.Message);
+            }
         }
+
+        public static FilePickerFileType BinaryFiles { get; } = new("Binary Files")
+        {
+            Patterns = ["*.bin"],
+            AppleUniformTypeIdentifiers = ["public.data"],
+            MimeTypes = ["application/octet-stream"]
+        };
         [RelayCommand]
         private async Task ExportBinaryFile()
         {
-
+            if (!CheckColorVilid())
+                return;
+            //保存数据
+            var path = await DialogHelper.ShowSaveFileDialogAsync("image_data", BinaryFiles);
+            if (path == null)
+                return;
+            var data = await GetExportData();
+            if (data == null)
+                return;
+            try
+            {
+                await File.WriteAllBytesAsync(path, [.. data]);
+                ShowSuccess();
+            }
+            catch (Exception e)
+            {
+                ShowError("保存失败" + e.Message, "Save failed" + e.Message);
+            }
         }
+
+        [RelayCommand]
+        private async Task ExportColors()
+        {
+            if (!CheckColorVilid())
+                return;
+            //保存数据
+            var path = await DialogHelper.ShowSaveFileDialogAsync("image_colors", CFiles);
+            if (path == null)
+                return;
+            try
+            {
+                await File.WriteAllTextAsync(path, ColorData.ColorListToCArray(ImageColors));
+                ShowSuccess();
+            }
+            catch (Exception e)
+            {
+                ShowError("保存失败" + e.Message, "Save failed" + e.Message);
+            }
+        }
+
 
         [RelayCommand]
         private void Test()
