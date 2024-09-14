@@ -18,6 +18,8 @@
 
 支持Win10+、linux、OSX
 
+![image2display](Assets/zh.gif)
+
 ## 下载
 
 所有正式版本：[GitHub Releases](https://github.com/chenxuuu/image2display/releases/latest)
@@ -26,4 +28,18 @@ CI快照版：[GitHub Action](https://nightly.link/chenxuuu/image2display/workfl
 
 ## 功能
 
-[待定，开发中，欢迎参与](https://github.com/chenxuuu/image2display/issues/1)
+- 图片预处理
+  - 提前裁剪、缩放、旋转图片
+  - 修改图片的亮度、对比度、饱和度、替换透明背景色
+  - 二值化图片，支持自定义阈值、抖动算法
+  - 量化颜色，减少调色板颜色数量，支持自定义量化颜色抖动算法
+- 图片取模导出
+  - 自定义取模方式，支持调色板与RGB565、RGB888、ARGB8888等格式
+  - 自定义遍历方式，支持从左到右、从上到下、从右到左、从下到上等方式
+  - 导出数据的字节序，支持大端、小端
+  - 颜色内部的位序，支持倒序
+  - 支持导出为C语言数组、Bin文件
+- 字体处理
+  - TBD
+- 字体取模导出
+  - TBD
