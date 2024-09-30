@@ -10,5 +10,6 @@ public partial class FontProcessingView : UserControl
     public FontProcessingView()
     {
         InitializeComponent();
+        this.DataContext = new ViewModels.FontProcessingViewModel();
     }
 }

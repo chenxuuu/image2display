@@ -11,10 +11,6 @@
     x:DataType="vm:FontProcessingViewModel"
     mc:Ignorable="d">
     <Grid>
-        <TextBlock
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            FontSize="40"
-            Text="TODO" />
+        <Button Command="{Binding TestCommand}" Content="123" />
     </Grid>
 </UserControl>
