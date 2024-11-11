@@ -4,17 +4,195 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
     xmlns:vm="using:Image2Display.ViewModels"
-    d:DesignHeight="450"
-    d:DesignWidth="580"
+    d:DesignHeight="660"
+    d:DesignWidth="800"
     x:CompileBindings="True"
     x:DataType="vm:FontConvertViewModel"
     mc:Ignorable="d">
-    <Grid>
-        <TextBlock
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            FontSize="40"
-            Text="TODO" />
+    <Grid ColumnDefinitions="2*,5*">
+        <Grid Grid.Column="0" RowDefinitions="auto,auto,auto,*">
+            <Panel Grid.Row="0">
+                <Border
+                    Margin="10"
+                    BorderBrush="{DynamicResource SurfaceStrokeColorDefaultBrush}"
+                    BorderThickness="2">
+                    <Image Source="/Assets/Images/unknowImage.png" />
+                </Border>
+            </Panel>
+            <Panel Grid.Row="1" Margin="10,0">
+                <Button
+                    Width="40"
+                    Height="40"
+                    HorizontalAlignment="Left"
+                    ToolTip.Tip="前一个字符">
+                    <ui:FontIcon
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="20"
+                        Glyph="&#xEC52;" />
+                </Button>
+                <Button
+                    Width="40"
+                    Height="40"
+                    HorizontalAlignment="Center"
+                    ToolTip.Tip="随机挑一个字符">
+                    <ui:FontIcon
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="20"
+                        Glyph="&#xEF3C;" />
+                </Button>
+                <Button
+                    Width="40"
+                    Height="40"
+                    HorizontalAlignment="Right"
+                    ToolTip.Tip="后一个字符">
+                    <ui:FontIcon
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="20"
+                        Glyph="&#xEBE7;" />
+                </Button>
+            </Panel>
+            <StackPanel Grid.Row="2" Margin="10">
+                <CheckBox
+                    Name="UseSystemFont"
+                    Margin="0,0,0,5"
+                    Content="使用系统字体" />
+                <ComboBox
+                    HorizontalAlignment="Stretch"
+                    IsVisible="{Binding ElementName=UseSystemFont, Path=IsChecked}"
+                    SelectedIndex="0">
+                    <ComboBoxItem Content="微软雅黑" />
+                    <ComboBoxItem Content="宋体" />
+                    <ComboBoxItem Content="xx体" />
+                </ComboBox>
+                <StackPanel IsVisible="{Binding ElementName=UseSystemFont, Path=!IsChecked}">
+                    <TextBlock HorizontalAlignment="Center" Text="字体xxx.ttf" />
+                    <Button
+                        Margin="0,5,0,0"
+                        HorizontalAlignment="Stretch"
+                        Content="选择文件" />
+                </StackPanel>
+            </StackPanel>
+            <ScrollViewer Grid.Row="3" Margin="10">
+                <StackPanel>
+                    <Expander Header="字符集">
+                        <StackPanel>
+                            <CheckBox Content="大写字母 [A-Z]" />
+                            <CheckBox Content="小写字母 [a-z]" />
+                            <CheckBox Content="数字 [0-9]" />
+                            <CheckBox Content="英文标点 [!@#...]" />
+                            <CheckBox Content="一级汉字" />
+                            <CheckBox Content="二级汉字" />
+                            <CheckBox Content="GB2312" />
+                            <CheckBox Content="GB18030" />
+                        </StackPanel>
+                    </Expander>
+                    <Expander Header="额外字符" IsExpanded="True">
+                        <TextBox
+                            Height="100"
+                            AcceptsReturn="True"
+                            TextWrapping="Wrap" />
+                    </Expander>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Column="1" RowDefinitions="3*,1*,auto">
+            <ScrollViewer Grid.Row="0">
+                <StackPanel Margin="0,10,10,0">
+                    <ui:SettingsExpander
+                        Margin="0,0,0,10"
+                        Description="字体大小、粗体、斜体等配置"
+                        Header="字体配置"
+                        IconSource="Font"
+                        IsExpanded="True">
+                        <ui:SettingsExpanderItem Content="Todo" Description="还没做呢">
+                            <ui:SettingsExpanderItem.Footer>
+                                <Button Content="还没做" />
+                            </ui:SettingsExpanderItem.Footer>
+                        </ui:SettingsExpanderItem>
+                    </ui:SettingsExpander>
+                    <ui:SettingsExpander
+                        Margin="0,0,0,10"
+                        Description="像素点阵大小、字符XY偏移"
+                        Header="字库配置"
+                        IconSource="CalendarMonth"
+                        IsExpanded="False">
+                        <ui:SettingsExpanderItem Content="Todo" Description="还没做呢">
+                            <ui:SettingsExpanderItem.Footer>
+                                <Button Content="还没做" />
+                            </ui:SettingsExpanderItem.Footer>
+                        </ui:SettingsExpanderItem>
+                    </ui:SettingsExpander>
+                    <ui:SettingsExpander
+                        Margin="0,0,0,10"
+                        Description="配置灰度字体或黑白字体"
+                        Header="灰度信息"
+                        IconSource="ColorFill"
+                        IsExpanded="False">
+                        <ui:SettingsExpanderItem Content="Todo" Description="还没做呢">
+                            <ui:SettingsExpanderItem.Footer>
+                                <Button Content="还没做" />
+                            </ui:SettingsExpanderItem.Footer>
+                        </ui:SettingsExpanderItem>
+                    </ui:SettingsExpander>
+                    <ui:SettingsExpander
+                        Margin="0,0,0,10"
+                        Description="像素顺序、高低位优先级、是否取反"
+                        Header="取模方式"
+                        IconSource="CalendarWeek"
+                        IsExpanded="False">
+                        <ui:SettingsExpanderItem Content="Todo" Description="还没做呢">
+                            <ui:SettingsExpanderItem.Footer>
+                                <Button Content="还没做" />
+                            </ui:SettingsExpanderItem.Footer>
+                        </ui:SettingsExpanderItem>
+                    </ui:SettingsExpander>
+                    <ui:SettingsExpander
+                        Margin="0,0,0,10"
+                        Description="是否启用压缩功能，后面再做"
+                        Header="压缩字库"
+                        IconSource="ZipFolder"
+                        IsExpanded="False">
+                        <ui:SettingsExpanderItem Content="Todo" Description="还没做呢">
+                            <ui:SettingsExpanderItem.Footer>
+                                <Button Content="还没做" />
+                            </ui:SettingsExpanderItem.Footer>
+                        </ui:SettingsExpanderItem>
+                    </ui:SettingsExpander>
+                </StackPanel>
+            </ScrollViewer>
+            <TextBox
+                Grid.Row="1"
+                Margin="0,10,10,0"
+                IsReadOnly="True"
+                Text="这里放导出的生成的数组数据，用于预览。不用显示完整的，显示前面一部分就行了（不然可能会卡）"
+                TextWrapping="Wrap" />
+            <StackPanel
+                Grid.Row="2"
+                Margin="10"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button Margin="0,0,10,0">
+                    <StackPanel Orientation="Horizontal">
+                        <ui:SymbolIcon
+                            Margin="0,0,10,0"
+                            FontSize="20"
+                            Symbol="ClipboardCode" />
+                        <TextBlock VerticalAlignment="Center" Text="复制到剪贴板" />
+                    </StackPanel>
+                </Button>
+                <Button Margin="0,0,10,0">
+                    <StackPanel Orientation="Horizontal">
+                        <ui:SymbolIcon
+                            Margin="0,0,10,0"
+                            FontSize="20"
+                            Symbol="Save" />
+                        <TextBlock VerticalAlignment="Center" Text="导出文件" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
