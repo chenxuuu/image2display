@@ -7,7 +7,6 @@
     <system:String x:Key="ImageProcessing">Image Processing</system:String>
     <system:String x:Key="ImageConvert">Generate Image Data</system:String>
     <system:String x:Key="FontTitle">Font Modulation</system:String>
-    <system:String x:Key="FontProcessing">Font Processing</system:String>
     <system:String x:Key="FontConvert">Generate Font Data</system:String>
     <system:String x:Key="ViewerTitle">Restore Data</system:String>
     <system:String x:Key="DataViewer">Import Existing Data</system:String>

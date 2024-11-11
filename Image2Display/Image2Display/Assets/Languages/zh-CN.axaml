@@ -8,7 +8,6 @@
     <system:String x:Key="ImageProcessing">图像处理</system:String>
     <system:String x:Key="ImageConvert">生成图像数据</system:String>
     <system:String x:Key="FontTitle">字体取模</system:String>
-    <system:String x:Key="FontProcessing">字体处理</system:String>
     <system:String x:Key="FontConvert">生成字库数据</system:String>
     <system:String x:Key="ViewerTitle">还原数据</system:String>
     <system:String x:Key="DataViewer">导入已有数据</system:String>

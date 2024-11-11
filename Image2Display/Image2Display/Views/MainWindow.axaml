@@ -50,10 +50,6 @@
                 Tag="ImageConvert" />
             <ui:NavigationViewItemHeader Margin="0,10,0,0" Content="{DynamicResource FontTitle}" />
             <ui:NavigationViewItem
-                Content="{DynamicResource FontProcessing}"
-                IconSource="FontDecrease"
-                Tag="FontProcessing" />
-            <ui:NavigationViewItem
                 Content="{DynamicResource FontConvert}"
                 IconSource="Font"
                 Tag="FontConvert" />

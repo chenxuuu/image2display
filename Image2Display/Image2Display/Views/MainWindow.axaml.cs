@@ -31,7 +31,6 @@ public partial class MainWindow : AppWindow
             "ImageConvert" => typeof(Views.ImageConvertView),
             "ImageProcessing" => typeof(Views.ImageProcessingView),
             "FontConvert" => typeof(Views.FontConvertView),
-            "FontProcessing" => typeof(Views.FontProcessingView),
             "DataViewer" => typeof(Views.DataViewerView),
             _ => typeof(Views.SettingsView)
         };
