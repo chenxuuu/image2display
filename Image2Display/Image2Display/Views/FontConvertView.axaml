@@ -27,7 +27,7 @@
                     Width="40"
                     Height="40"
                     HorizontalAlignment="Left"
-                    ToolTip.Tip="前一个字符">
+                    ToolTip.Tip="{DynamicResource PreviousCharacterToolTip}">
                     <ui:FontIcon
                         FontFamily="{StaticResource SymbolThemeFontFamily}"
                         FontSize="20"
@@ -37,7 +37,7 @@
                     Width="40"
                     Height="40"
                     HorizontalAlignment="Center"
-                    ToolTip.Tip="随机挑一个字符">
+                    ToolTip.Tip="{DynamicResource RandomCharacterToolTip}">
                     <ui:FontIcon
                         FontFamily="{StaticResource SymbolThemeFontFamily}"
                         FontSize="20"
@@ -47,7 +47,7 @@
                     Width="40"
                     Height="40"
                     HorizontalAlignment="Right"
-                    ToolTip.Tip="后一个字符">
+                    ToolTip.Tip="{DynamicResource NextCharacterToolTip}">
                     <ui:FontIcon
                         FontFamily="{StaticResource SymbolThemeFontFamily}"
                         FontSize="20"
@@ -58,38 +58,38 @@
                 <CheckBox
                     Name="UseSystemFont"
                     Margin="0,0,0,5"
-                    Content="使用系统字体" />
+                    Content="{DynamicResource UseSystemFontText}" />
                 <ComboBox
                     HorizontalAlignment="Stretch"
                     IsVisible="{Binding ElementName=UseSystemFont, Path=IsChecked}"
                     SelectedIndex="0">
-                    <ComboBoxItem Content="微软雅黑" />
-                    <ComboBoxItem Content="宋体" />
-                    <ComboBoxItem Content="xx体" />
+                    <ComboBoxItem Content="xxx" />
+                    <ComboBoxItem Content="xxx" />
+                    <ComboBoxItem Content="xxx" />
                 </ComboBox>
                 <StackPanel IsVisible="{Binding ElementName=UseSystemFont, Path=!IsChecked}">
-                    <TextBlock HorizontalAlignment="Center" Text="xxx.ttf绑定文件名" />
+                    <TextBlock HorizontalAlignment="Center" Text="xxx.ttf" />
                     <Button
                         Margin="0,5,0,0"
                         HorizontalAlignment="Stretch"
-                        Content="选择文件" />
+                        Content="{DynamicResource SelectFileText}" />
                 </StackPanel>
             </StackPanel>
             <ScrollViewer Grid.Row="3" Margin="10">
                 <StackPanel>
-                    <Expander Header="字符集">
+                    <Expander Header="{DynamicResource CharsetHeader}">
                         <StackPanel>
-                            <CheckBox Content="大写字母 [A-Z]" />
-                            <CheckBox Content="小写字母 [a-z]" />
-                            <CheckBox Content="数字 [0-9]" />
-                            <CheckBox Content="英文标点 [!@#...]" />
-                            <CheckBox Content="一级汉字" />
-                            <CheckBox Content="二级汉字" />
+                            <CheckBox Content="{DynamicResource UppercaseLetters}" />
+                            <CheckBox Content="{DynamicResource LowercaseLetters}" />
+                            <CheckBox Content="{DynamicResource Numbers}" />
+                            <CheckBox Content="{DynamicResource Punctuation}" />
+                            <CheckBox Content="{DynamicResource FirstLevelChineseCharacters}" />
+                            <CheckBox Content="{DynamicResource SecondLevelChineseCharacters}" />
                             <CheckBox Content="GB2312" />
                             <CheckBox Content="GB18030" />
                         </StackPanel>
                     </Expander>
-                    <Expander Header="额外字符" IsExpanded="True">
+                    <Expander Header="{DynamicResource ExtraCharactersHeader}" IsExpanded="True">
                         <TextBox
                             Height="100"
                             AcceptsReturn="True"
@@ -103,10 +103,10 @@
                 <StackPanel Margin="0,10,10,0">
                     <ui:SettingsExpander
                         Margin="0,0,0,10"
-                        Description="字体大小、粗体、斜体等配置"
-                        Header="字体配置"
+                        Description="{DynamicResource FontSettingsDescription}"
+                        Header="{DynamicResource FontSettingsHeader}"
                         IconSource="Font">
-                        <ui:SettingsExpanderItem Content="字体大小" Description="实际的字体大小">
+                        <ui:SettingsExpanderItem Content="{DynamicResource FontSizeContent}" Description="{DynamicResource FontSizeDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ui:NumberBox
                                     Minimum="1"
@@ -114,7 +114,7 @@
                                     Value="12" />
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
-                        <ui:SettingsExpanderItem Content="字体样式" Description="粗体、斜体等">
+                        <ui:SettingsExpanderItem Content="{DynamicResource FontStyleContent}" Description="{DynamicResource FontStyleDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                     <ToggleButton>
@@ -147,10 +147,10 @@
                     </ui:SettingsExpander>
                     <ui:SettingsExpander
                         Margin="0,0,0,10"
-                        Description="像素点阵大小、字符XY偏移"
-                        Header="字库配置"
+                        Description="{DynamicResource FontPixelDescription}"
+                        Header="{DynamicResource FontPixelTitle}"
                         IconSource="CalendarMonth">
-                        <ui:SettingsExpanderItem Content="像素宽度 X" Description="实际字库的X宽度">
+                        <ui:SettingsExpanderItem Content="{DynamicResource PixelWidth}" Description="{DynamicResource PixelWidthDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ui:NumberBox
                                     Minimum="1"
@@ -158,7 +158,7 @@
                                     Value="20" />
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
-                        <ui:SettingsExpanderItem Content="像素高度 Y" Description="实际字库的Y高度">
+                        <ui:SettingsExpanderItem Content="{DynamicResource PixelHeight}" Description="{DynamicResource PixelHeightDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ui:NumberBox
                                     Minimum="1"
@@ -166,12 +166,12 @@
                                     Value="20" />
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
-                        <ui:SettingsExpanderItem Content="横向偏移 X轴" Description="字体在X轴上的偏移量">
+                        <ui:SettingsExpanderItem Content="{DynamicResource HorizontalOffset}" Description="{DynamicResource HorizontalOffsetDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ui:NumberBox SpinButtonPlacementMode="Inline" Value="0" />
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
-                        <ui:SettingsExpanderItem Content="纵向偏移 Y轴" Description="字体在Y轴上的偏移量">
+                        <ui:SettingsExpanderItem Content="{DynamicResource VerticalOffset}" Description="{DynamicResource VerticalOffsetDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ui:NumberBox SpinButtonPlacementMode="Inline" Value="0" />
                             </ui:SettingsExpanderItem.Footer>
@@ -179,10 +179,10 @@
                     </ui:SettingsExpander>
                     <ui:SettingsExpander
                         Margin="0,0,0,10"
-                        Description="配置灰度字体或黑白字体"
-                        Header="灰度信息"
+                        Description="{DynamicResource SettingsExpanderDescription}"
+                        Header="{DynamicResource SettingsExpanderHeader}"
                         IconSource="ColorFill">
-                        <ui:SettingsExpanderItem Content="二值化" Description="将字体处理成纯黑白数据">
+                        <ui:SettingsExpanderItem Content="{DynamicResource BinarizationContent}" Description="{DynamicResource BinarizationDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ToggleSwitch
                                     Name="IsEnableTowColor"
@@ -192,8 +192,8 @@
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                         <ui:SettingsExpanderItem
-                            Content="阈值"
-                            Description="二值化的处理阈值"
+                            Content="{DynamicResource ThresholdContent}"
+                            Description="{DynamicResource ThresholdDescription}"
                             IsVisible="{Binding ElementName=IsEnableTowColor, Path=IsChecked}">
                             <ui:SettingsExpanderItem.Footer>
                                 <Slider
@@ -204,26 +204,26 @@
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                         <ui:SettingsExpanderItem
-                            Content="灰度位数"
-                            Description="每个像素占用几位数据"
+                            Content="{DynamicResource GrayScaleBitsContent}"
+                            Description="{DynamicResource GrayScaleBitsDescription}"
                             IsVisible="{Binding ElementName=IsEnableTowColor, Path=!IsChecked}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ComboBox Width="150" SelectedIndex="0">
-                                    <ComboBoxItem Content="2位" />
-                                    <ComboBoxItem Content="4位" />
-                                    <ComboBoxItem Content="8位" />
+                                    <ComboBoxItem Content="{DynamicResource TwoBitOption}" />
+                                    <ComboBoxItem Content="{DynamicResource FourBitOption}" />
+                                    <ComboBoxItem Content="{DynamicResource EightBitOption}" />
                                 </ComboBox>
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                     </ui:SettingsExpander>
                     <ui:SettingsExpander
                         Margin="0,0,0,10"
-                        Description="像素顺序、高低位优先级、是否取反"
-                        Header="取模方式"
+                        Description="{DynamicResource SettingsExpanderDescription}"
+                        Header="{DynamicResource SettingsExpanderHeader}"
                         IconSource="CalendarWeek">
                         <ui:SettingsExpanderItem
-                            Content="取反"
-                            Description="颠倒黑白颜色"
+                            Content="{DynamicResource InvertContent}"
+                            Description="{DynamicResource InvertDescription}"
                             IsVisible="{Binding ElementName=IsEnableTowColor, Path=IsChecked}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ToggleSwitch OffContent="{DynamicResource Disable}" OnContent="{DynamicResource Enable}" />
@@ -243,21 +243,21 @@
                                 </ComboBox>
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
-                        <ui:SettingsExpanderItem Content="高位在前还是低位在前" Description="字节顺序">
+                        <ui:SettingsExpanderItem Content="{DynamicResource BitOrderContent}" Description="{DynamicResource BitOrderDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ToggleSwitch
                                     IsChecked="True"
-                                    OffContent="低位"
-                                    OnContent="高位" />
+                                    OffContent="{DynamicResource LowBit}"
+                                    OnContent="{DynamicResource HighBit}" />
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                     </ui:SettingsExpander>
                     <ui:SettingsExpander
                         Margin="0,0,0,10"
-                        Description="是否启用压缩功能，后面再做"
-                        Header="压缩字库"
+                        Description="{DynamicResource CompressionDescription}"
+                        Header="{DynamicResource CompressionHeader}"
                         IconSource="ZipFolder">
-                        <ui:SettingsExpanderItem Content="启用RLE压缩" Description="生成的c代码会附带简单的解压dmeo">
+                        <ui:SettingsExpanderItem Content="{DynamicResource EnableRLECompression}" Description="{DynamicResource RLECompressionDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ToggleSwitch OffContent="{DynamicResource Disable}" OnContent="{DynamicResource Enable}" />
                             </ui:SettingsExpanderItem.Footer>
@@ -269,7 +269,7 @@
                 Grid.Row="1"
                 Margin="0,10,10,0"
                 IsReadOnly="True"
-                Text="此处用于预览待生成的数据"
+                Text="{DynamicResource PreviewText}"
                 TextWrapping="Wrap" />
             <StackPanel
                 Grid.Row="2"
@@ -282,16 +282,16 @@
                             Margin="0,0,10,0"
                             FontSize="20"
                             Symbol="ClipboardCode" />
-                        <TextBlock VerticalAlignment="Center" Text="复制到剪贴板" />
+                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource CopyToClipboardText}" />
                     </StackPanel>
                 </Button>
-                <Button Margin="0,0,10,0">
+                <Button Margin="0,0,10,0" Classes="accent">
                     <StackPanel Orientation="Horizontal">
                         <ui:SymbolIcon
                             Margin="0,0,10,0"
                             FontSize="20"
                             Symbol="Save" />
-                        <TextBlock VerticalAlignment="Center" Text="导出文件" />
+                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource ExportFileText}" />
                     </StackPanel>
                 </Button>
             </StackPanel>

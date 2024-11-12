@@ -40,7 +40,10 @@
                     Delay="0"
                     Interval="25"
                     ToolTip.Tip="{DynamicResource HoldToCompare}">
-                    <ui:SymbolIcon FontSize="20" Symbol="Switch" />
+                    <ui:FontIcon
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="20"
+                        Glyph="&#xF0E7;" />
                 </RepeatButton>
                 <Button
                     Grid.Row="0"
@@ -51,7 +54,10 @@
                     Padding="0"
                     Command="{Binding OpenImageFileCommand}"
                     ToolTip.Tip="{DynamicResource LoadNewImage}">
-                    <ui:SymbolIcon FontSize="20" Symbol="OpenFolder" />
+                    <ui:FontIcon
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="20"
+                        Glyph="&#xE1A5;" />
                 </Button>
                 <Button
                     Grid.Row="0"
@@ -62,7 +68,10 @@
                     Padding="0"
                     Command="{Binding SaveImageFileCommand}"
                     ToolTip.Tip="{DynamicResource SaveAsNewFile}">
-                    <ui:SymbolIcon FontSize="20" Symbol="Save" />
+                    <ui:FontIcon
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="20"
+                        Glyph="&#xE105;" />
                 </Button>
                 <Button
                     Grid.Row="1"
@@ -73,7 +82,10 @@
                     Padding="0"
                     Command="{Binding SentImage2ConvertPageCommand}"
                     ToolTip.Tip="{DynamicResource PerformModulation}">
-                    <ui:SymbolIcon FontSize="20" Symbol="Accept" />
+                    <ui:FontIcon
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="20"
+                        Glyph="&#xE122;" />
                 </Button>
             </Grid>
             <!--  空白图片  -->

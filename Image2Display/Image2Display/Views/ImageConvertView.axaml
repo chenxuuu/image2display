@@ -532,7 +532,10 @@
                         <TextBlock VerticalAlignment="Center" Text="{DynamicResource ExportAsArrayFile}" />
                     </StackPanel>
                 </Button>
-                <Button HorizontalAlignment="Stretch" Command="{Binding ExportBinaryFileCommand}">
+                <Button
+                    HorizontalAlignment="Stretch"
+                    Classes="accent"
+                    Command="{Binding ExportBinaryFileCommand}">
                     <StackPanel Orientation="Horizontal">
                         <ui:SymbolIcon
                             Margin="0,0,10,0"
