@@ -14,19 +14,22 @@
     mc:Ignorable="d">
     <Grid ColumnDefinitions="2*,5*">
         <Grid Grid.Column="0" RowDefinitions="auto,auto,auto,*">
+            <!--  预览图  -->
             <Panel Grid.Row="0">
                 <Border
                     Margin="10"
                     BorderBrush="{DynamicResource SurfaceStrokeColorDefaultBrush}"
                     BorderThickness="2">
-                    <Image Source="/Assets/Images/unknowImage.png" />
+                    <Image Source="{Binding OriginalImage}" />
                 </Border>
             </Panel>
+            <!--  切换预览字符按钮  -->
             <Panel Grid.Row="1" Margin="10,0">
                 <Button
                     Width="40"
                     Height="40"
                     HorizontalAlignment="Left"
+                    Command="{Binding ShowPreviousCharacterCommand}"
                     ToolTip.Tip="{DynamicResource PreviousCharacterToolTip}">
                     <ui:FontIcon
                         FontFamily="{StaticResource SymbolThemeFontFamily}"
@@ -37,6 +40,7 @@
                     Width="40"
                     Height="40"
                     HorizontalAlignment="Center"
+                    Command="{Binding ShowRandomCharacterCommand}"
                     ToolTip.Tip="{DynamicResource RandomCharacterToolTip}">
                     <ui:FontIcon
                         FontFamily="{StaticResource SymbolThemeFontFamily}"
@@ -47,6 +51,7 @@
                     Width="40"
                     Height="40"
                     HorizontalAlignment="Right"
+                    Command="{Binding ShowNextCharacterCommand}"
                     ToolTip.Tip="{DynamicResource NextCharacterToolTip}">
                     <ui:FontIcon
                         FontFamily="{StaticResource SymbolThemeFontFamily}"
@@ -54,88 +59,93 @@
                         Glyph="&#xEBE7;" />
                 </Button>
             </Panel>
+            <!--  字体选择  -->
             <StackPanel Grid.Row="2" Margin="10">
                 <CheckBox
                     Name="UseSystemFont"
                     Margin="0,0,0,5"
-                    Content="{DynamicResource UseSystemFontText}" />
+                    Content="{DynamicResource UseSystemFontText}"
+                    IsChecked="{Binding UseSystemFont}" />
                 <ComboBox
                     HorizontalAlignment="Stretch"
                     IsVisible="{Binding ElementName=UseSystemFont, Path=IsChecked}"
-                    SelectedIndex="0">
-                    <ComboBoxItem Content="xxx" />
-                    <ComboBoxItem Content="xxx" />
-                    <ComboBoxItem Content="xxx" />
-                </ComboBox>
+                    ItemsSource="{Binding SystemFontList}"
+                    SelectedIndex="{Binding SelectedFontIndex}" />
                 <StackPanel IsVisible="{Binding ElementName=UseSystemFont, Path=!IsChecked}">
-                    <TextBlock HorizontalAlignment="Center" Text="xxx.ttf" />
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding FontName}" />
                     <Button
                         Margin="0,5,0,0"
                         HorizontalAlignment="Stretch"
+                        Command="{Binding LoadFontFileCommand}"
                         Content="{DynamicResource SelectFileText}" />
                 </StackPanel>
             </StackPanel>
+            <!--  字符集选择  -->
             <ScrollViewer Grid.Row="3" Margin="10">
                 <StackPanel>
                     <Expander Header="{DynamicResource CharsetHeader}">
                         <StackPanel>
-                            <CheckBox Content="{DynamicResource UppercaseLetters}" />
-                            <CheckBox Content="{DynamicResource LowercaseLetters}" />
-                            <CheckBox Content="{DynamicResource Numbers}" />
-                            <CheckBox Content="{DynamicResource Punctuation}" />
-                            <CheckBox Content="{DynamicResource FirstLevelChineseCharacters}" />
-                            <CheckBox Content="{DynamicResource SecondLevelChineseCharacters}" />
-                            <CheckBox Content="GB2312" />
-                            <CheckBox Content="GB18030" />
+                            <CheckBox Content="{DynamicResource UppercaseLetters}" IsChecked="{Binding CharsetUppercaseLetters}" />
+                            <CheckBox Content="{DynamicResource LowercaseLetters}" IsChecked="{Binding CharsetLowercaseLetters}" />
+                            <CheckBox Content="{DynamicResource Numbers}" IsChecked="{Binding CharsetNumbers}" />
+                            <CheckBox Content="{DynamicResource Punctuation}" IsChecked="{Binding CharsetPunctuation}" />
+                            <CheckBox Content="{DynamicResource FirstLevelChineseCharacters}" IsChecked="{Binding CharsetFirstLevelChineseCharacters}" />
+                            <CheckBox Content="{DynamicResource SecondLevelChineseCharacters}" IsChecked="{Binding CharsetSecondLevelChineseCharacters}" />
+                            <CheckBox Content="GB2312" IsChecked="{Binding CharsetGB2312}" />
+                            <CheckBox Content="GB18030" IsChecked="{Binding CharsetGB18030}" />
                         </StackPanel>
                     </Expander>
                     <Expander Header="{DynamicResource ExtraCharactersHeader}" IsExpanded="True">
                         <TextBox
                             Height="100"
                             AcceptsReturn="True"
+                            Text="{Binding CustomCharset}"
                             TextWrapping="Wrap" />
                     </Expander>
                 </StackPanel>
             </ScrollViewer>
         </Grid>
-        <Grid Grid.Column="1" RowDefinitions="4*,1*,auto">
+        <Grid Grid.Column="1" RowDefinitions="4*,auto">
             <ScrollViewer Grid.Row="0">
                 <StackPanel Margin="0,10,10,0">
+                    <!--  字体配置  -->
                     <ui:SettingsExpander
                         Margin="0,0,0,10"
                         Description="{DynamicResource FontSettingsDescription}"
                         Header="{DynamicResource FontSettingsHeader}"
-                        IconSource="Font">
+                        IconSource="Font"
+                        IsExpanded="True">
                         <ui:SettingsExpanderItem Content="{DynamicResource FontSizeContent}" Description="{DynamicResource FontSizeDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ui:NumberBox
+                                    Width="200"
                                     Minimum="1"
                                     SpinButtonPlacementMode="Inline"
-                                    Value="12" />
+                                    Value="{Binding FontSize}" />
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                         <ui:SettingsExpanderItem Content="{DynamicResource FontStyleContent}" Description="{DynamicResource FontStyleDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                    <ToggleButton>
+                                    <ToggleButton IsChecked="{Binding FontBold}">
                                         <ui:FontIcon
                                             FontFamily="{StaticResource SymbolThemeFontFamily}"
                                             FontSize="20"
                                             Glyph="&#xE19B;" />
                                     </ToggleButton>
-                                    <ToggleButton>
+                                    <ToggleButton IsChecked="{Binding FontItalic}">
                                         <ui:FontIcon
                                             FontFamily="{StaticResource SymbolThemeFontFamily}"
                                             FontSize="20"
                                             Glyph="&#xE199;" />
                                     </ToggleButton>
-                                    <ToggleButton>
+                                    <ToggleButton IsChecked="{Binding FontUnderline}">
                                         <ui:FontIcon
                                             FontFamily="{StaticResource SymbolThemeFontFamily}"
                                             FontSize="20"
                                             Glyph="&#xE19A;" />
                                     </ToggleButton>
-                                    <ToggleButton>
+                                    <ToggleButton IsChecked="{Binding FontStrikeout}">
                                         <ui:FontIcon
                                             FontFamily="{StaticResource SymbolThemeFontFamily}"
                                             FontSize="20"
@@ -145,48 +155,60 @@
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                     </ui:SettingsExpander>
+                    <!--  字库配置  -->
                     <ui:SettingsExpander
                         Margin="0,0,0,10"
                         Description="{DynamicResource FontPixelDescription}"
                         Header="{DynamicResource FontPixelTitle}"
-                        IconSource="CalendarMonth">
+                        IconSource="CalendarMonth"
+                        IsExpanded="True">
                         <ui:SettingsExpanderItem Content="{DynamicResource PixelWidth}" Description="{DynamicResource PixelWidthDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ui:NumberBox
+                                    Width="200"
                                     Minimum="1"
                                     SpinButtonPlacementMode="Inline"
-                                    Value="20" />
+                                    Value="{Binding FontWidth}" />
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                         <ui:SettingsExpanderItem Content="{DynamicResource PixelHeight}" Description="{DynamicResource PixelHeightDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ui:NumberBox
+                                    Width="200"
                                     Minimum="1"
                                     SpinButtonPlacementMode="Inline"
-                                    Value="20" />
+                                    Value="{Binding FontHeight}" />
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                         <ui:SettingsExpanderItem Content="{DynamicResource HorizontalOffset}" Description="{DynamicResource HorizontalOffsetDescription}">
                             <ui:SettingsExpanderItem.Footer>
-                                <ui:NumberBox SpinButtonPlacementMode="Inline" Value="0" />
+                                <ui:NumberBox
+                                    Width="200"
+                                    SpinButtonPlacementMode="Inline"
+                                    Value="{Binding FontXOffset}" />
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                         <ui:SettingsExpanderItem Content="{DynamicResource VerticalOffset}" Description="{DynamicResource VerticalOffsetDescription}">
                             <ui:SettingsExpanderItem.Footer>
-                                <ui:NumberBox SpinButtonPlacementMode="Inline" Value="0" />
+                                <ui:NumberBox
+                                    Width="200"
+                                    SpinButtonPlacementMode="Inline"
+                                    Value="{Binding FontYOffset}" />
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                     </ui:SettingsExpander>
+                    <!--  灰度信息  -->
                     <ui:SettingsExpander
                         Margin="0,0,0,10"
                         Description="{DynamicResource SettingsExpanderDescription}"
                         Header="{DynamicResource SettingsExpanderHeader}"
-                        IconSource="ColorFill">
+                        IconSource="ColorFill"
+                        IsExpanded="True">
                         <ui:SettingsExpanderItem Content="{DynamicResource BinarizationContent}" Description="{DynamicResource BinarizationDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ToggleSwitch
                                     Name="IsEnableTowColor"
-                                    IsChecked="True"
+                                    IsChecked="{Binding UseThreshold}"
                                     OffContent="{DynamicResource Disable}"
                                     OnContent="{DynamicResource Enable}" />
                             </ui:SettingsExpanderItem.Footer>
@@ -200,7 +222,7 @@
                                     Width="200"
                                     Maximum="255"
                                     Minimum="0"
-                                    Value="150" />
+                                    Value="{Binding Threshold}" />
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                         <ui:SettingsExpanderItem
@@ -208,7 +230,7 @@
                             Description="{DynamicResource GrayScaleBitsDescription}"
                             IsVisible="{Binding ElementName=IsEnableTowColor, Path=!IsChecked}">
                             <ui:SettingsExpanderItem.Footer>
-                                <ComboBox Width="150" SelectedIndex="0">
+                                <ComboBox Width="150" SelectedIndex="{Binding GrayBitIndex}">
                                     <ComboBoxItem Content="{DynamicResource TwoBitOption}" />
                                     <ComboBoxItem Content="{DynamicResource FourBitOption}" />
                                     <ComboBoxItem Content="{DynamicResource EightBitOption}" />
@@ -216,22 +238,27 @@
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                     </ui:SettingsExpander>
+                    <!--  取模方式  -->
                     <ui:SettingsExpander
                         Margin="0,0,0,10"
-                        Description="{DynamicResource SettingsExpanderDescription}"
-                        Header="{DynamicResource SettingsExpanderHeader}"
-                        IconSource="CalendarWeek">
+                        Description="{DynamicResource FontExportDescription}"
+                        Header="{DynamicResource FontExportHeader}"
+                        IconSource="CalendarWeek"
+                        IsExpanded="True">
                         <ui:SettingsExpanderItem
                             Content="{DynamicResource InvertContent}"
                             Description="{DynamicResource InvertDescription}"
                             IsVisible="{Binding ElementName=IsEnableTowColor, Path=IsChecked}">
                             <ui:SettingsExpanderItem.Footer>
-                                <ToggleSwitch OffContent="{DynamicResource Disable}" OnContent="{DynamicResource Enable}" />
+                                <ToggleSwitch
+                                    IsChecked="{Binding Invert}"
+                                    OffContent="{DynamicResource Disable}"
+                                    OnContent="{DynamicResource Enable}" />
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                         <ui:SettingsExpanderItem Content="{DynamicResource PixelTraversalOrderContent}" Description="{DynamicResource PixelTraversalOrderDescription}">
                             <ui:SettingsExpanderItem.Footer>
-                                <ComboBox Width="150" SelectedIndex="0">
+                                <ComboBox Width="150" SelectedIndex="{Binding ByteOrderIndex}">
                                     <ComboBoxItem Content="→ ↓" />
                                     <ComboBoxItem Content="← ↓" />
                                     <ComboBoxItem Content="→ ↑" />
@@ -246,37 +273,36 @@
                         <ui:SettingsExpanderItem Content="{DynamicResource BitOrderContent}" Description="{DynamicResource BitOrderDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ToggleSwitch
-                                    IsChecked="True"
+                                    IsChecked="{Binding BitOrderMSB}"
                                     OffContent="{DynamicResource LowBit}"
                                     OnContent="{DynamicResource HighBit}" />
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                     </ui:SettingsExpander>
+                    <!--  压缩  -->
                     <ui:SettingsExpander
                         Margin="0,0,0,10"
                         Description="{DynamicResource CompressionDescription}"
                         Header="{DynamicResource CompressionHeader}"
-                        IconSource="ZipFolder">
+                        IconSource="ZipFolder"
+                        IsExpanded="True">
                         <ui:SettingsExpanderItem Content="{DynamicResource EnableRLECompression}" Description="{DynamicResource RLECompressionDescription}">
                             <ui:SettingsExpanderItem.Footer>
-                                <ToggleSwitch OffContent="{DynamicResource Disable}" OnContent="{DynamicResource Enable}" />
+                                <ToggleSwitch
+                                    IsChecked="{Binding RLECompress}"
+                                    OffContent="{DynamicResource Disable}"
+                                    OnContent="{DynamicResource Enable}" />
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
                     </ui:SettingsExpander>
                 </StackPanel>
             </ScrollViewer>
-            <TextBox
-                Grid.Row="1"
-                Margin="0,10,10,0"
-                IsReadOnly="True"
-                Text="{DynamicResource PreviewText}"
-                TextWrapping="Wrap" />
             <StackPanel
-                Grid.Row="2"
+                Grid.Row="1"
                 Margin="10"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
-                <Button Margin="0,0,10,0">
+                <Button Margin="0,0,10,0" Command="{Binding CopyFontCodeCommand}">
                     <StackPanel Orientation="Horizontal">
                         <ui:SymbolIcon
                             Margin="0,0,10,0"
@@ -285,7 +311,10 @@
                         <TextBlock VerticalAlignment="Center" Text="{DynamicResource CopyToClipboardText}" />
                     </StackPanel>
                 </Button>
-                <Button Margin="0,0,10,0" Classes="accent">
+                <Button
+                    Margin="0,0,10,0"
+                    Classes="accent"
+                    Command="{Binding SaveFontFileCommand}">
                     <StackPanel Orientation="Horizontal">
                         <ui:SymbolIcon
                             Margin="0,0,10,0"
