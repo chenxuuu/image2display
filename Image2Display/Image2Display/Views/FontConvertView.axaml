@@ -20,7 +20,7 @@
                     Margin="10"
                     BorderBrush="{DynamicResource SurfaceStrokeColorDefaultBrush}"
                     BorderThickness="2">
-                    <Image Source="{Binding OriginalImage}" />
+                    <Image RenderOptions.BitmapInterpolationMode="None" Source="{Binding OriginalImage}" />
                 </Border>
             </Panel>
             <!--  切换预览字符按钮  -->

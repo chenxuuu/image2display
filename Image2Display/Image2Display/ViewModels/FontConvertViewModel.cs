@@ -2,6 +2,7 @@
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Image2Display.Helpers;
 using Image2Display.Models;
 using System;
 using System.Collections.Generic;
@@ -96,11 +97,12 @@ namespace Image2Display.ViewModels
         [ObservableProperty]
         private string _PreviewText = Utils.GetI18n<string>("PreviewText");
 
+        private ImageData? ImageCache = null;
+
         public FontConvertViewModel()
         {
-            //TODO 初始化图片成格子图
-            var pic = new ImageData(100,100);
-            pic.AddBackGround(100,100,new SixLabors.ImageSharp.PixelFormats.Rgba32(0,0,0));
+            //初始化图片成格子图
+            var pic = FontConvert.GetImage(new byte[100], 10, 10, ImageCache);
             OriginalImage = new Bitmap(pic.GetStream());
 
             //用skia接口获取系统字体列表

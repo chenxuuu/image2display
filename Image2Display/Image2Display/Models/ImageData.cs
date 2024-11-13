@@ -53,6 +53,25 @@ namespace Image2Display.Models
             Raw = Image.Load<Rgba32>(stream);
         }
 
+        public bool Reset(int width, int height)
+        {
+            Raw?.Dispose();
+            Raw = new Image<Rgba32>(width, height);
+            return true;
+        }
+
+        /// <summary>
+        /// 画一个矩形
+        /// </summary>
+        public bool DrawRect(int x, int y, int width, int height, Rgba32 color)
+        {
+            if (x < 0 || y < 0 || width < 0 || height < 0)
+                return false;
+            if (x + width > Raw.Width || y + height > Raw.Height)
+                return false;
+            Raw.Mutate(ctx => ctx.Fill(color, new Rectangle(x, y, width, height)));
+            return true;
+        }
 
         /// <summary>
         /// 裁剪图片区域
