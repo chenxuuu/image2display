@@ -104,6 +104,12 @@ public class ColorData
                 temp = 0;
             }
         });
+        // 如果最后一个字节不满8位，补0
+        if (count != 0)
+        {
+            temp = (byte)(temp << (8 - count));
+            l.Add(temp);
+        }
 
         return l;
     }

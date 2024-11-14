@@ -133,6 +133,8 @@ namespace Image2Display.ViewModels
             }
             ImageColors = Image.GetColors();
             Debug.WriteLine($"Color Count: {ImageColors.Count}");
+            //把颜色按红色排序
+            ImageColors.Sort((a, b) => a.R - b.R);
             ImageColorCount = ImageColors.Count;
             using var stream = Image.GetStream();
             RawImage = new Bitmap(stream);
@@ -193,7 +195,7 @@ namespace Image2Display.ViewModels
                         {
                             <= 3 => ColorData.Get1_2_4_8BitsImage(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
-                                2 ^ ColorDepth, ImageColors),
+                                (int)double.Pow(2, ColorDepth), ImageColors),
                             4 => ColorData.Get16BitsImage(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
                                 ByteOrder == 1, ImageColors),
