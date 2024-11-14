@@ -41,6 +41,7 @@ namespace Image2Display.ViewModels
                         <= 3 => [25, 0, 0],
                         <= 6 => [25, 25, 0],
                         <= 8 => [25, 25, 25],
+                        9 => [0, 0, 0],
                         _ => throw new NotImplementedException(),
                     };
                 }
@@ -232,6 +233,8 @@ namespace Image2Display.ViewModels
                             8 => ColorData.GetRGBA8888Image(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
                                 ByteOrder == 1),
+                        9 => ColorData.GetGray8Image(
+                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1),
                             _ => throw new NotImplementedException(),
                         };
                     }

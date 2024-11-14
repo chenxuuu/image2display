@@ -472,6 +472,24 @@ public class ColorData
         return l;
     }
 
+    public static List<byte> GetGray8Image(Image<Rgba32> img, int rotate, bool reverseBits)
+    {
+        var l = new List<byte>();
+
+        IterateImg(img, rotate, (color) =>
+        {
+            byte r = color.R;
+            if (reverseBits)
+            {
+                r = (byte)ReverseBits(r, 8);
+            }
+
+            l.Add(r);
+        });
+
+        return l;
+    }
+
     public static string ListToCArray(List<byte> data, Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian,
         int mode, int subMode)
     {

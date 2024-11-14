@@ -171,6 +171,22 @@ public class ByteOrder
                         ],
                     _ => throw new NotImplementedException(),
                 },
+                9 => byteOrder switch
+                {
+                    0 => [
+                        EC, EC, EC, EC, EC, EC, EC, EC,
+                        EC, EC, EC, EC, EC, EC, EC, EC,
+                        EC, EC, EC, EC, EC, EC, EC, EC,
+                        EC, EC, EC, EC, EC, EC, EC, EC,
+                        ],
+                    1 => [
+                        EC, EC, EC, EC, EC, EC, EC, EC,
+                        EC, EC, EC, EC, EC, EC, EC, EC,
+                        EC, EC, EC, EC, EC, EC, EC, EC,
+                        EC, EC, EC, EC, EC, EC, EC, EC,
+                        ],
+                    _ => throw new NotImplementedException(),
+                },
                 _ => throw new NotImplementedException(),
             };
         }
@@ -450,6 +466,22 @@ public class ByteOrder
                             "0", "1", "2", "3", "4", "5", "6", "7",
                             "0", "1", "2", "3", "4", "5", "6", "7",
                             "0", "1", "2", "3", "4", "5", "6", "7",
+                        ],
+                    _ => throw new NotImplementedException(),
+                },
+                9 => internalOrder switch
+                {
+                    0 => [
+                            "7", "6", "5", "4", "3", "2", "1", "0",
+                            "0", "0",  "0", "0", "0", "0", "0", "0",
+                            "0", "0",  "0", "0", "0", "0", "0", "0",
+                            "0", "0",  "0", "0", "0", "0", "0", "0",
+                        ],
+                    1 => [
+                            "0", "1", "2", "3", "4", "5", "6", "7",
+                            "0", "0",  "0", "0", "0", "0", "0", "0",
+                            "0", "0",  "0", "0", "0", "0", "0", "0",
+                            "0", "0",  "0", "0", "0", "0", "0", "0",
                         ],
                     _ => throw new NotImplementedException(),
                 },

@@ -117,6 +117,7 @@
     <system:String x:Key="RGB888">24位色，RGB888</system:String>
     <system:String x:Key="ARGB8888">32位色，ARGB8888</system:String>
     <system:String x:Key="RGBA8888">32位色，RGBA8888</system:String>
+    <system:String x:Key="Gray8Bit">8位，纯灰度图，仅红色数据</system:String>
     <system:String x:Key="DataConfigurationDescription">数据配置</system:String>
     <system:String x:Key="DataArrangementHeader">设置数据排列与像素数据顺序</system:String>
     <system:String x:Key="PixelTraversalOrderContent">像素遍历顺序</system:String>
@@ -192,6 +193,7 @@
     <system:String x:Key="PreviewText">此处用于预览待生成的数据</system:String>
     <system:String x:Key="CopyToClipboardText">复制到剪贴板</system:String>
     <system:String x:Key="ExportFileText">导出文件</system:String>
+    <system:String x:Key="TotalCharacters">总字符数量</system:String>
 
     <!--  设置页  -->
     <system:String x:Key="Settings">设置</system:String>

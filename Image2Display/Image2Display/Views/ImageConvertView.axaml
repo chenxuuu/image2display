@@ -594,6 +594,7 @@
                                 <ComboBoxItem Content="{DynamicResource RGB888}" />
                                 <ComboBoxItem Content="{DynamicResource ARGB8888}" />
                                 <ComboBoxItem Content="{DynamicResource RGBA8888}" />
+                                <ComboBoxItem Content="{DynamicResource Gray8Bit}" />
                             </ComboBox>
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
