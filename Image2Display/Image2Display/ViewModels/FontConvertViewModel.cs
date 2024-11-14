@@ -39,16 +39,19 @@ namespace Image2Display.ViewModels
         [ObservableProperty]
         private bool _CharsetPunctuation = false;
         [ObservableProperty]
+        private bool _CharsetChinesePunctuation = false;
+        [ObservableProperty]
         private bool _CharsetFirstLevelChineseCharacters = false;
         [ObservableProperty]
         private bool _CharsetSecondLevelChineseCharacters = false;
         [ObservableProperty]
         private bool _CharsetGB2312 = false;
-        [ObservableProperty]
-        private bool _CharsetGB18030 = false;
 
         [ObservableProperty]
         private string _CustomCharset = "";
+
+        [ObservableProperty]
+        private int _TotalCharacters = 0;
 
         //字体配置
         [ObservableProperty]
@@ -99,10 +102,14 @@ namespace Image2Display.ViewModels
 
         private ImageData? ImageCache = null;
 
+
+        /// <summary>
+        /// FontConvertViewModel初始化
+        /// </summary>
         public FontConvertViewModel()
         {
             //初始化图片成格子图
-            var pic = FontConvert.GetImage(new byte[100], 10, 10, ImageCache);
+            var pic = FontConvert.GetImage(DemoFontData.ASymbol, 20, 20, ImageCache);
             OriginalImage = new Bitmap(pic.GetStream());
 
             //用skia接口获取系统字体列表
@@ -126,10 +133,66 @@ namespace Image2Display.ViewModels
                 SystemFontList.Add(item);
             }
 
+            //字符集需要刷新的情况
+            string[] charsetChangedElements =
+            [
+                nameof(CharsetUppercaseLetters),
+                    nameof(CharsetLowercaseLetters),
+                    nameof(CharsetNumbers),
+                    nameof(CharsetPunctuation),
+                    nameof(CharsetChinesePunctuation),
+                    nameof(CharsetFirstLevelChineseCharacters),
+                    nameof(CharsetSecondLevelChineseCharacters),
+                    nameof(CharsetGB2312),
+                    nameof(CustomCharset)
+            ];
 
+            PropertyChanged += async (sender, e) =>
+            {
+                //某个变量被更改
+                var name = e.PropertyName;
+
+                if (charsetChangedElements.Contains(name))
+                {
+                    await RefreshCharset();
+                }
+
+            };
 
         }
 
+
+        private List<char> chars = [];
+        private async Task RefreshCharset()
+        {
+            await Task.Run(() =>
+            {
+                chars.Clear();
+                if (CharsetUppercaseLetters)
+                    chars.AddRange(Charset.GetUppercaseLetters());
+                if (CharsetLowercaseLetters)
+                    chars.AddRange(Charset.GetLowercaseLetters());
+                if (CharsetNumbers)
+                    chars.AddRange(Charset.GetNumbers());
+                if (CharsetPunctuation)
+                    chars.AddRange(Charset.GetPunctuation());
+                if (CharsetChinesePunctuation)
+                    chars.AddRange(Charset.GetChinesePunctuation());
+                if (CharsetFirstLevelChineseCharacters)
+                    chars.AddRange(Charset.GetFirstLevelChinese());
+                if (CharsetSecondLevelChineseCharacters)
+                    chars.AddRange(Charset.GetSecondLevelChinese());
+                if (CharsetGB2312)
+                    chars.AddRange(Charset.GetGB2312());
+                if (!string.IsNullOrEmpty(CustomCharset))
+                    chars.AddRange(CustomCharset);
+
+                //去除重复字符
+                chars = chars.Distinct().ToList();
+                //刷新字符数量
+                TotalCharacters = chars.Count;
+            });
+        }
 
         [RelayCommand]
         private async Task ShowPreviousCharacter()

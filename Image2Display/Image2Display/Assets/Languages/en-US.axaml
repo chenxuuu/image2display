@@ -145,8 +145,10 @@
     <system:String x:Key="LowercaseLetters">Lowercase [a-z]</system:String>
     <system:String x:Key="Numbers">Numbers [0-9]</system:String>
     <system:String x:Key="Punctuation">Punctuation [!@#...]</system:String>
+    <system:String x:Key="ChinesePunctuation">Chinese Punctuation [，。……]</system:String>
     <system:String x:Key="FirstLevelChineseCharacters">First Level Chinese</system:String>
     <system:String x:Key="SecondLevelChineseCharacters">Second Level Chinese</system:String>
+    <system:String x:Key="GB2312ChineseCharacters">GB2312 Characters</system:String>
     <system:String x:Key="ExtraCharactersHeader">Extra Characters</system:String>
     <system:String x:Key="FontSettingsDescription">Font size, bold, italic, etc. configuration</system:String>
     <system:String x:Key="FontSettingsHeader">Font Configuration</system:String>

@@ -148,8 +148,10 @@
     <system:String x:Key="LowercaseLetters">小写字母 [a-z]</system:String>
     <system:String x:Key="Numbers">数字 [0-9]</system:String>
     <system:String x:Key="Punctuation">英文标点 [!@#...]</system:String>
+    <system:String x:Key="ChinesePunctuation">中文标点 [，。……]</system:String>
     <system:String x:Key="FirstLevelChineseCharacters">一级汉字</system:String>
     <system:String x:Key="SecondLevelChineseCharacters">二级汉字</system:String>
+    <system:String x:Key="GB2312ChineseCharacters">GB2312汉字</system:String>
     <system:String x:Key="ExtraCharactersHeader">额外字符</system:String>
     <system:String x:Key="FontSettingsDescription">字体大小、粗体、斜体等配置</system:String>
     <system:String x:Key="FontSettingsHeader">字体配置</system:String>

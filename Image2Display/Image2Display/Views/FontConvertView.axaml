@@ -89,10 +89,10 @@
                             <CheckBox Content="{DynamicResource LowercaseLetters}" IsChecked="{Binding CharsetLowercaseLetters}" />
                             <CheckBox Content="{DynamicResource Numbers}" IsChecked="{Binding CharsetNumbers}" />
                             <CheckBox Content="{DynamicResource Punctuation}" IsChecked="{Binding CharsetPunctuation}" />
+                            <CheckBox Content="{DynamicResource ChinesePunctuation}" IsChecked="{Binding CharsetChinesePunctuation}" />
                             <CheckBox Content="{DynamicResource FirstLevelChineseCharacters}" IsChecked="{Binding CharsetFirstLevelChineseCharacters}" />
                             <CheckBox Content="{DynamicResource SecondLevelChineseCharacters}" IsChecked="{Binding CharsetSecondLevelChineseCharacters}" />
-                            <CheckBox Content="GB2312" IsChecked="{Binding CharsetGB2312}" />
-                            <CheckBox Content="GB18030" IsChecked="{Binding CharsetGB18030}" />
+                            <CheckBox Content="{DynamicResource GB2312ChineseCharacters}" IsChecked="{Binding CharsetGB2312}" />
                         </StackPanel>
                     </Expander>
                     <Expander Header="{DynamicResource ExtraCharactersHeader}" IsExpanded="True">
@@ -323,6 +323,14 @@
                         <TextBlock VerticalAlignment="Center" Text="{DynamicResource ExportFileText}" />
                     </StackPanel>
                 </Button>
+            </StackPanel>
+            <StackPanel
+                Grid.Row="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <TextBlock Text="{DynamicResource TotalCharacters}" />
+                <TextBlock Margin="10,0,0,0" Text="{Binding TotalCharacters}" />
             </StackPanel>
         </Grid>
     </Grid>
