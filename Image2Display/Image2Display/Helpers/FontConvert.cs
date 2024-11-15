@@ -275,18 +275,18 @@ public class FontConvert
                 $"Data per char: {data[0].Count} */\n");
         }
         //每个字符列出来
-        sb.Append("const char charset[] = {\n");
+        sb.Append("const char charset[] = \"");
         foreach (var c in charset)
         {
             //转义字符
             if (c == '\'')
-                sb.Append("'\\'',");
+                sb.Append("\\'");
             else if(c == '\\')
-                sb.Append("'\\\\',");
+                sb.Append("\\\\");
             else
-                sb.Append($"'{c}',");
+                sb.Append($"{c}");
         }
-        sb.Append("\n};\n\n");
+        sb.Append("\";\n\n");
         sb.Append("const uint8_t fonts[] = {\n");
         //每行一个字
         for (int i = 0; i < charset.Count; i++)
