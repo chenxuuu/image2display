@@ -19,6 +19,7 @@
 支持Win10+、linux、OSX
 
 ![image2display](Assets/zh.gif)
+![font](Assets/font.png)
 
 ## 下载
 
@@ -39,7 +40,10 @@ CI快照版：[GitHub Action](https://nightly.link/chenxuuu/image2display/workfl
   - 导出数据的字节序，支持大端、小端
   - 颜色内部的位序，支持倒序
   - 支持导出为C语言数组、Bin文件
-- 字体处理
-  - TBD
-- 字体取模导出
-  - TBD
+- 字体取模
+  - 使用系统字体或者TTF/OTF字体
+  - 支持自定义字体大小、字体样式、偏移、字体灰度、反色
+  - 预置常用字符集，支持自定义字符
+  - 可配置字节顺序、位序
+  - 实时预览当前的处理效果
+  - 支持导出为C语言数组、复制到剪贴板

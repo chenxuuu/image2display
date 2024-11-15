@@ -19,6 +19,7 @@ A cross-platform image and font data processing tool for generating data usable 
 Supports Win10+, Linux, OSX
 
 ![image2display](Assets/en.gif)
+![font](Assets/font.png)
 
 ## Download
 
@@ -39,7 +40,10 @@ CI snapshot version: [GitHub Action](https://nightly.link/chenxuuu/image2display
   - Export data endianness, supporting big-endian and little-endian
   - Bit order within colors, supporting reverse order
   - Support export as C language arrays and Bin files
-- Font Processing
-  - TBD
-- Font Modulation Export
-  - TBD
+- Font Rasterization
+  - Use system fonts or TTF/OTF fonts
+  - Supports custom font size, style, offset, font grayscale, and inversion
+  - Preset common character sets, supports custom characters
+  - Configurable byte order and bit order
+  - Real-time preview of current processing effects
+  - Supports exporting as C language arrays and copying to clipboard
