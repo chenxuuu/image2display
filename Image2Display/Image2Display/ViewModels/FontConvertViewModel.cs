@@ -239,6 +239,9 @@ namespace Image2Display.ViewModels
 
                 if (!string.IsNullOrEmpty(CustomCharset))
                     chars.AddRange(CustomCharset);
+                //去除回车换行
+                chars.RemoveAll(c => c == '\r' || c == '\n');
+
                 if (CharsetUppercaseLetters)
                     chars.AddRange(Charset.GetUppercaseLetters());
                 if (CharsetLowercaseLetters)
