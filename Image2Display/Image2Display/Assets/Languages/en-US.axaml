@@ -193,6 +193,7 @@
     <system:String x:Key="CopyToClipboardText">Copy to Clipboard</system:String>
     <system:String x:Key="ExportFileText">Export File</system:String>
     <system:String x:Key="TotalCharacters">Total Characters</system:String>
+    <system:String x:Key="LoadFontFileFail">Fail to load font file, format error.</system:String>
 
     <system:String x:Key="Settings">Settings</system:String>
     <system:String x:Key="General">General</system:String>

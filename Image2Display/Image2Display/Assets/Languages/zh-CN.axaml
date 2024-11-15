@@ -132,7 +132,7 @@
     <system:String x:Key="LSB">最低有效位（LSB）</system:String>
     <system:String x:Key="SuccessTitle">成功</system:String>
     <system:String x:Key="SuccessMessage">数据已导出。</system:String>
-    <system:String x:Key="FailTitle">导出失败</system:String>
+    <system:String x:Key="FailTitle">失败</system:String>
     <system:String x:Key="ExportPalette">导出调色板</system:String>
     <system:String x:Key="ExportPaletteDescription">导出当前图片所使用的所有颜色</system:String>
     <system:String x:Key="ExportData">导出数据</system:String>
@@ -196,6 +196,7 @@
     <system:String x:Key="CopyToClipboardText">复制到剪贴板</system:String>
     <system:String x:Key="ExportFileText">导出文件</system:String>
     <system:String x:Key="TotalCharacters">总字符数量</system:String>
+    <system:String x:Key="LoadFontFileFail">字体文件加载失败，文件格式不正确。</system:String>
 
     <!--  设置页  -->
     <system:String x:Key="Settings">设置</system:String>

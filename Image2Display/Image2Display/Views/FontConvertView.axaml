@@ -20,7 +20,7 @@
                     Margin="10"
                     BorderBrush="{DynamicResource SurfaceStrokeColorDefaultBrush}"
                     BorderThickness="2">
-                    <Image RenderOptions.BitmapInterpolationMode="None" Source="{Binding OriginalImage}" />
+                    <Image RenderOptions.BitmapInterpolationMode="HighQuality" Source="{Binding OriginalImage}" />
                 </Border>
             </Panel>
             <!--  切换预览字符按钮  -->
@@ -62,16 +62,17 @@
             <!--  字体选择  -->
             <StackPanel Grid.Row="2" Margin="10">
                 <CheckBox
-                    Name="UseSystemFont"
+                    Name="UseSystemFontCheckBox"
                     Margin="0,0,0,5"
                     Content="{DynamicResource UseSystemFontText}"
-                    IsChecked="{Binding UseSystemFont}" />
+                    IsChecked="{Binding UseSystemFont}"
+                    IsEnabled="{Binding EnableUseSystemFontCheckBox}" />
                 <ComboBox
                     HorizontalAlignment="Stretch"
-                    IsVisible="{Binding ElementName=UseSystemFont, Path=IsChecked}"
+                    IsVisible="{Binding ElementName=UseSystemFontCheckBox, Path=IsChecked}"
                     ItemsSource="{Binding SystemFontList}"
                     SelectedIndex="{Binding SelectedFontIndex}" />
-                <StackPanel IsVisible="{Binding ElementName=UseSystemFont, Path=!IsChecked}">
+                <StackPanel IsVisible="{Binding ElementName=UseSystemFontCheckBox, Path=!IsChecked}">
                     <TextBlock HorizontalAlignment="Center" Text="{Binding FontName}" />
                     <Button
                         Margin="0,5,0,0"
@@ -126,7 +127,10 @@
                         </ui:SettingsExpanderItem>
                         <ui:SettingsExpanderItem Content="{DynamicResource FontStyleContent}" Description="{DynamicResource FontStyleDescription}">
                             <ui:SettingsExpanderItem.Footer>
-                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                <StackPanel
+                                    VerticalAlignment="Center"
+                                    IsEnabled="{Binding ElementName=UseSystemFontCheckBox, Path=IsChecked}"
+                                    Orientation="Horizontal">
                                     <ToggleButton IsChecked="{Binding FontBold}">
                                         <ui:FontIcon
                                             FontFamily="{StaticResource SymbolThemeFontFamily}"
@@ -139,13 +143,13 @@
                                             FontSize="20"
                                             Glyph="&#xE199;" />
                                     </ToggleButton>
-                                    <ToggleButton IsChecked="{Binding FontUnderline}">
+                                    <ToggleButton IsChecked="{Binding FontUnderline}" IsEnabled="False">
                                         <ui:FontIcon
                                             FontFamily="{StaticResource SymbolThemeFontFamily}"
                                             FontSize="20"
                                             Glyph="&#xE19A;" />
                                     </ToggleButton>
-                                    <ToggleButton IsChecked="{Binding FontStrikeout}">
+                                    <ToggleButton IsChecked="{Binding FontStrikeout}" IsEnabled="False">
                                         <ui:FontIcon
                                             FontFamily="{StaticResource SymbolThemeFontFamily}"
                                             FontSize="20"
@@ -245,10 +249,7 @@
                         Header="{DynamicResource FontExportHeader}"
                         IconSource="CalendarWeek"
                         IsExpanded="True">
-                        <ui:SettingsExpanderItem
-                            Content="{DynamicResource InvertContent}"
-                            Description="{DynamicResource InvertDescription}"
-                            IsVisible="{Binding ElementName=IsEnableTowColor, Path=IsChecked}">
+                        <ui:SettingsExpanderItem Content="{DynamicResource InvertContent}" Description="{DynamicResource InvertDescription}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ToggleSwitch
                                     IsChecked="{Binding Invert}"
@@ -270,7 +271,10 @@
                                 </ComboBox>
                             </ui:SettingsExpanderItem.Footer>
                         </ui:SettingsExpanderItem>
-                        <ui:SettingsExpanderItem Content="{DynamicResource BitOrderContent}" Description="{DynamicResource BitOrderDescription}">
+                        <ui:SettingsExpanderItem
+                            Content="{DynamicResource BitOrderContent}"
+                            Description="{DynamicResource BitOrderDescription}"
+                            IsVisible="{Binding ElementName=IsEnableTowColor, Path=!IsChecked}">
                             <ui:SettingsExpanderItem.Footer>
                                 <ToggleSwitch
                                     IsChecked="{Binding BitOrderMSB}"
@@ -290,6 +294,7 @@
                             <ui:SettingsExpanderItem.Footer>
                                 <ToggleSwitch
                                     IsChecked="{Binding RLECompress}"
+                                    IsEnabled="False"
                                     OffContent="{DynamicResource Disable}"
                                     OnContent="{DynamicResource Enable}" />
                             </ui:SettingsExpanderItem.Footer>
@@ -332,6 +337,21 @@
                 <TextBlock Text="{DynamicResource TotalCharacters}" />
                 <TextBlock Margin="10,0,0,0" Text="{Binding TotalCharacters}" />
             </StackPanel>
+
+            <ui:InfoBar
+                Title="{DynamicResource SuccessTitle}"
+                Margin="20"
+                VerticalAlignment="Bottom"
+                IsOpen="{Binding IsShowSuccess, Mode=TwoWay}"
+                Message="{DynamicResource SuccessMessage}"
+                Severity="Success" />
+            <ui:InfoBar
+                Title="{DynamicResource FailTitle}"
+                Margin="20"
+                VerticalAlignment="Bottom"
+                IsOpen="{Binding IsShowFail, Mode=TwoWay}"
+                Message="{Binding FailMessage}"
+                Severity="Error" />
         </Grid>
     </Grid>
 </UserControl>
