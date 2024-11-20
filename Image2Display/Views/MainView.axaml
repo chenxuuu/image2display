@@ -1,0 +1,66 @@
+<UserControl
+    x:Class="Image2Display.Views.MainView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
+    xmlns:vm="using:Image2Display.ViewModels"
+    MinWidth="660"
+    MinHeight="300"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:MainViewModel"
+    mc:Ignorable="d">
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <ui:NavigationView
+        Name="MainNavigationView"
+        AlwaysShowHeader="False"
+        IsPaneOpen="False"
+        IsPaneToggleButtonVisible="False"
+        IsSettingsVisible="False"
+        OpenPaneLength="{DynamicResource MainOpenPaneLength}"
+        PaneDisplayMode="Left"
+        SelectionChanged="MainNavigationView_SelectionChanged">
+        <ui:NavigationView.MenuItems>
+            <ui:NavigationViewItemHeader Margin="0,10,0,0" Content="{DynamicResource ImageTitle}" />
+            <ui:NavigationViewItem
+                Content="{DynamicResource ImageProcessing}"
+                IconSource="ImageEdit"
+                IsSelected="True"
+                Tag="ImageProcessing" />
+            <ui:NavigationViewItem
+                Content="{DynamicResource ImageConvert}"
+                IconSource="Image"
+                Tag="ImageConvert" />
+            <ui:NavigationViewItemHeader Margin="0,10,0,0" Content="{DynamicResource FontTitle}" />
+            <ui:NavigationViewItem
+                Content="{DynamicResource FontConvert}"
+                IconSource="Font"
+                Tag="FontConvert" />
+            <ui:NavigationViewItemHeader Margin="0,10,0,0" Content="{DynamicResource ViewerTitle}" />
+            <ui:NavigationViewItem
+                Content="{DynamicResource DataViewer}"
+                IconSource="OpenLocal"
+                Tag="DataViewer" />
+        </ui:NavigationView.MenuItems>
+        <ui:NavigationView.FooterMenuItems>
+            <ui:NavigationViewItem
+                Content="{DynamicResource Settings}"
+                IconSource="Setting"
+                Tag="SettingViewer" />
+        </ui:NavigationView.FooterMenuItems>
+        <ui:NavigationView.Content>
+            <ui:Frame x:Name="ContentFrame" />
+        </ui:NavigationView.Content>
+    </ui:NavigationView>
+</UserControl>

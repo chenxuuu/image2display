@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<Content Include="Assets\I2D-logo.ico" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="Avalonia.Fonts.Inter" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Include="Avalonia.Diagnostics">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="FluentAvaloniaUI" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<AvaloniaXaml Update="Assets\Languages\en-US.axaml">
+			<SubType>Designer</SubType>
+		</AvaloniaXaml>
+		<AvaloniaXaml Update="Views\SettingsView.axaml">
+			<Generator>MSBuild:Compile</Generator>
+		</AvaloniaXaml>
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<Compile Update="Views\SettingsView.axaml.cs">
+			<DependentUpon>SettingsView.xaml</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<AvaloniaXaml Update="Assets\Resources.axaml">
+			<SubType>Designer</SubType>
+		</AvaloniaXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+		<TrimmerRootAssembly Include="Image2Display" />
+	</ItemGroup>
+</Project>

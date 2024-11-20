@@ -1,0 +1,483 @@
+<UserControl
+    x:Class="Image2Display.Views.ImageProcessingView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
+    xmlns:vm="using:Image2Display.ViewModels"
+    d:DesignHeight="660"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:ImageProcessingViewModel"
+    mc:Ignorable="d">
+    <Grid RowDefinitions="3*,5,5*">
+        <!--  分割线  -->
+        <GridSplitter Grid.Row="1" ToolTip.Tip="{DynamicResource AdjustWidthTip}" />
+        <!--  图片框  -->
+        <Grid
+            Name="ImageGrid"
+            Grid.Row="0"
+            Background="{StaticResource CheckerBoardBrush}"
+            ClipToBounds="True"
+            PointerWheelChanged="Grid_PointerWheelChanged">
+            <!--  一堆按钮  -->
+            <Grid
+                Margin="0,0,10,10"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                ColumnDefinitions="auto,auto"
+                RowDefinitions="auto,auto">
+                <RepeatButton
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Width="40"
+                    Height="40"
+                    Margin="10,10,0,0"
+                    Padding="0"
+                    Command="{Binding ShowOriginalImageCommand}"
+                    Delay="0"
+                    Interval="25"
+                    ToolTip.Tip="{DynamicResource HoldToCompare}">
+                    <ui:FontIcon
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="20"
+                        Glyph="&#xF0E7;" />
+                </RepeatButton>
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Width="40"
+                    Height="40"
+                    Margin="10,10,0,0"
+                    Padding="0"
+                    Command="{Binding OpenImageFileCommand}"
+                    ToolTip.Tip="{DynamicResource LoadNewImage}">
+                    <ui:FontIcon
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="20"
+                        Glyph="&#xE1A5;" />
+                </Button>
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Width="40"
+                    Height="40"
+                    Margin="10,10,0,0"
+                    Padding="0"
+                    Command="{Binding SaveImageFileCommand}"
+                    ToolTip.Tip="{DynamicResource SaveAsNewFile}">
+                    <ui:FontIcon
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="20"
+                        Glyph="&#xE105;" />
+                </Button>
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Width="40"
+                    Height="40"
+                    Margin="10,10,0,0"
+                    Padding="0"
+                    Command="{Binding SentImage2ConvertPageCommand}"
+                    ToolTip.Tip="{DynamicResource PerformModulation}">
+                    <ui:FontIcon
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="20"
+                        Glyph="&#xE122;" />
+                </Button>
+            </Grid>
+            <!--  空白图片  -->
+            <Viewbox Name="ImageViewbox" ZIndex="-1">
+                <Border
+                    Margin="10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    BoxShadow="0 0 10 2 #7F7F7F7F">
+                    <Grid>
+                        <Viewbox IsVisible="{Binding OriginalImage, Converter={x:Static ObjectConverters.IsNull}}">
+                            <Image
+                                Width="200"
+                                Margin="100"
+                                Opacity="0.5"
+                                Source="/Assets/Images/unknowImage.png" />
+                        </Viewbox>
+                        <!--  后面还要放两张图片，代表原图与处理后的图片  -->
+                        <Grid IsVisible="{Binding OriginalImage, Converter={x:Static ObjectConverters.IsNotNull}}">
+                            <Image
+                                IsVisible="{Binding IsShowOriginalImage}"
+                                RenderOptions.BitmapInterpolationMode="None"
+                                Source="{Binding OriginalImage}" />
+                            <Image
+                                IsVisible="{Binding !IsShowOriginalImage}"
+                                RenderOptions.BitmapInterpolationMode="None"
+                                Source="{Binding ProcessedImage}" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Viewbox>
+            <Viewbox>
+                <ui:ProgressRing Margin="10" IsVisible="{Binding IsProcessing}" />
+            </Viewbox>
+            <ui:InfoBar
+                Title="{DynamicResource ProcessError}"
+                Margin="20"
+                IsOpen="{Binding IsError, Mode=TwoWay}"
+                Message="{Binding ErrorMessage}"
+                Severity="Error" />
+        </Grid>
+        <ScrollViewer
+            Grid.Row="2"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="20">
+                <!--  图像裁剪  -->
+                <ui:SettingsExpander
+                    Margin="0,0,0,10"
+                    Description="{DynamicResource DescriptionKeepTargetArea}"
+                    Header="{DynamicResource ImageCropping}"
+                    IconSource="Crop">
+                    <ui:SettingsExpanderItem Content="{DynamicResource CropImage}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch
+                                IsChecked="{Binding CropImage}"
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem
+                        Content="{DynamicResource CurrentImageSizeInfo}"
+                        Description="{DynamicResource OriginalImageSize}"
+                        IsVisible="{Binding CropImage}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <Grid
+                                Margin="0,0,20,0"
+                                ColumnDefinitions="auto,auto,auto"
+                                RowDefinitions="*,*">
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Right"
+                                    Text="{DynamicResource Width}" />
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Text="{Binding ImageWidth}" />
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Text="px" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Right"
+                                    Text="{DynamicResource Height}" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Text="{Binding ImageHeight}" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Text="px" />
+                            </Grid>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem
+                        Content="{DynamicResource CropTopLeftCoordinates}"
+                        Description="{DynamicResource CropStart0}"
+                        IsVisible="{Binding CropImage}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox MinWidth="80" Text="{Binding CropX1}" />
+                                <TextBox MinWidth="80" Text="{Binding CropY1}" />
+                            </StackPanel>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource CropBottomRightCoordinates}" IsVisible="{Binding CropImage}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox MinWidth="80" Text="{Binding CropX2}" />
+                                <TextBox MinWidth="80" Text="{Binding CropY2}" />
+                            </StackPanel>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander>
+
+                <!--  图像缩放  -->
+                <ui:SettingsExpander
+                    Margin="0,0,0,10"
+                    Description="{DynamicResource DescriptionScaleToResolution}"
+                    Header="{DynamicResource ImageScaling}"
+                    IconSource="BackToWindow">
+                    <ui:SettingsExpanderItem Content="{DynamicResource ScaleImage}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch
+                                IsChecked="{Binding ImageScaling}"
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem
+                        Content="{DynamicResource CurrentImageSizeInfo}"
+                        Description="{DynamicResource CropedImageSize}"
+                        IsVisible="{Binding ImageScaling}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <Grid
+                                Margin="0,0,20,0"
+                                ColumnDefinitions="auto,auto,auto"
+                                RowDefinitions="*,*">
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Right"
+                                    Text="{DynamicResource Width}" />
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Text="{Binding ImageWidthCroped}" />
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Text="px" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Right"
+                                    Text="{DynamicResource Height}" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Text="{Binding ImageHeightCroped}" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Text="px" />
+                            </Grid>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource QuickSelectScale}" IsVisible="{Binding ImageScaling}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="200" SelectedIndex="{Binding QuickScale}">
+                                <ComboBoxItem Content="{DynamicResource ManualScale}" />
+                                <ComboBoxItem Content="30%" />
+                                <ComboBoxItem Content="50%" />
+                                <ComboBoxItem Content="80%" />
+                                <ComboBoxItem Content="120%" />
+                                <ComboBoxItem Content="150%" />
+                                <ComboBoxItem Content="200%" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem
+                        Content="{DynamicResource MaintainAspectRatio}"
+                        Description="{DynamicResource AutoCalculateWidthOrHeight}"
+                        IsVisible="{Binding ManuallyScale}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch
+                                IsChecked="{Binding KeepAspectRatio}"
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem
+                        Content="{DynamicResource StretchImage}"
+                        Description="{DynamicResource CropExtraParts}"
+                        IsVisible="{Binding ManuallyScale}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch
+                                IsChecked="{Binding Stretch}"
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource ScaleToResolution}" IsVisible="{Binding ManuallyScale}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="{DynamicResource Width}" />
+                                <TextBox
+                                    MinWidth="80"
+                                    Margin="0,0,10,0"
+                                    Text="{Binding ScaleWidth}" />
+                                <TextBlock VerticalAlignment="Center" Text="{DynamicResource Height}" />
+                                <TextBox MinWidth="80" Text="{Binding ScaleHeight}" />
+                            </StackPanel>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource InterpolationAlgorithm}" IsVisible="{Binding ImageScaling}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="200" SelectedIndex="{Binding ScaleAlgorithm}">
+                                <ComboBoxItem Content="{DynamicResource NearestNeighbor}" />
+                                <ComboBoxItem Content="{DynamicResource Bicubic}" />
+                                <ComboBoxItem Content="{DynamicResource Triangle}" />
+                                <ComboBoxItem Content="{DynamicResource Box}" />
+                                <ComboBoxItem Content="Lanczos2" />
+                                <ComboBoxItem Content="Lanczos3" />
+                                <ComboBoxItem Content="Lanczos5" />
+                                <ComboBoxItem Content="Lanczos8" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander>
+
+                <!--  颜色处理  -->
+                <ui:SettingsExpander
+                    Margin="0,0,0,10"
+                    Description="{DynamicResource DescriptionBasicBrightnessContrast}"
+                    Header="{DynamicResource ColorProcessing}"
+                    IconSource="ColorFill">
+                    <ui:SettingsExpanderItem Content="{DynamicResource PreserveTransparency}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch
+                                IsChecked="{Binding PreserveTransparency}"
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource ConvertTransparentColor}" IsVisible="{Binding !PreserveTransparency}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ui:ColorPickerButton ShowAcceptDismissButtons="False" Color="{Binding TransparencyColor}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource Brightness}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <Slider
+                                Width="200"
+                                Maximum="200"
+                                Minimum="0"
+                                Value="{Binding Brightness}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource Contrast}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <Slider
+                                Width="200"
+                                Maximum="200"
+                                Minimum="0"
+                                Value="{Binding Contrast}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource Saturation}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <Slider
+                                Width="200"
+                                Maximum="200"
+                                Minimum="0"
+                                Value="{Binding Saturation}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource InvertColors}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch
+                                IsChecked="{Binding InvertColors}"
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander>
+
+                <!--  旋转和翻转  -->
+                <ui:SettingsExpander
+                    Margin="0,0,0,10"
+                    Description="{DynamicResource DescriptionRotateImageAndMirror}"
+                    Header="{DynamicResource RotationAndMirroring}"
+                    IconSource="Orientation">
+                    <ui:SettingsExpanderItem Content="{DynamicResource RotateImage}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="200" SelectedIndex="{Binding RotateImage}">
+                                <ComboBoxItem Content="{DynamicResource NoRotation}" />
+                                <ComboBoxItem Content="90%" />
+                                <ComboBoxItem Content="180%" />
+                                <ComboBoxItem Content="270%" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource MirrorProcessing}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="200" SelectedIndex="{Binding MirrorProcessing}">
+                                <ComboBoxItem Content="{DynamicResource NoMirroring}" />
+                                <ComboBoxItem Content="{DynamicResource HorizontalMirror}" />
+                                <ComboBoxItem Content="{DynamicResource VerticalMirror}" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander>
+
+                <!--  颜色量化  -->
+                <ui:SettingsExpander
+                    Margin="0,0,0,10"
+                    Description="{DynamicResource DescriptionUseLowerBitPalette}"
+                    Header="{DynamicResource ColorQuantization}"
+                    IconSource="DarkTheme">
+                    <ui:SettingsExpanderItem Content="{DynamicResource ImageBinarization}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch
+                                IsChecked="{Binding Binarization}"
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource Threshold}" IsVisible="{Binding BinarizationThresholdShow}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <Slider
+                                Width="200"
+                                Maximum="255"
+                                Minimum="0"
+                                Value="{Binding BinarizationThreshold}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource BlackAndWhiteInversion}" IsVisible="{Binding Binarization}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch
+                                IsChecked="{Binding BinarizationInversion}"
+                                OffContent="{DynamicResource Disable}"
+                                OnContent="{DynamicResource Enable}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem
+                        Content="{DynamicResource TargetColorQuantization}"
+                        Description="{DynamicResource ChangeTransparentColorInColorTab}"
+                        IsVisible="{Binding IsQuantizationComboBoxShow}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="200" SelectedIndex="{Binding Quantization}">
+                                <ComboBoxItem Content="{DynamicResource MaintainCurrent}" />
+                                <ComboBoxItem Content="{DynamicResource Colors256}" />
+                                <ComboBoxItem Content="{DynamicResource Colors16}" />
+                                <ComboBoxItem Content="{DynamicResource Colors8}" />
+                                <ComboBoxItem Content="{DynamicResource Colors4}" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource DitheringAlgorithm}" IsVisible="{Binding Binarization}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="200" SelectedIndex="{Binding DitheringAlgorithm}">
+                                <ComboBoxItem Content="{DynamicResource DitheringAlgorithmDisable}" />
+                                <ComboBoxItem Content="{DynamicResource FloydSteinberg}" />
+                                <ComboBoxItem Content="{DynamicResource Bayer4x4}" />
+                                <ComboBoxItem Content="{DynamicResource JarvisJudiceNinke}" />
+                                <ComboBoxItem Content="{DynamicResource Stucki}" />
+                                <ComboBoxItem Content="{DynamicResource Atkinson}" />
+                                <ComboBoxItem Content="{DynamicResource Burks}" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="{DynamicResource QuantizationAlgorithm}" IsVisible="{Binding !Binarization}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox Width="200" SelectedIndex="{Binding QuantizationAlgorithm}">
+                                <ComboBoxItem Content="Octree" />
+                                <ComboBoxItem Content="Web Safe Palette" />
+                                <ComboBoxItem Content="Xiaolin Wu" />
+                                <ComboBoxItem Content="Werner Palette" />
+                            </ComboBox>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

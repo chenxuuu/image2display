@@ -1,0 +1,852 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+    <DrawingBrush
+        x:Key="CheckerBoardBrush"
+        DestinationRect="0 0 30 30"
+        Opacity="0.03"
+        Stretch="None"
+        TileMode="Tile">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="White">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,0,30,30" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="White">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="30,30,30,30" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="Black">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="30,0,30,30" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="Black">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,30,30,30" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <Canvas
+        x:Key="ArrowsLineCanvasLRUD"
+        Width="200"
+        Height="200">
+        <!--  第一条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="5,30"
+            EndPoint="195,30" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="195,30 170,25 170,35" />
+
+        <!--  第一条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="195,30"
+            EndPoint="5,60" />
+
+        <!--  第二条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="5,60"
+            EndPoint="195,60" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="195,60 170,55 170,65" />
+
+        <!--  第二条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="195,60"
+            EndPoint="5,90" />
+
+        <!--  第三条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="5,90"
+            EndPoint="195,90" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="195,90 170,85 170,95" />
+
+        <!--  第三条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="195,90"
+            EndPoint="5,120" />
+
+        <!--  第四条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="5,120"
+            EndPoint="195,120" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="195,120 170,115 170,125" />
+
+        <!--  第四条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="195,120"
+            EndPoint="5,150" />
+
+        <!--  第五条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="5,150"
+            EndPoint="195,150" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="195,150 170,145 170,155" />
+
+        <!--  第五条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="195,150"
+            EndPoint="5,180" />
+
+        <!--  第六条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="5,180"
+            EndPoint="195,180" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="195,180 170,175 170,185" />
+
+        <!--  画2个小圆圈  -->
+        <Ellipse
+            Canvas.Left="0"
+            Canvas.Top="25"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorSuccessBrush}" />
+        <Ellipse
+            Canvas.Left="190"
+            Canvas.Top="175"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorCriticalBrush}" />
+
+    </Canvas>
+    <Canvas
+        x:Key="ArrowsLineCanvasRLUD"
+        Width="200"
+        Height="200">
+        <!--  第一条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="195,30"
+            EndPoint="5,30" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="5,30 30,25 30,35" />
+
+        <!--  第一条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="5,30"
+            EndPoint="195,60" />
+
+        <!--  第二条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="195,60"
+            EndPoint="5,60" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="5,60 30,55 30,65" />
+
+        <!--  第二条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="5,60"
+            EndPoint="195,90" />
+
+        <!--  第三条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="195,90"
+            EndPoint="5,90" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="5,90 30,85 30,95" />
+
+        <!--  第三条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="5,90"
+            EndPoint="195,120" />
+
+        <!--  第四条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="195,120"
+            EndPoint="5,120" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="5,120 30,115 30,125" />
+
+        <!--  第四条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="5,120"
+            EndPoint="195,150" />
+
+        <!--  第五条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="195,150"
+            EndPoint="5,150" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="5,150 30,145 30,155" />
+
+        <!--  第五条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="5,150"
+            EndPoint="195,180" />
+
+        <!--  第六条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="195,180"
+            EndPoint="5,180" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="5,180 30,175 30,185" />
+
+        <!--  画2个小圆圈  -->
+        <Ellipse
+            Canvas.Left="190"
+            Canvas.Top="25"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorSuccessBrush}" />
+        <Ellipse
+            Canvas.Left="0"
+            Canvas.Top="175"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorCriticalBrush}" />
+    </Canvas>
+    <Canvas
+        x:Key="ArrowsLineCanvasLRDU"
+        Width="200"
+        Height="200">
+        <!--  第一条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="5,170"
+            EndPoint="195,170" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="195,170 170,175 170,165" />
+
+        <!--  第一条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="195,170"
+            EndPoint="5,140" />
+
+        <!--  第二条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="5,140"
+            EndPoint="195,140" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="195,140 170,145 170,135" />
+
+        <!--  第二条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="195,140"
+            EndPoint="5,110" />
+
+        <!--  第三条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="5,110"
+            EndPoint="195,110" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="195,110 170,115 170,105" />
+
+        <!--  第三条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="195,110"
+            EndPoint="5,80" />
+
+        <!--  第四条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="5,80"
+            EndPoint="195,80" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="195,80 170,85 170,75" />
+
+        <!--  第四条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="195,80"
+            EndPoint="5,50" />
+
+        <!--  第五条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="5,50"
+            EndPoint="195,50" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="195,50 170,55 170,45" />
+
+        <!--  第五条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="195,50"
+            EndPoint="5,20" />
+
+        <!--  第六条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="5,20"
+            EndPoint="195,20" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="195,20 170,25 170,15" />
+
+        <!--  画2个小圆圈  -->
+        <Ellipse
+            Canvas.Left="0"
+            Canvas.Top="165"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorSuccessBrush}" />
+        <Ellipse
+            Canvas.Left="190"
+            Canvas.Top="15"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorCriticalBrush}" />
+    </Canvas>
+    <Canvas
+        x:Key="ArrowsLineCanvasRLDU"
+        Width="200"
+        Height="200">
+        <!--  第一条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="195,170"
+            EndPoint="5,170" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="5,170 30,175 30,165" />
+
+        <!--  第一条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="5,170"
+            EndPoint="195,140" />
+
+        <!--  第二条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="195,140"
+            EndPoint="5,140" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="5,140 30,145 30,135" />
+
+        <!--  第二条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="5,140"
+            EndPoint="195,110" />
+
+        <!--  第三条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="195,110"
+            EndPoint="5,110" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="5,110 30,115 30,105" />
+
+        <!--  第三条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="5,110"
+            EndPoint="195,80" />
+
+        <!--  第四条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="195,80"
+            EndPoint="5,80" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="5,80 30,85 30,75" />
+
+        <!--  第四条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="5,80"
+            EndPoint="195,50" />
+
+        <!--  第五条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="195,50"
+            EndPoint="5,50" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="5,50 30,55 30,45" />
+
+        <!--  第五条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="5,50"
+            EndPoint="195,20" />
+
+        <!--  第六条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="195,20"
+            EndPoint="5,20" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="5,20 30,25 30,15" />
+        <!--  画2个小圆圈  -->
+        <Ellipse
+            Canvas.Left="190"
+            Canvas.Top="165"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorSuccessBrush}" />
+        <Ellipse
+            Canvas.Left="0"
+            Canvas.Top="15"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorCriticalBrush}" />
+    </Canvas>
+
+    <Canvas
+        x:Key="ArrowsLineCanvasUDRL"
+        Width="200"
+        Height="200">
+        <!--  第一条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="170,5"
+            EndPoint="170,195" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="170,195 165,170 175,170" />
+
+        <!--  第一条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="170,195"
+            EndPoint="140,5" />
+
+        <!--  第二条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="140,5"
+            EndPoint="140,195" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="140,195 135,170 145,170" />
+
+        <!--  第二条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="140,195"
+            EndPoint="110,5" />
+
+        <!--  第三条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="110,5"
+            EndPoint="110,195" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="110,195 105,170 115,170" />
+
+        <!--  第三条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="110,195"
+            EndPoint="80,5" />
+
+        <!--  第四条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="80,5"
+            EndPoint="80,195" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="80,195 75,170 85,170" />
+
+        <!--  第四条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="80,195"
+            EndPoint="50,5" />
+
+        <!--  第五条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="50,5"
+            EndPoint="50,195" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="50,195 45,170 55,170" />
+
+        <!--  第五条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="50,195"
+            EndPoint="20,5" />
+
+        <!--  第六条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="20,5"
+            EndPoint="20,195" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="20,195 15,170 25,170" />
+        <!--  画2个小圆圈  -->
+        <Ellipse
+            Canvas.Left="165"
+            Canvas.Top="0"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorSuccessBrush}" />
+        <Ellipse
+            Canvas.Left="15"
+            Canvas.Top="190"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorCriticalBrush}" />
+    </Canvas>
+    <Canvas
+        x:Key="ArrowsLineCanvasUDLR"
+        Width="200"
+        Height="200">
+        <!--  第一条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="30,5"
+            EndPoint="30,195" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="30,195 35,170 25,170" />
+        <!--  第一条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="30,195"
+            EndPoint="60,5" />
+        <!--  第二条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="60,5"
+            EndPoint="60,195" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="60,195 65,170 55,170" />
+        <!--  第二条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="60,195"
+            EndPoint="90,5" />
+        <!--  第三条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="90,5"
+            EndPoint="90,195" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="90,195 95,170 85,170" />
+        <!--  第三条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="90,195"
+            EndPoint="120,5" />
+        <!--  第四条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="120,5"
+            EndPoint="120,195" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="120,195 125,170 115,170" />
+        <!--  第四条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="120,195"
+            EndPoint="150,5" />
+        <!--  第五条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="150,5"
+            EndPoint="150,195" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="150,195 155,170 145,170" />
+        <!--  第五条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="150,195"
+            EndPoint="180,5" />
+        <!--  第六条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="180,5"
+            EndPoint="180,195" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="180,195 185,170 175,170" />
+        <!--  画2个小圆圈  -->
+        <Ellipse
+            Canvas.Left="25"
+            Canvas.Top="0"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorSuccessBrush}" />
+        <Ellipse
+            Canvas.Left="175"
+            Canvas.Top="190"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorCriticalBrush}" />
+    </Canvas>
+    <Canvas
+        x:Key="ArrowsLineCanvasDURL"
+        Width="200"
+        Height="200">
+        <!--  第一条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="170,195"
+            EndPoint="170,5" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="170,5 165,30 175,30" />
+        <!--  第一条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="170,5"
+            EndPoint="140,195" />
+        <!--  第二条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="140,195"
+            EndPoint="140,5" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="140,5 135,30 145,30" />
+        <!--  第二条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="140,5"
+            EndPoint="110,195" />
+        <!--  第三条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="110,195"
+            EndPoint="110,5" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="110,5 105,30 115,30" />
+        <!--  第三条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="110,5"
+            EndPoint="80,195" />
+        <!--  第四条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="80,195"
+            EndPoint="80,5" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="80,5 75,30 85,30" />
+        <!--  第四条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="80,5"
+            EndPoint="50,195" />
+        <!--  第五条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="50,195"
+            EndPoint="50,5" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="50,5 45,30 55,30" />
+        <!--  第五条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="50,5"
+            EndPoint="20,195" />
+        <!--  第六条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="20,195"
+            EndPoint="20,5" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="20,5 15,30 25,30" />
+        <!--  画2个小圆圈  -->
+        <Ellipse
+            Canvas.Left="165"
+            Canvas.Top="190"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorSuccessBrush}" />
+        <Ellipse
+            Canvas.Left="15"
+            Canvas.Top="0"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorCriticalBrush}" />
+    </Canvas>
+    <Canvas
+        x:Key="ArrowsLineCanvasDULR"
+        Width="200"
+        Height="200">
+        <!--  第一条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="30,195"
+            EndPoint="30,5" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="30,5 35,30 25,30" />
+        <!--  第一条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="30,5"
+            EndPoint="60,195" />
+        <!--  第二条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="60,195"
+            EndPoint="60,5" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="60,5 65,30 55,30" />
+        <!--  第二条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="60,5"
+            EndPoint="90,195" />
+        <!--  第三条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="90,195"
+            EndPoint="90,5" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="90,5 95,30 85,30" />
+        <!--  第三条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="90,5"
+            EndPoint="120,195" />
+        <!--  第四条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="120,195"
+            EndPoint="120,5" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="120,5 125,30 115,30" />
+        <!--  第四条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="120,5"
+            EndPoint="150,195" />
+        <!--  第五条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="150,195"
+            EndPoint="150,5" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="150,5 155,30 145,30" />
+        <!--  第五条虚线  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeDashArray="5,5"
+            StrokeThickness="2"
+            StartPoint="150,5"
+            EndPoint="180,195" />
+        <!--  第六条实线箭头  -->
+        <Line
+            Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+            StrokeThickness="2"
+            StartPoint="180,195"
+            EndPoint="180,5" />
+        <Polygon Fill="{DynamicResource FocusStrokeColorOuterBrush}" Points="180,5 185,30 175,30" />
+        <!--  画2个小圆圈  -->
+        <Ellipse
+            Canvas.Left="25"
+            Canvas.Top="190"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorSuccessBrush}" />
+        <Ellipse
+            Canvas.Left="175"
+            Canvas.Top="0"
+            Width="10"
+            Height="10"
+            Fill="{DynamicResource SystemFillColorCriticalBrush}" />
+    </Canvas>
+</ResourceDictionary>
