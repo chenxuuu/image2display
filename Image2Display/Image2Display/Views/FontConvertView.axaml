@@ -20,7 +20,7 @@
                     Margin="10"
                     BorderBrush="{DynamicResource SurfaceStrokeColorDefaultBrush}"
                     BorderThickness="2">
-                    <Image RenderOptions.BitmapInterpolationMode="HighQuality" Source="{Binding OriginalImage}" />
+                    <Image RenderOptions.BitmapInterpolationMode="HighQuality" Source="{Binding OriginalImage}" MaxHeight="200" MinHeight="100"/>
                 </Border>
             </Panel>
             <!--  切换预览字符按钮  -->
