@@ -18,8 +18,9 @@ A cross-platform image and font data processing tool for generating data usable 
 
 Supports Win10+, Linux, OSX
 
-![image2display](Assets/en.gif)
-![font](Assets/font.png)
+| Image Modulation | Font Rasterization |
+|--------|--------|
+| ![image2display](Assets/en.gif) | ![font](Assets/font.png) |
 
 ## Download
 

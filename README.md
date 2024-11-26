@@ -18,8 +18,9 @@
 
 支持Win10+、linux、OSX
 
-![image2display](Assets/zh.gif)
-![font](Assets/font.png)
+| 图片取模 | 字体取模 |
+|--------|--------|
+| ![image2display](Assets/zh.gif) | ![font](Assets/font.png) |
 
 ## 下载
 
