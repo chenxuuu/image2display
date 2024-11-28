@@ -40,7 +40,7 @@ jobs:
           DOTNETARCH: ${{ matrix.dotnetarch }}
         run: |
           cd Image2Display/Image2Display
-          dotnet publish -r $DOTNETOS-$DOTNETARCH --configuration Release -p:PublishSingleFile=true -p:IncludeNativeLibrariesFromSelfExtract=true --self-contained true -p:PublishTrimmed=true -p:TrimMode=link
+          dotnet publish -r $DOTNETOS-$DOTNETARCH --configuration Release --self-contained true -p:PublishTrimmed=true -p:TrimMode=link -p:PublishAot=true
           mkdir pkg
           mv bin/Release/net8.0/$DOTNETOS-$DOTNETARCH/publish/* pkg/
 
