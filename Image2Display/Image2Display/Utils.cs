@@ -116,7 +116,7 @@ namespace Image2Display
         /// </summary>
         public static void SaveSettings()
         {
-            string jsonString = JsonSerializer.Serialize(Settings);
+            string jsonString = JsonSerializer.Serialize(Settings, SourceGenerationContext.Default.SettingModel);
             File.WriteAllText(_settingsPath, jsonString);
         }
 

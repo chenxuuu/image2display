@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Image2Display.Models
 {
+    [JsonSerializable(typeof(SettingModel))]
+    [JsonSourceGenerationOptions(WriteIndented = true)]
+    internal partial class SourceGenerationContext : JsonSerializerContext
+    {
+    }
+
     public class SettingModel
     {
         public static readonly string[] SupportLanguages = ["zh-CN", "en-US"];
