@@ -31,7 +31,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y apt-transport-https
           sudo apt-get update
-          sudo apt-get install -y dotnet-sdk-8.0
+          sudo apt-get install -y dotnet-sdk-9.0
           sudo apt-get install -y p7zip-full
       - name: build
         env:
@@ -40,8 +40,9 @@ jobs:
         run: |
           cd Image2Display/Image2Display
           dotnet publish -r $DOTNETOS-$DOTNETARCH --configuration Release --self-contained true -p:PublishTrimmed=true -p:TrimMode=link -p:PublishAot=true
+          rm bin/Release/net9.0/$DOTNETOS-$DOTNETARCH/publish/*.pdb
           mkdir pkg
-          mv bin/Release/net8.0/$DOTNETOS-$DOTNETARCH/publish/* pkg/
+          mv bin/Release/net9.0/$DOTNETOS-$DOTNETARCH/publish/* pkg/
 
       - uses: actions/upload-artifact@v4
         with:
