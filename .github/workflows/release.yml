@@ -23,7 +23,7 @@ jobs:
             dotnetarch: arm
           - dotnetos: win
             dotnetarch: arm
-      fail-fast: true
+      fail-fast: false
     steps:
       - uses: actions/checkout@v4
       - name: environment prepare
