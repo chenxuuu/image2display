@@ -523,6 +523,7 @@
                 <Button
                     Margin="0,0,0,5"
                     HorizontalAlignment="Stretch"
+                    Classes="accent"
                     Command="{Binding ExportAsArrayFileCommand}">
                     <StackPanel Orientation="Horizontal">
                         <ui:SymbolIcon
