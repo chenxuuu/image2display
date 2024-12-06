@@ -18,7 +18,7 @@ public class ColorData
     /// <param name="rotate">遍历顺序</param>
     /// <param name="action">回调函数</param>
     /// <exception cref="NotImplementedException"></exception>
-    private static void IterateImg(Image<Rgba32> img, int rotate, Action<Rgba32> action)
+    private static void IterateImg(Image<Rgba32> img, int rotate, Action<Rgba32> action, Action<int> PgsCb)
     {
         //主要开始1 主要结束1 次要开始2 次要结束2 是否先x后y
         var (m1,m2,p1,p2,xFirst) = rotate switch
@@ -36,13 +36,16 @@ public class ColorData
 
         var mStep = m1 < m2 ? 1 : -1;
         var pStep = p1 < p2 ? 1 : -1;
+        var steps = img.Width * img.Height;
+        var stepNow = 0;
         if (xFirst)
         {
             for (var y = p1; y != p2 + pStep; y += pStep)
             {
                 for (var x = m1; x != m2 + mStep; x += mStep)
                 {
-                    Debug.WriteLine($"x:{x} y:{y}");
+                    stepNow++;
+                    PgsCb(stepNow * 100 / steps);
                     action(img[x, y]);
                 }
             }
@@ -53,7 +56,8 @@ public class ColorData
             {
                 for (var y = m1; y != m2 + mStep; y += mStep)
                 {
-                    Debug.WriteLine($"x:{x} y:{y}");
+                    stepNow++;
+                    PgsCb(stepNow * 100 / steps);
                     action(img[x, y]);
                 }
             }
@@ -77,7 +81,7 @@ public class ColorData
         return result;
     }
 
-    public static List<byte> Get1_2_4_8BitsImage(Image<Rgba32> img, int rotate, bool reverseBits, int bitsPerPixel, List<Rgba32> colors)
+    public static List<byte> Get1_2_4_8BitsImage(Image<Rgba32> img, int rotate, bool reverseBits, int bitsPerPixel, List<Rgba32> colors, Action<int> PgsCb)
     {
         var l = new List<byte>();
         var count = 0;
@@ -103,7 +107,7 @@ public class ColorData
                 count = 0;
                 temp = 0;
             }
-        });
+        }, PgsCb);
         // 如果最后一个字节不满8位，补0
         if (count != 0)
         {
@@ -114,7 +118,7 @@ public class ColorData
         return l;
     }
 
-    public static List<byte> Get16BitsImage(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian, List<Rgba32> colors)
+    public static List<byte> Get16BitsImage(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian, List<Rgba32> colors, Action<int> PgsCb)
     {
         var l = new List<byte>();
         ushort temp = 0;
@@ -141,12 +145,12 @@ public class ColorData
                 l.Add((byte)((temp >> 8) & 0xFF));
                 l.Add((byte)(temp & 0xFF));
             }
-        });
+        }, PgsCb);
 
         return l;
     }
 
-    public static List<byte> GetRGB444Image(Image<Rgba32> img, int rotate, bool reverseBits)
+    public static List<byte> GetRGB444Image(Image<Rgba32> img, int rotate, bool reverseBits, Action<int> PgsCb)
     {
         var l = new List<byte>();
         byte halfTemp = 0;
@@ -181,7 +185,7 @@ public class ColorData
                 halfTemp = (byte)(b << 4);
                 isLastHalfByte = true;
             }
-        });
+        }, PgsCb);
 
         if (isLastHalfByte)
             l.Add(halfTemp);
@@ -189,7 +193,7 @@ public class ColorData
         return l;
     }
 
-    public static List<byte> GetRGB444HighEmptyImage(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian)
+    public static List<byte> GetRGB444HighEmptyImage(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian, Action<int> PgsCb)
     {
         var l = new List<byte>();
 
@@ -221,12 +225,12 @@ public class ColorData
                 temp |= b;
                 l.Add(temp);
             }
-        });
+        }, PgsCb);
 
         return l;
     }
 
-    public static List<byte> GetRGB565Image(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian)
+    public static List<byte> GetRGB565Image(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian, Action<int> PgsCb)
     {
         var l = new List<byte>();
 
@@ -256,12 +260,12 @@ public class ColorData
                 l.Add((byte)((temp >> 8) & 0xFF));
                 l.Add((byte)(temp & 0xFF));
             }
-        });
+        }, PgsCb);
 
         return l;
     }
 
-    public static List<byte> GetRGB555HighEmptyImage(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian)
+    public static List<byte> GetRGB555HighEmptyImage(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian, Action<int> PgsCb)
     {
         var l = new List<byte>();
 
@@ -291,12 +295,12 @@ public class ColorData
                 l.Add((byte)((temp >> 8) & 0xFF));
                 l.Add((byte)(temp & 0xFF));
             }
-        });
+        }, PgsCb);
 
         return l;
     }
 
-    public static List<byte> GetRGB666HighEmptyImage(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian)
+    public static List<byte> GetRGB666HighEmptyImage(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian, Action<int> PgsCb)
     {
         var l = new List<byte>();
 
@@ -324,12 +328,12 @@ public class ColorData
                 l.Add(g);
                 l.Add(b);
             }
-        });
+        }, PgsCb);
 
         return l;
     }
 
-    public static List<byte> GetRGB666LowEmptyImage(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian)
+    public static List<byte> GetRGB666LowEmptyImage(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian, Action<int> PgsCb)
     {
         var l = new List<byte>();
 
@@ -360,12 +364,12 @@ public class ColorData
                 l.Add(temp2);
                 l.Add(temp3);
             }
-        });
+        }, PgsCb);
 
         return l;
     }
 
-    public static List<byte> GetRGB888Image(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian)
+    public static List<byte> GetRGB888Image(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian, Action<int> PgsCb)
     {
         var l = new List<byte>();
 
@@ -393,49 +397,12 @@ public class ColorData
                 l.Add(g);
                 l.Add(b);
             }
-        });
+        }, PgsCb);
 
         return l;
     }
 
-    public static List<byte> GetARGB8888Image(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian)
-    {
-        var l = new List<byte>();
-
-        IterateImg(img, rotate, (color) =>
-        {
-            byte r = color.R;
-            byte g = color.G;
-            byte b = color.B;
-            byte a = color.A;
-            if (reverseBits)
-            {
-                r = (byte)ReverseBits(r, 8);
-                g = (byte)ReverseBits(g, 8);
-                b = (byte)ReverseBits(b, 8);
-                a = (byte)ReverseBits(a, 8);
-            }
-
-            if (isSmallEndian)
-            {
-                l.Add(b);
-                l.Add(g);
-                l.Add(r);
-                l.Add(a);
-            }
-            else
-            {
-                l.Add(a);
-                l.Add(r);
-                l.Add(g);
-                l.Add(b);
-            }
-        });
-
-        return l;
-    }
-
-    public static List<byte> GetRGBA8888Image(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian)
+    public static List<byte> GetARGB8888Image(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian, Action<int> PgsCb)
     {
         var l = new List<byte>();
 
@@ -455,6 +422,43 @@ public class ColorData
 
             if (isSmallEndian)
             {
+                l.Add(b);
+                l.Add(g);
+                l.Add(r);
+                l.Add(a);
+            }
+            else
+            {
+                l.Add(a);
+                l.Add(r);
+                l.Add(g);
+                l.Add(b);
+            }
+        }, PgsCb);
+
+        return l;
+    }
+
+    public static List<byte> GetRGBA8888Image(Image<Rgba32> img, int rotate, bool reverseBits, bool isSmallEndian, Action<int> PgsCb)
+    {
+        var l = new List<byte>();
+
+        IterateImg(img, rotate, (color) =>
+        {
+            byte r = color.R;
+            byte g = color.G;
+            byte b = color.B;
+            byte a = color.A;
+            if (reverseBits)
+            {
+                r = (byte)ReverseBits(r, 8);
+                g = (byte)ReverseBits(g, 8);
+                b = (byte)ReverseBits(b, 8);
+                a = (byte)ReverseBits(a, 8);
+            }
+
+            if (isSmallEndian)
+            {
                 l.Add(a);
                 l.Add(b);
                 l.Add(g);
@@ -467,12 +471,12 @@ public class ColorData
                 l.Add(b);
                 l.Add(a);
             }
-        });
+        }, PgsCb);
 
         return l;
     }
 
-    public static List<byte> GetGray8Image(Image<Rgba32> img, int rotate, bool reverseBits)
+    public static List<byte> GetGray8Image(Image<Rgba32> img, int rotate, bool reverseBits, Action<int> PgsCb)
     {
         var l = new List<byte>();
 
@@ -485,7 +489,7 @@ public class ColorData
             }
 
             l.Add(r);
-        });
+        }, PgsCb);
 
         return l;
     }

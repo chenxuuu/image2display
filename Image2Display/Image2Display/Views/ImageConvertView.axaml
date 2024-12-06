@@ -15,6 +15,14 @@
     x:DataType="vm:ImageConvertViewModel"
     mc:Ignorable="d">
     <Grid ColumnDefinitions="*,200">
+        <ProgressBar
+            Grid.ColumnSpan="2"
+            Height="5"
+            VerticalAlignment="Bottom"
+            Background="Transparent"
+            Maximum="100"
+            Minimum="0"
+            Value="{Binding ProgressValue}" />
         <Grid Grid.Column="1" RowDefinitions="*,auto,2*,auto">
             <Border
                 Margin="10"

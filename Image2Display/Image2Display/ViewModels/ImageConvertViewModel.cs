@@ -117,6 +117,9 @@ namespace Image2Display.ViewModels
         [ObservableProperty]
         private bool _isProcessing = false;
 
+        //处理进度
+        [ObservableProperty]
+        private int _ProgressValue = 0;
 
         private ImageData? Image = null;
         private List<Rgba32> ImageColors = new List<Rgba32>();
@@ -186,6 +189,11 @@ namespace Image2Display.ViewModels
         {
             IsProcessing = true;
             List<byte>? r = null;
+            ProgressValue = 0;
+            void cb(int value)
+            {
+                ProgressValue = value;
+            }
             try
             {
                 await Task.Run(() =>
@@ -196,10 +204,10 @@ namespace Image2Display.ViewModels
                         {
                             <= 3 => ColorData.Get1_2_4_8BitsImage(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
-                                (int)double.Pow(2, ColorDepth), ImageColors),
+                                (int)double.Pow(2, ColorDepth), ImageColors,cb),
                             4 => ColorData.Get16BitsImage(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
-                                ByteOrder == 1, ImageColors),
+                                ByteOrder == 1, ImageColors, cb),
                             _ => throw new NotImplementedException(),
                         };
                     }
@@ -208,33 +216,33 @@ namespace Image2Display.ViewModels
                         r = FullColorStorage switch
                         {
                             0 => ColorData.GetRGB444Image(
-                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1),
+                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1, cb),
                             1 => ColorData.GetRGB444HighEmptyImage(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
-                                ByteOrder == 1),
+                                ByteOrder == 1, cb),
                             2 => ColorData.GetRGB565Image(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
-                                ByteOrder == 1),
+                                ByteOrder == 1, cb),
                             3 => ColorData.GetRGB555HighEmptyImage(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
-                                ByteOrder == 1),
+                                ByteOrder == 1, cb),
                             4 => ColorData.GetRGB666HighEmptyImage(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
-                                ByteOrder == 1),
+                                ByteOrder == 1, cb),
                             5 => ColorData.GetRGB666LowEmptyImage(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
-                                ByteOrder == 1),
+                                ByteOrder == 1, cb),
                             6 => ColorData.GetRGB888Image(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
-                                ByteOrder == 1),
+                                ByteOrder == 1, cb),
                             7 => ColorData.GetARGB8888Image(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
-                                ByteOrder == 1),
+                                ByteOrder == 1, cb),
                             8 => ColorData.GetRGBA8888Image(
                                 Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1,
-                                ByteOrder == 1),
+                                ByteOrder == 1, cb),
                         9 => ColorData.GetGray8Image(
-                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1),
+                                Image!.Raw, PixelTraversalOrder, ColorInternalOrder == 1, cb),
                             _ => throw new NotImplementedException(),
                         };
                     }
@@ -244,6 +252,7 @@ namespace Image2Display.ViewModels
             {
                 ShowError("导出失败" + e.Message, "Export failed" + e.Message);
             }
+            ProgressValue = 0;
             IsProcessing = false;
             return r;
         }
