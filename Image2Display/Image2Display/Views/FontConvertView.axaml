@@ -20,7 +20,11 @@
                     Margin="10"
                     BorderBrush="{DynamicResource SurfaceStrokeColorDefaultBrush}"
                     BorderThickness="2">
-                    <Image RenderOptions.BitmapInterpolationMode="HighQuality" Source="{Binding OriginalImage}" MaxHeight="200" MinHeight="100"/>
+                    <Image
+                        MinHeight="100"
+                        MaxHeight="200"
+                        RenderOptions.BitmapInterpolationMode="HighQuality"
+                        Source="{Binding OriginalImage}" />
                 </Border>
             </Panel>
             <!--  切换预览字符按钮  -->
@@ -337,6 +341,14 @@
                 <TextBlock Text="{DynamicResource TotalCharacters}" />
                 <TextBlock Margin="10,0,0,0" Text="{Binding TotalCharacters}" />
             </StackPanel>
+            <ProgressBar
+                Grid.Row="1"
+                Height="5"
+                VerticalAlignment="Bottom"
+                Background="Transparent"
+                Maximum="100"
+                Minimum="0"
+                Value="{Binding ProgressValue}" />
 
             <ui:InfoBar
                 Title="{DynamicResource SuccessTitle}"

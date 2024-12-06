@@ -108,6 +108,10 @@ namespace Image2Display.ViewModels
         [ObservableProperty]
         private string _FailMessage = "";
 
+        //处理进度
+        [ObservableProperty]
+        private int _ProgressValue = 0;
+
         private void ShowSuccess()
         {
             IsShowSuccess = true;
@@ -399,52 +403,72 @@ namespace Image2Display.ViewModels
         }
 
 
-        private async Task<string> GetFontData()
+        private async Task<(byte[],string)> GetFontData(bool isCFile = true)
         {
             if(LoadedFont == null)
             {
                 ShowFail("no font");
-                return string.Empty;
+                return ([],string.Empty);
             }
+            ProgressValue = 0;
+            byte[] resultArr = [];
             var result = string.Empty;
             var error = string.Empty;
             await Task.Run(() =>
             {
-                var data = new List<List<byte>>();
-                foreach (var c in chars)
+                try
                 {
-                    var raw = FontConvert.GetData(LoadedFont,
-                        FontSize, c,
-                        FontWidth, FontHeight,
-                        FontXOffset, FontYOffset);
-
-                    var grayBit = GrayBitIndex switch
+                    var data = new List<List<byte>>();
+                    var progressCount = 0;
+                    foreach (var c in chars)
                     {
-                        0 => 2,
-                        1 => 4,
-                        2 => 8,
-                        _ => 2
-                    };
-                    var d = FontConvert.GetResultData(raw, FontWidth, FontHeight,
-                        !UseThreshold, grayBit, Threshold,
-                        Invert, ByteOrderIndex, BitOrderMSB);
-                    data.Add(d);
+                        var raw = FontConvert.GetData(LoadedFont,
+                            FontSize, c,
+                            FontWidth, FontHeight,
+                            FontXOffset, FontYOffset);
+
+                        var grayBit = GrayBitIndex switch
+                        {
+                            0 => 2,
+                            1 => 4,
+                            2 => 8,
+                            _ => 2
+                        };
+                        var d = FontConvert.GetResultData(raw, FontWidth, FontHeight,
+                            !UseThreshold, grayBit, Threshold,
+                            Invert, ByteOrderIndex, BitOrderMSB);
+                        data.Add(d);
+                        progressCount += 1;
+                        ProgressValue = (int)(progressCount * 100.0 / chars.Count);
+                    }
+                    if(isCFile)
+                        result = FontConvert.ByteListToCArray(data, FontWidth, FontHeight, chars);
+                    else
+                    {
+                        resultArr = data.SelectMany(d => d).ToArray();
+                        result = FontConvert.ByteListToExplain(data, FontWidth, FontHeight, chars);
+                    }
                 }
-                result = FontConvert.ByteListToCArray(data, FontWidth, FontHeight, chars);
+                catch (Exception e)
+                {
+                    error = e.Message;
+                }
             });
             if (!string.IsNullOrEmpty(error))
             {
                 ShowFail(error);
-                return string.Empty;
+                return ([], string.Empty);
             }
-            return result;
+            ProgressValue = 0;
+            return (resultArr,result);
         }
 
         [RelayCommand]
         private async Task CopyFontCode()
         {
-            var data = await GetFontData();
-            if(string.IsNullOrEmpty(data))
+            var dataTemp = await GetFontData();
+            var data = dataTemp.Item2;
+            if (string.IsNullOrEmpty(data))
                 return;
             if (await Utils.CopyString(data))
             {
@@ -457,7 +481,7 @@ namespace Image2Display.ViewModels
         }
         public static FilePickerFileType CFiles { get; } = new("C Files")
         {
-            Patterns = ["*.c"],
+            Patterns = ["*.c","*.bin"],
             AppleUniformTypeIdentifiers = ["public.source-code"],
             MimeTypes = ["text/x-csrc"]
         };
@@ -468,12 +492,26 @@ namespace Image2Display.ViewModels
             var path = await DialogHelper.ShowSaveFileDialogAsync("font_data", CFiles);
             if (path == null)
                 return;
-            var data = await GetFontData();
-            if (string.IsNullOrEmpty(data))
+            //判断下文件拓展名是不是.c
+            var isCFile = Path.GetExtension(path).Equals(".c", StringComparison.CurrentCultureIgnoreCase);
+            var dataTemp = await GetFontData(isCFile);
+
+            //保存数据
+            var byteData = dataTemp.Item1;
+            var stringData = dataTemp.Item2;
+            if (string.IsNullOrEmpty(stringData))
+                return;
+            if (!isCFile && byteData.Length == 0)
                 return;
             try
             {
-                await File.WriteAllTextAsync(path, data);
+                if(isCFile)
+                    await File.WriteAllTextAsync(path, stringData);
+                else
+                {
+                    await File.WriteAllTextAsync(path + ".txt", stringData);
+                    await File.WriteAllBytesAsync(path, byteData);
+                }
                 ShowSuccess();
             }
             catch (Exception e)

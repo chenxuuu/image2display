@@ -204,9 +204,7 @@ public class Utils
             else
                 return false;
             var clipboard = top.Clipboard;
-            var dataObject = new DataObject();
-            dataObject.Set(DataFormats.Text, txt);
-            await clipboard!.SetDataObjectAsync(dataObject);
+            await clipboard!.SetTextAsync(txt);
             return true;
         }
         catch
