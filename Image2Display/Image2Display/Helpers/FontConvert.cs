@@ -70,10 +70,10 @@ public class FontConvert
 
     public static byte[] GetData(SKTypeface font, int size, char c, int width, int height, int offsetx, int offsety)
     {
-        Debug.WriteLine($"Font: {font.FamilyName}, Size: {size}, Char: {c}, Width: {width}, Height: {height}, OffsetX: {offsetx}, OffsetY: {offsety}");
+        //Debug.WriteLine($"Font: {font.FamilyName}, Size: {size}, Char: {c}, Width: {width}, Height: {height}, OffsetX: {offsetx}, OffsetY: {offsety}");
         //创建画布
         using var surface = SKSurface.Create(new SKImageInfo(width, height));
-        Debug.WriteLine("Surface Created");
+        //Debug.WriteLine("Surface Created");
         //创建画笔
         using var paint = new SKPaint
         {
@@ -83,21 +83,21 @@ public class FontConvert
             TextAlign = SKTextAlign.Center,
             IsAntialias = true,
         };
-        Debug.WriteLine("Paint Created");
+        //Debug.WriteLine("Paint Created");
         //画布上画字
         surface.Canvas.DrawText(c.ToString(), width/2 + offsetx, height - offsety, paint);
-        Debug.WriteLine("Text Drawn");
+        //Debug.WriteLine("Text Drawn");
         //获取像素数据
         IntPtr data = surface.PeekPixels().GetPixels();
-        Debug.WriteLine("Pixels Get");
+        //Debug.WriteLine("Pixels Get");
         var result = new byte[width * height];
 
         // 获取像素数据
         using var pixmap = surface.PeekPixels();
-        Debug.WriteLine("pixmap got");
+        //Debug.WriteLine("pixmap got");
         if (pixmap != null)
         {
-            Debug.WriteLine("get data");
+            //Debug.WriteLine("get data");
             // 遍历像素数据
             for (int y = 0; y < pixmap.Height; y++)
             {
@@ -110,7 +110,7 @@ public class FontConvert
                 }
             }
         }
-        Debug.WriteLine("Data got");
+        //Debug.WriteLine("Data got");
 
         return result;
     }
