@@ -192,19 +192,37 @@ namespace Image2Display.ViewModels
             RealOriginalImage = null;
             RealProcessedImage = null;
 
+            var isLoaded = false;
             await Task.Run(() =>
             {
-                //读取图片，导入到OriginalImage内
-                RealOriginalImage = new ImageData(files[0].Path.LocalPath);
-                ImageWidth = RealOriginalImage.Width;
-                ImageHeight = RealOriginalImage.Height;
-                //复制图片数据到Processed
-                RealProcessedImage = new ImageData(RealOriginalImage);
+                try
+                {
+                    //读取图片，导入到OriginalImage内
+                    RealOriginalImage = new ImageData(files[0].Path.LocalPath);
+                    ImageWidth = RealOriginalImage.Width;
+                    ImageHeight = RealOriginalImage.Height;
+                    //复制图片数据到Processed
+                    RealProcessedImage = new ImageData(RealOriginalImage);
 
-                //刷新到UI
-                RefreshOriginalImage();
-                RefreshProcessedImage();
+                    //刷新到UI
+                    RefreshOriginalImage();
+                    RefreshProcessedImage();
+                    isLoaded = true;
+                }
+                catch (Exception e)
+                {
+                    ErrorMessage = e.Message;
+                    isLoaded = false;
+                    return;
+                }
             });
+
+            //如果加载失败
+            if (!isLoaded)
+            {
+                IsError = true;
+                return;
+            }
 
             //初始化其他变量
             ImageWidth = RealOriginalImage!.Width;
