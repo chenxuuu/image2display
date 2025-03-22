@@ -42,12 +42,12 @@ public class Utils
 
     /// <summary>
     /// 用户配置文件路径
-    /// win：C:\Users\{username}\Image2Display
-    /// linux：/home/{username}/Image2Display
-    /// mac：/Users/{username}/Image2Display
+    /// win：C:\Users\{username}\.Image2Display
+    /// linux：/home/{username}/.Image2Display
+    /// mac：/Users/{username}/.Image2Display
     /// </summary>
     public readonly static string AppPath =
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Image2Display");
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Image2Display");
     /// <summary>
     /// 配置文件路径
     /// </summary>
