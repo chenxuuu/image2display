@@ -1,4 +1,4 @@
-﻿using Avalonia.Controls;
+using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -230,7 +230,6 @@ namespace Image2Display.ViewModels
                     await RefreshPreview();
                 }
             };
-
         }
 
 

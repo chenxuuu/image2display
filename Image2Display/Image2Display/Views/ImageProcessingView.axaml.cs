@@ -16,11 +16,11 @@ public partial class ImageProcessingView : UserControl
 
     private void Grid_PointerWheelChanged(object? sender, Avalonia.Input.PointerWheelEventArgs e)
     {
-        // ´¦Àí¹öÂÖÊÂ¼þ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
         var delta = e.Delta.Y;
         Debug.WriteLine($"delta: {delta}");
         var mar = ImageViewbox.Margin.Left;
-        var marAfter = mar - delta * 10;
+        var marAfter = mar - (delta * 10);
         if (marAfter >= 10)
             return;
         ImageViewbox.Margin = new Thickness(marAfter);

@@ -1,4 +1,4 @@
-﻿using Image2Display.Models;
+using Image2Display.Models;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SkiaSharp;
@@ -31,8 +31,8 @@ public class FontConvert
         var paddingColor = new Rgba32(45, 25, 70, 255);
 
         //计算一下实际尺寸
-        var realWidth = width * pixelSize + (width - 1) * padding;
-        var realHeight = height * pixelSize + (height - 1) * padding;
+        var realWidth = (width * pixelSize) + ((width - 1) * padding);
+        var realHeight = (height * pixelSize) + ((height - 1) * padding);
         //保证缓冲区存在
         image ??= new ImageData(realWidth, realHeight);
         //如果尺寸不一致，改一下尺寸
@@ -59,7 +59,7 @@ public class FontConvert
         {
             for (var x = 0; x < width; x++)
             {
-                var index = y * width + x;
+                var index = (y * width) + x;
                 var color = new Rgba32(data[index], data[index], data[index], 255);
                 image.DrawRect(x * (pixelSize + padding), y * (pixelSize + padding), pixelSize, pixelSize, color);
             }
@@ -85,7 +85,7 @@ public class FontConvert
         };
         //Debug.WriteLine("Paint Created");
         //画布上画字
-        surface.Canvas.DrawText(c.ToString(), width/2 + offsetx, height - offsety, paint);
+        surface.Canvas.DrawText(c.ToString(), (width/2) + offsetx, height - offsety, paint);
         //Debug.WriteLine("Text Drawn");
         //获取像素数据
         IntPtr data = surface.PeekPixels().GetPixels();
@@ -106,7 +106,7 @@ public class FontConvert
                     IntPtr pixel = pixmap.GetPixels(x, y);
                     var buff = new byte[pixmap.BytesPerPixel];
                     System.Runtime.InteropServices.Marshal.Copy(pixel, buff, 0, buff.Length);
-                    result[x + y * width] = buff[0];
+                    result[x + (y * width)] = buff[0];
                 }
             }
         }
@@ -177,7 +177,7 @@ public class FontConvert
             {
                 for (var x = m1; x != m2 + mStep; x += mStep)
                 {
-                    action(data[x + y * width]);
+                    action(data[x + (y * width)]);
                 }
             }
         }
@@ -187,7 +187,7 @@ public class FontConvert
             {
                 for (var y = m1; y != m2 + mStep; y += mStep)
                 {
-                    action(data[x + y * width]);
+                    action(data[x + (y * width)]);
                 }
             }
         }
