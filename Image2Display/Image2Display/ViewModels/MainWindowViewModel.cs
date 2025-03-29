@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Markup.Xaml.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Image2Display.Views;
@@ -10,5 +10,4 @@ namespace Image2Display.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-
 }
