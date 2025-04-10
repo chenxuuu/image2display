@@ -59,6 +59,7 @@
     <PackageReference Include="Sentry" Version="4.13.0" />
     <PackageReference Include="Sentry.Profiling" Version="4.13.0" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.4" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="3.116.1" />
   </ItemGroup>
 
 
