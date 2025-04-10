@@ -28,6 +28,8 @@ All official versions: [GitHub Releases](https://github.com/chenxuuu/image2displ
 
 CI snapshot version: [GitHub Action](https://nightly.link/chenxuuu/image2display/workflows/build/master)
 
+Archlinux: [AUR](https://aur.archlinux.org/packages/image2display-bin)
+
 ## Features
 
 - Image Preprocessing

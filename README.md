@@ -28,6 +28,8 @@
 
 CI快照版：[GitHub Action](https://nightly.link/chenxuuu/image2display/workflows/build/master)
 
+Archlinux：[AUR](https://aur.archlinux.org/packages/image2display-bin)
+
 ## 功能
 
 - 图片预处理
