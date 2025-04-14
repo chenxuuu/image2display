@@ -10,7 +10,7 @@
     <Authors>chenxuuu</Authors>
     <Company>https://github.com/chenxuuu/image2display</Company>
     <Description>Image data conversion tool</Description>
-    <Version>1.1.6.2</Version>
+    <Version>1.1.6.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
