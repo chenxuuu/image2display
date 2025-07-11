@@ -244,7 +244,16 @@ namespace Image2Display.ViewModels
             var path = await DialogHelper.ShowSaveFileDialogAsync("image", FilePickerFileTypes.ImagePng);
             if (path == null)
                 return;
-            ProcessedImage?.Save(path);
+            try
+            {
+                ProcessedImage?.Save(path);
+            }
+            catch(Exception e)
+            {
+                ErrorMessage = e.Message;
+                IsError = true;
+                return;
+            }
         }
 
         [RelayCommand]
