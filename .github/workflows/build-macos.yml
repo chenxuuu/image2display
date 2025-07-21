@@ -1,0 +1,135 @@
+name: build-macos
+
+on:
+  push:
+    paths:
+      - 'Image2Display/**'
+      - '.github/workflows/build-macos.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整历史以便获取tags
+      
+      - name: Get version from git tag
+        id: get_version
+        run: |
+          VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "1.0.0.0")
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "Using version: $VERSION"
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      
+      - name: Install fpm
+        run: |
+          # 安装 Ruby (如果需要)
+          brew install ruby
+          # 安装 fpm
+          gem install fpm
+      
+      - name: Build .NET application
+        run: |
+          cd Image2Display/Image2Display
+          dotnet publish -r osx-x64 --configuration Release --self-contained true -p:PublishTrimmed=true -p:TrimMode=link -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:Version=${{ steps.get_version.outputs.VERSION }}
+          rm -f bin/Release/net9.0/osx-x64/publish/*.pdb
+      
+      - name: Create .app bundle structure
+        run: |
+          cd Image2Display/Image2Display
+          mkdir -p Image2Display.app/Contents/MacOS
+          mkdir -p Image2Display.app/Contents/Resources
+          
+          # Copy executable
+          cp bin/Release/net9.0/osx-x64/publish/Image2Display Image2Display.app/Contents/MacOS/
+          
+          # Copy icon (convert to icns if needed)
+          if [ -f "Assets/logo.png" ]; then
+            # Create icns from png
+            mkdir -p icon.iconset
+            sips -z 16 16 Assets/logo.png --out icon.iconset/icon_16x16.png
+            sips -z 32 32 Assets/logo.png --out icon.iconset/icon_16x16@2x.png
+            sips -z 32 32 Assets/logo.png --out icon.iconset/icon_32x32.png
+            sips -z 64 64 Assets/logo.png --out icon.iconset/icon_32x32@2x.png
+            sips -z 128 128 Assets/logo.png --out icon.iconset/icon_128x128.png
+            sips -z 256 256 Assets/logo.png --out icon.iconset/icon_128x128@2x.png
+            sips -z 256 256 Assets/logo.png --out icon.iconset/icon_256x256.png
+            sips -z 512 512 Assets/logo.png --out icon.iconset/icon_256x256@2x.png
+            sips -z 512 512 Assets/logo.png --out icon.iconset/icon_512x512.png
+            sips -z 1024 1024 Assets/logo.png --out icon.iconset/icon_512x512@2x.png
+            iconutil -c icns icon.iconset
+            cp icon.icns Image2Display.app/Contents/Resources/
+          fi
+          
+          # Create Info.plist
+          cat > Image2Display.app/Contents/Info.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>CFBundleExecutable</key>
+              <string>Image2Display</string>
+              <key>CFBundleIdentifier</key>
+              <string>com.image2display.app</string>
+              <key>CFBundleName</key>
+              <string>Image2Display</string>
+              <key>CFBundleVersion</key>
+              <string>${{ steps.get_version.outputs.VERSION }}</string>
+              <key>CFBundleShortVersionString</key>
+              <string>${{ steps.get_version.outputs.VERSION }}</string>
+              <key>CFBundleInfoDictionaryVersion</key>
+              <string>6.0</string>
+              <key>CFBundlePackageType</key>
+              <string>APPL</string>
+              <key>CFBundleIconFile</key>
+              <string>icon.icns</string>
+              <key>LSMinimumSystemVersion</key>
+              <string>10.15</string>
+          </dict>
+          </plist>
+          EOF
+          
+          # Make executable
+          chmod +x Image2Display.app/Contents/MacOS/Image2Display
+      
+      - name: Create .pkg installer using fpm
+        run: |
+          cd Image2Display/Image2Display
+          
+          # Create staging directory for pkg contents
+          mkdir -p pkg_staging/Applications
+          cp -R Image2Display.app pkg_staging/Applications/
+          
+          # Use fpm to create .pkg
+          fpm -s dir -t osxpkg \
+            -n "Image2Display" \
+            -v "${{ steps.get_version.outputs.VERSION }}" \
+            --description "Image2Display Application" \
+            --url "https://github.com/${{ github.repository }}" \
+            --maintainer "Image2Display Team" \
+            --osxpkg-identifier-prefix "com.image2display" \
+            -C pkg_staging \
+            Applications
+          
+          # Move generated files to a clean directory
+          mkdir -p dist
+          mv Image2Display.app dist/
+          mv *.pkg dist/Image2Display-${{ steps.get_version.outputs.VERSION }}.pkg
+
+      - name: Upload .app artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Image2Display-${{ steps.get_version.outputs.VERSION }}-macos.app
+          path: Image2Display/Image2Display/dist/Image2Display.app
+
+      - name: Upload .pkg artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Image2Display-${{ steps.get_version.outputs.VERSION }}-macos.pkg
+          path: Image2Display/Image2Display/dist/*.pkg
