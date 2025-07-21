@@ -10,126 +10,126 @@ on:
 jobs:
   build:
     runs-on: macos-latest
+    strategy:
+      matrix:
+        arch: [osx-x64, osx-arm64]
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 获取完整历史以便获取tags
-      
-      - name: Get version from git tag
-        id: get_version
-        run: |
-          VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "1.0.0.0")
-          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
-          echo "Using version: $VERSION"
+          fetch-depth: 0  # 获取完整的git历史，用于获取tag信息
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
       
-      - name: Install fpm
+      - name: Install dependencies
         run: |
-          # 安装 Ruby (如果需要)
-          brew install ruby
-          # 安装 fpm
-          gem install fpm
+          # 安装fpm用于生成dmg
+          brew install fpm
+          # 安装create-dmg用于生成dmg
+          brew install create-dmg
       
-      - name: Build .NET application
+      - name: Get version from git tag
+        id: version
+        run: |
+          VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "1.0.0.0")
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "Using version: $VERSION"
+      
+      - name: Build application
         run: |
           cd Image2Display/Image2Display
-          dotnet publish -r osx-x64 --configuration Release --self-contained true -p:PublishTrimmed=true -p:TrimMode=link -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:Version=${{ steps.get_version.outputs.VERSION }}
-          rm -f bin/Release/net9.0/osx-x64/publish/*.pdb
+          dotnet publish -r ${{ matrix.arch }} --configuration Release --self-contained true -p:PublishTrimmed=true -p:TrimMode=link -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:Version=${{ steps.version.outputs.VERSION }}
+          rm -f bin/Release/net9.0/${{ matrix.arch }}/publish/*.pdb
       
-      - name: Create .app bundle structure
+      - name: Create .app bundle
         run: |
           cd Image2Display/Image2Display
-          mkdir -p Image2Display.app/Contents/MacOS
-          mkdir -p Image2Display.app/Contents/Resources
+          APP_NAME="Image2Display.app"
+          APP_DIR="$APP_NAME/Contents"
           
-          # Copy executable
-          cp bin/Release/net9.0/osx-x64/publish/Image2Display Image2Display.app/Contents/MacOS/
+          # 创建.app目录结构
+          mkdir -p "$APP_DIR/MacOS"
+          mkdir -p "$APP_DIR/Resources"
           
-          # Copy icon (convert to icns if needed)
-          if [ -f "Assets/logo.png" ]; then
-            # Create icns from png
-            mkdir -p icon.iconset
-            sips -z 16 16 Assets/logo.png --out icon.iconset/icon_16x16.png
-            sips -z 32 32 Assets/logo.png --out icon.iconset/icon_16x16@2x.png
-            sips -z 32 32 Assets/logo.png --out icon.iconset/icon_32x32.png
-            sips -z 64 64 Assets/logo.png --out icon.iconset/icon_32x32@2x.png
-            sips -z 128 128 Assets/logo.png --out icon.iconset/icon_128x128.png
-            sips -z 256 256 Assets/logo.png --out icon.iconset/icon_128x128@2x.png
-            sips -z 256 256 Assets/logo.png --out icon.iconset/icon_256x256.png
-            sips -z 512 512 Assets/logo.png --out icon.iconset/icon_256x256@2x.png
-            sips -z 512 512 Assets/logo.png --out icon.iconset/icon_512x512.png
-            sips -z 1024 1024 Assets/logo.png --out icon.iconset/icon_512x512@2x.png
-            iconutil -c icns icon.iconset
-            cp icon.icns Image2Display.app/Contents/Resources/
-          fi
+          # 复制可执行文件
+          cp bin/Release/net9.0/${{ matrix.arch }}/publish/Image2Display "$APP_DIR/MacOS/"
           
-          # Create Info.plist
-          cat > Image2Display.app/Contents/Info.plist << EOF
+          # 复制图标文件
+          cp Assets/logo.png "$APP_DIR/Resources/logo.png"
+          
+          # 创建Info.plist文件
+          cat > "$APP_DIR/Info.plist" << EOF
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <plist version="1.0">
           <dict>
+              <key>CFBundleDevelopmentRegion</key>
+              <string>en</string>
+              <key>CFBundleDisplayName</key>
+              <string>Image2Display</string>
               <key>CFBundleExecutable</key>
               <string>Image2Display</string>
+              <key>CFBundleIconFile</key>
+              <string>logo.png</string>
               <key>CFBundleIdentifier</key>
-              <string>com.image2display.app</string>
-              <key>CFBundleName</key>
-              <string>Image2Display</string>
-              <key>CFBundleVersion</key>
-              <string>${{ steps.get_version.outputs.VERSION }}</string>
-              <key>CFBundleShortVersionString</key>
-              <string>${{ steps.get_version.outputs.VERSION }}</string>
+              <string>com.chenxublog.image2display</string>
               <key>CFBundleInfoDictionaryVersion</key>
               <string>6.0</string>
+              <key>CFBundleName</key>
+              <string>Image2Display</string>
               <key>CFBundlePackageType</key>
               <string>APPL</string>
-              <key>CFBundleIconFile</key>
-              <string>icon.icns</string>
+              <key>CFBundleShortVersionString</key>
+              <string>${{ steps.version.outputs.VERSION }}</string>
+              <key>CFBundleVersion</key>
+              <string>${{ steps.version.outputs.VERSION }}</string>
               <key>LSMinimumSystemVersion</key>
               <string>10.15</string>
+              <key>NSHighResolutionCapable</key>
+              <true/>
           </dict>
           </plist>
           EOF
           
-          # Make executable
-          chmod +x Image2Display.app/Contents/MacOS/Image2Display
+          # 设置可执行权限
+          chmod +x "$APP_DIR/MacOS/Image2Display"
       
-      - name: Create .pkg installer using fpm
+      - name: Create DMG
         run: |
           cd Image2Display/Image2Display
           
-          # Create staging directory for pkg contents
-          mkdir -p pkg_staging/Applications
-          cp -R Image2Display.app pkg_staging/Applications/
+          # 创建临时目录用于dmg内容
+          DMG_DIR="dmg_temp"
+          mkdir -p "$DMG_DIR"
           
-          # Use fpm to create .pkg
-          fpm -s dir -t osxpkg \
-            -n "Image2Display" \
-            -v "${{ steps.get_version.outputs.VERSION }}" \
-            --description "Image2Display Application" \
-            --url "https://github.com/${{ github.repository }}" \
-            --maintainer "Image2Display Team" \
-            --osxpkg-identifier-prefix "com.image2display" \
-            -C pkg_staging \
-            Applications
+          # 复制.app到临时目录
+          cp -R Image2Display.app "$DMG_DIR/"
           
-          # Move generated files to a clean directory
-          mkdir -p dist
-          mv Image2Display.app dist/
-          mv *.pkg dist/Image2Display-${{ steps.get_version.outputs.VERSION }}.pkg
-
+          # 创建dmg文件
+          DMG_NAME="Image2Display-${{ steps.version.outputs.VERSION }}-${{ matrix.arch }}.dmg"
+          
+          create-dmg \
+            --volname "Image2Display" \
+            --volicon "Assets/logo.png" \
+            --window-pos 200 120 \
+            --window-size 600 300 \
+            --icon-size 100 \
+            --icon "Image2Display.app" 175 120 \
+            --hide-extension "Image2Display.app" \
+            --app-drop-link 425 120 \
+            "$DMG_NAME" \
+            "$DMG_DIR"
+      
       - name: Upload .app artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Image2Display-${{ steps.get_version.outputs.VERSION }}-macos.app
-          path: Image2Display/Image2Display/dist/Image2Display.app
-
-      - name: Upload .pkg artifact
+          name: Image2Display-${{ steps.version.outputs.VERSION }}-${{ matrix.arch }}-app
+          path: Image2Display/Image2Display/Image2Display.app
+      
+      - name: Upload DMG artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Image2Display-${{ steps.get_version.outputs.VERSION }}-macos.pkg
-          path: Image2Display/Image2Display/dist/*.pkg
+          name: Image2Display-${{ steps.version.outputs.VERSION }}-${{ matrix.arch }}-dmg
+          path: Image2Display/Image2Display/Image2Display-${{ steps.version.outputs.VERSION }}-${{ matrix.arch }}.dmg
