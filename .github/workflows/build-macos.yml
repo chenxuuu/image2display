@@ -25,10 +25,10 @@ jobs:
       
       - name: Install dependencies
         run: |
-          # 安装fpm用于生成dmg
-          brew install fpm
           # 安装create-dmg用于生成dmg
           brew install create-dmg
+          # 安装iconutil用于转换图标
+          # iconutil是macOS内置工具，不需要安装
       
       - name: Get version from git tag
         id: version
@@ -37,11 +37,48 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           echo "Using version: $VERSION"
       
+      - name: Create icon file
+        run: |
+          cd Image2Display/Image2Display
+          # 创建iconset目录结构
+          mkdir -p icon.iconset
+          
+          # 从PNG创建不同尺寸的图标（需要ImageMagick或sips）
+          # 使用macOS内置的sips工具
+          sips -z 16 16 Assets/logo.png --out icon.iconset/icon_16x16.png
+          sips -z 32 32 Assets/logo.png --out icon.iconset/icon_16x16@2x.png
+          sips -z 32 32 Assets/logo.png --out icon.iconset/icon_32x32.png
+          sips -z 64 64 Assets/logo.png --out icon.iconset/icon_32x32@2x.png
+          sips -z 128 128 Assets/logo.png --out icon.iconset/icon_128x128.png
+          sips -z 256 256 Assets/logo.png --out icon.iconset/icon_128x128@2x.png
+          sips -z 256 256 Assets/logo.png --out icon.iconset/icon_256x256.png
+          sips -z 512 512 Assets/logo.png --out icon.iconset/icon_256x256@2x.png
+          sips -z 512 512 Assets/logo.png --out icon.iconset/icon_512x512.png
+          sips -z 1024 1024 Assets/logo.png --out icon.iconset/icon_512x512@2x.png
+          
+          # 创建icns文件
+          iconutil -c icns icon.iconset -o app.icns
+      
       - name: Build application
         run: |
           cd Image2Display/Image2Display
-          dotnet publish -r ${{ matrix.arch }} --configuration Release --self-contained true -p:PublishTrimmed=true -p:TrimMode=link -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:Version=${{ steps.version.outputs.VERSION }}
+          dotnet publish -r ${{ matrix.arch }} --configuration Release --self-contained true \
+            -p:PublishTrimmed=true \
+            -p:TrimMode=link \
+            -p:PublishSingleFile=true \
+            -p:IncludeNativeLibrariesForSelfExtract=true \
+            -p:Version=${{ steps.version.outputs.VERSION }} \
+            -p:EnableCompressionInSingleFile=true
           rm -f bin/Release/net9.0/${{ matrix.arch }}/publish/*.pdb
+      
+      - name: Import Code-Signing Certificates (if available)
+        if: ${{ env.MACOS_CERTIFICATE != '' }}
+        uses: Apple-Actions/import-codesign-certs@v2
+        with:
+          p12-file-base64: ${{ secrets.MACOS_CERTIFICATE }}
+          p12-password: ${{ secrets.MACOS_CERTIFICATE_PWD }}
+        env:
+          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
       
       - name: Create .app bundle
         run: |
@@ -57,7 +94,7 @@ jobs:
           cp bin/Release/net9.0/${{ matrix.arch }}/publish/Image2Display "$APP_DIR/MacOS/"
           
           # 复制图标文件
-          cp Assets/logo.png "$APP_DIR/Resources/logo.png"
+          cp app.icns "$APP_DIR/Resources/"
           
           # 创建Info.plist文件
           cat > "$APP_DIR/Info.plist" << EOF
@@ -72,7 +109,7 @@ jobs:
               <key>CFBundleExecutable</key>
               <string>Image2Display</string>
               <key>CFBundleIconFile</key>
-              <string>logo.png</string>
+              <string>app.icns</string>
               <key>CFBundleIdentifier</key>
               <string>com.chenxublog.image2display</string>
               <key>CFBundleInfoDictionaryVersion</key>
@@ -89,12 +126,38 @@ jobs:
               <string>10.15</string>
               <key>NSHighResolutionCapable</key>
               <true/>
+              <key>NSRequiresAquaSystemAppearance</key>
+              <false/>
+              <key>NSSupportsAutomaticGraphicsSwitching</key>
+              <true/>
           </dict>
           </plist>
           EOF
           
           # 设置可执行权限
           chmod +x "$APP_DIR/MacOS/Image2Display"
+      
+      - name: Code sign app bundle
+        if: ${{ env.MACOS_CERTIFICATE != '' }}
+        run: |
+          cd Image2Display/Image2Display
+          # 签名可执行文件
+          codesign --force --options runtime --deep --sign "${{ secrets.MACOS_CERTIFICATE_NAME }}" Image2Display.app/Contents/MacOS/Image2Display
+          # 签名整个app bundle
+          codesign --force --options runtime --deep --sign "${{ secrets.MACOS_CERTIFICATE_NAME }}" Image2Display.app
+          # 验证签名
+          codesign --verify --deep --strict --verbose=2 Image2Display.app
+        env:
+          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
+      
+      - name: Create ad-hoc signature (fallback)
+        if: ${{ env.MACOS_CERTIFICATE == '' }}
+        run: |
+          cd Image2Display/Image2Display
+          # 使用ad-hoc签名
+          codesign --force --deep --sign - Image2Display.app
+        env:
+          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
       
       - name: Create DMG
         run: |
@@ -112,7 +175,6 @@ jobs:
           
           create-dmg \
             --volname "Image2Display" \
-            --volicon "Assets/logo.png" \
             --window-pos 200 120 \
             --window-size 600 300 \
             --icon-size 100 \
@@ -120,7 +182,53 @@ jobs:
             --hide-extension "Image2Display.app" \
             --app-drop-link 425 120 \
             "$DMG_NAME" \
-            "$DMG_DIR"
+            "$DMG_DIR" || true
+          
+          # 如果create-dmg失败，使用hdiutil创建简单的dmg
+          if [ ! -f "$DMG_NAME" ]; then
+            echo "create-dmg failed, using hdiutil..."
+            hdiutil create -volname "Image2Display" -srcfolder "$DMG_DIR" -ov -format UDZO "$DMG_NAME"
+          fi
+      
+      - name: Code sign DMG
+        if: ${{ env.MACOS_CERTIFICATE != '' }}
+        run: |
+          cd Image2Display/Image2Display
+          DMG_NAME="Image2Display-${{ steps.version.outputs.VERSION }}-${{ matrix.arch }}.dmg"
+          codesign --force --sign "${{ secrets.MACOS_CERTIFICATE_NAME }}" "$DMG_NAME"
+        env:
+          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
+      
+      - name: Notarize app bundle
+        if: ${{ env.MACOS_CERTIFICATE != '' && env.NOTARIZATION_USERNAME != '' }}
+        run: |
+          cd Image2Display/Image2Display
+          
+          # 创建zip文件用于公证
+          ditto -c -k --keepParent Image2Display.app Image2Display.zip
+          
+          # 提交公证
+          xcrun notarytool submit Image2Display.zip \
+            --apple-id "${{ secrets.NOTARIZATION_USERNAME }}" \
+            --password "${{ secrets.NOTARIZATION_PASSWORD }}" \
+            --team-id "${{ secrets.TEAM_ID }}" \
+            --wait
+          
+          # 装订公证票据
+          xcrun stapler staple Image2Display.app
+          
+          # 同样处理DMG
+          DMG_NAME="Image2Display-${{ steps.version.outputs.VERSION }}-${{ matrix.arch }}.dmg"
+          xcrun notarytool submit "$DMG_NAME" \
+            --apple-id "${{ secrets.NOTARIZATION_USERNAME }}" \
+            --password "${{ secrets.NOTARIZATION_PASSWORD }}" \
+            --team-id "${{ secrets.TEAM_ID }}" \
+            --wait
+          
+          xcrun stapler staple "$DMG_NAME"
+        env:
+          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
+          NOTARIZATION_USERNAME: ${{ secrets.NOTARIZATION_USERNAME }}
       
       - name: Upload .app artifact
         uses: actions/upload-artifact@v4
