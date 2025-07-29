@@ -40,7 +40,7 @@ jobs:
         run: |
           chmod +x ./build_on_mac.sh
           ./build_on_mac.sh $DOTNETOS-$DOTNETARCH
-          mkdir pkg
+          mkdir Image2Display/Image2Display/pkg/
           mv build/* Image2Display/Image2Display/pkg/
 
       - name: build-others
