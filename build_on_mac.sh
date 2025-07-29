@@ -158,12 +158,12 @@ EOF
         -inkey /tmp/cert.key \
         -in /tmp/cert.crt \
         -name "$CERTIFICATE_NAME" \
-        -passout pass:
+        -passout pass:123456
 
     security unlock-keychain -p "$SYS_PASSWD" ~/Library/Keychains/login.keychain-db || true
 
     # 导入到钥匙串
-    security import /tmp/cert.p12 -k ~/Library/Keychains/login.keychain-db -P "" -T /usr/bin/codesign
+    security import /tmp/cert.p12 -k ~/Library/Keychains/login.keychain-db -P "123456" -T /usr/bin/codesign
 
     # 设置信任
     security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db /tmp/cert.crt
