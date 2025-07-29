@@ -125,13 +125,32 @@ EOF
 # 8. 创建 PkgInfo
 echo -n "APPL????" > "$CONTENTS_DIR/PkgInfo"
 
-# 9. 生成自签名证书（如果不存在）
-echo -e "${YELLOW}检查并生成自签名证书...${NC}"
-if ! security find-identity -v -p codesigning | grep -q "$CERTIFICATE_NAME"; then
-    echo -e "${YELLOW}生成自签名证书...${NC}"
-    
-    # 创建临时配置文件
-    cat > /tmp/cert_config.txt << EOF
+# 9. 生成自签名证书
+echo -e "${YELLOW}CI 环境：创建临时 keychain 和证书...${NC}"
+
+# CI 环境的 keychain 处理
+KEYCHAIN_PATH="$HOME/build.keychain"
+KEYCHAIN_PASSWORD="123456"
+
+# 删除可能存在的 keychain
+security delete-keychain "$KEYCHAIN_PATH" 2>/dev/null || true
+
+# 创建新的 keychain
+security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+# 设置 keychain 搜索列表
+security list-keychains -s "$KEYCHAIN_PATH"
+
+# 解锁 keychain
+security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+# 设置 keychain 永不锁定
+security set-keychain-settings "$KEYCHAIN_PATH"
+
+# 生成证书
+echo -e "${YELLOW}生成自签名证书...${NC}"
+
+cat > /tmp/cert_config.txt << EOF
 [req]
 distinguished_name = req_distinguished_name
 x509_extensions = v3_req
@@ -147,34 +166,29 @@ keyUsage = keyEncipherment, dataEncipherment, digitalSignature
 extendedKeyUsage = codeSigning
 EOF
 
-    # 生成私钥和证书
-    openssl req -new -x509 -days 365 -nodes \
-        -config /tmp/cert_config.txt \
-        -keyout /tmp/cert.key \
-        -out /tmp/cert.crt
+# 生成私钥和证书
+openssl req -new -x509 -days 365 -nodes \
+    -config /tmp/cert_config.txt \
+    -keyout /tmp/cert.key \
+    -out /tmp/cert.crt
 
-    # 创建 p12 文件
-    openssl pkcs12 -export -out /tmp/cert.p12 \
-        -inkey /tmp/cert.key \
-        -in /tmp/cert.crt \
-        -name "$CERTIFICATE_NAME" \
-        -passout pass:123456
+# 创建 p12 文件
+openssl pkcs12 -export -out /tmp/cert.p12 \
+    -inkey /tmp/cert.key \
+    -in /tmp/cert.crt \
+    -name "$CERTIFICATE_NAME" \
+    -passout pass:123456
 
-    security unlock-keychain -p "$SYS_PASSWD" ~/Library/Keychains/login.keychain-db || true
+# 导入证书到 keychain
+security import /tmp/cert.p12 -k "$KEYCHAIN_PATH" -P "123456" -T /usr/bin/codesign
 
-    # 导入到钥匙串
-    security import /tmp/cert.p12 -k ~/Library/Keychains/login.keychain-db -P "123456" -T /usr/bin/codesign
+# 设置证书信任（CI 环境下的替代方法）
+security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
 
-    # 设置信任
-    security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db /tmp/cert.crt
+# 清理临时文件
+rm -f /tmp/cert_config.txt /tmp/cert.key /tmp/cert.crt /tmp/cert.p12
 
-    # 清理临时文件
-    rm -f /tmp/cert_config.txt /tmp/cert.key /tmp/cert.crt /tmp/cert.p12
-
-    echo -e "${GREEN}自签名证书已生成并安装${NC}"
-else
-    echo -e "${GREEN}证书已存在，跳过生成${NC}"
-fi
+echo -e "${GREEN}CI 环境证书配置完成${NC}"
 
 # 10. 代码签名
 echo -e "${YELLOW}对应用进行代码签名...${NC}"

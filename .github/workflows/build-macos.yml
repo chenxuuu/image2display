@@ -12,20 +12,17 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # 获取完整的git历史，用于获取tag信息
-      
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
-      
+
       - name: build mac app and dmg
         run: |
           chmod +x ./build_on_mac.sh
           ./build_on_mac.sh osx-x64
           ./build_on_mac.sh osx-arm64
-      
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
