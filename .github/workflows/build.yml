@@ -9,32 +9,42 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       matrix:
         # build and publish in parallel: linux-arm,linux-x64,win-x86,win-x64,win-arm
-        dotnetos: [linux, win]
+        dotnetos: [linux, win, osx]
         dotnetarch: [x86, x64, arm, arm64]
         exclude:
           - dotnetos: linux
             dotnetarch: x86
           - dotnetos: win
             dotnetarch: arm
+          - dotnetos: osx
+            dotnetarch: x86
+          - dotnetos: osx
+            dotnetarch: arm
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
-      - name: environment prepare
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: build-mac
+        if: matrix.dotnetos == 'osx'
+        env:
+          DOTNETOS: ${{ matrix.dotnetos }}
+          DOTNETARCH: ${{ matrix.dotnetarch }}
         run: |
-          sudo apt-get update
-          sudo apt-get install -y apt-transport-https
-          sudo apt-get update
-          sudo apt-get install -y p7zip-full
-          sudo apt remove dotnet-sdk-* -y
-          sudo apt remove netstandard-targeting-pack-* -y
-          sudo add-apt-repository ppa:dotnet/backports
-          sudo apt-get update
-          sudo apt-get install -y dotnet-sdk-9.0
-      - name: build
+          chmod +x ./build_on_mac.sh
+          ./build_on_mac.sh $DOTNETOS-$DOTNETARCH
+          mkdir pkg
+          mv build/* Image2Display/Image2Display/pkg/
+
+      - name: build-others
+        if: matrix.dotnetos != 'osx'
         env:
           DOTNETOS: ${{ matrix.dotnetos }}
           DOTNETARCH: ${{ matrix.dotnetarch }}
