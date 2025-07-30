@@ -5,6 +5,7 @@ on:
     paths:
       - 'Image2Display/**'
       - '.github/workflows/build.yml'
+      - 'build_on_mac.sh'
   workflow_dispatch:
 
 jobs:
