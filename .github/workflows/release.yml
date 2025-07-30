@@ -82,6 +82,10 @@ jobs:
         path: Image2Display-osx-x64/
     - uses: actions/download-artifact@v4
       with:
+        name: Image2Display-osx-arm64
+        path: Image2Display-osx-arm64/
+    - uses: actions/download-artifact@v4
+      with:
         name: Image2Display-win-arm64
         path: Image2Display-win-arm64/
     - uses: actions/download-artifact@v4
@@ -108,10 +112,11 @@ jobs:
         cd ..
         tar zcvf Image2Display-linux-x64.tar.gz Image2Display-linux-x64/
         cd Image2Display-osx-x64
-        chmod +x ./Image2Display
         cd ..
-        tar zcvf Image2Display-osx-arm64.tar.gz Image2Display-osx-x64/
         tar zcvf Image2Display-osx-x64.tar.gz Image2Display-osx-x64/
+        cd Image2Display-osx-arm64
+        cd ..
+        tar zcvf Image2Display-osx-arm64.tar.gz Image2Display-osx-arm64/
         zip -r Image2Display-win-arm64.zip Image2Display-win-arm64/
         zip -r Image2Display-win-x64.zip Image2Display-win-x64/
         zip -r Image2Display-win-x86.zip Image2Display-win-x86/
