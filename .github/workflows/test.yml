@@ -21,5 +21,5 @@ jobs:
           dotnet-version: '9.0.x'
       - name: test
         run: |
-          cd Image2Display
+          cd Image2Display/I2D_Test
           dotnet test
