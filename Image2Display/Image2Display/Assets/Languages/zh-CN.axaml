@@ -234,4 +234,6 @@
     <system:String x:Key="Copied">已复制！</system:String>
     <system:String x:Key="Error">错误</system:String>
     <system:String x:Key="CheckUpdateFail">更新检查失败，请确保网络连接正常</system:String>
+    <system:String x:Key="Notify">提示</system:String>
+    <system:String x:Key="NoUpdate">当前已是最新版本。</system:String>
 </ResourceDictionary>

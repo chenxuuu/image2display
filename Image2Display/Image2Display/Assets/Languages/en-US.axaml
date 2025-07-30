@@ -229,4 +229,6 @@
     <system:String x:Key="Copied">Copied!</system:String>
     <system:String x:Key="Error">Error</system:String>
     <system:String x:Key="CheckUpdateFail">Check update failed.</system:String>
+    <system:String x:Key="Notify">Notify</system:String>
+    <system:String x:Key="NoUpdate">This is the latest version.</system:String>
 </ResourceDictionary>

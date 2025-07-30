@@ -91,7 +91,7 @@ namespace Image2Display.ViewModels
                 HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("user-agent", "Image2Display");
                 string data = await client.GetStringAsync("https://api.github.com/repos/chenxuuu/Image2Display/releases/latest");
-                var jo = JsonSerializer.Deserialize<JsonObject>(data);
+                var jo = JsonNode.Parse(data)?.AsObject();
                 var ver = (string)jo!["tag_name"]!;
 
                 var vLocal = Utils.Version.Split('.');
@@ -111,6 +111,12 @@ namespace Image2Display.ViewModels
                 {
                     NewVersion = ver;
                     HasNewVersion = true;
+                }
+                else
+                {
+                    await DialogHelper.ShowNotifyDialog(Utils.GetI18n<string>("Notify"),
+                        $"{Utils.GetI18n<string>("NoUpdate")}",
+                        Symbol.Emoji);
                 }
             }
             catch (Exception ex)
