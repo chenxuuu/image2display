@@ -53,7 +53,7 @@
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.11" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="FluentAvaloniaUI" Version="2.1.0" />
+    <PackageReference Include="FluentAvaloniaUI" Version="2.4.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.2" />
     <PackageReference Include="Sentry" Version="6.0.0" />

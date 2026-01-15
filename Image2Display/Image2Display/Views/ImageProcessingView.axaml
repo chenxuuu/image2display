@@ -341,7 +341,7 @@
                     </ui:SettingsExpanderItem>
                     <ui:SettingsExpanderItem Content="{DynamicResource ConvertTransparentColor}" IsVisible="{Binding !PreserveTransparency}">
                         <ui:SettingsExpanderItem.Footer>
-                            <ui:ColorPickerButton ShowAcceptDismissButtons="False" Color="{Binding TransparencyColor}" />
+                            <ColorPicker Color="{Binding TransparencyColor}" />
                         </ui:SettingsExpanderItem.Footer>
                     </ui:SettingsExpanderItem>
                     <ui:SettingsExpanderItem Content="{DynamicResource Brightness}">
