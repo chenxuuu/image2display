@@ -21,10 +21,6 @@ namespace I2D_Test
         public void Language()
         {
             Utils.Initial();
-            _ = new MainWindow()
-            {
-                DataContext = new MainWindowViewModel(),
-            };
             Utils.ChangeLanguage("test",true);
             Utils.ChangeLanguage("en-US", true);
         }
@@ -33,10 +29,6 @@ namespace I2D_Test
         public void Setting()
         {
             Utils.Initial();
-            _ = new MainWindow()
-            {
-                DataContext = new MainWindowViewModel(),
-            };
             Utils.Settings.Language = "en-US";
             Utils.SaveSettings();
             Utils.Settings.Language = "zh-CN";
