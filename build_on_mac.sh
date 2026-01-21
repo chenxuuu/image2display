@@ -61,7 +61,7 @@ mkdir -p "$RESOURCES_DIR"
 # 4. 编译项目
 echo -e "${YELLOW}编译项目...${NC}"
 dotnet publish "$PROJECT_PATH" \
-    -f net9.0 \
+    -f net10.0 \
     -r "$BUILD_ARCH" \
     --configuration Release \
     --self-contained true \
