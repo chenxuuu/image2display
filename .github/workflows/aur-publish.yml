@@ -1,0 +1,91 @@
+name: aur-publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      pkgver:
+        description: "Package version (leave empty to use latest GitHub release tag)"
+        required: false
+        type: string
+      pkgrel:
+        description: "Package release number"
+        required: false
+        default: "1"
+        type: string
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve pkgver
+        id: ver
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_VER: ${{ inputs.pkgver }}
+        run: |
+          if [ -n "$INPUT_VER" ]; then
+            VER="$INPUT_VER"
+          else
+            VER=$(gh release view --json tagName -q .tagName)
+          fi
+          echo "pkgver=$VER" >> "$GITHUB_OUTPUT"
+          echo "Resolved pkgver: $VER"
+
+      - name: Render PKGBUILD
+        env:
+          PKGVER: ${{ steps.ver.outputs.pkgver }}
+          PKGREL: ${{ inputs.pkgrel }}
+        run: |
+          mkdir -p aur-out
+          sed -e "s/__PKGVER__/${PKGVER}/g" \
+              -e "s/__PKGREL__/${PKGREL}/g" \
+              PKGBUILD > aur-out/PKGBUILD
+          echo "--- rendered PKGBUILD head ---"
+          head -10 aur-out/PKGBUILD
+
+      - name: Generate .SRCINFO
+        run: |
+          docker run --rm -v "$PWD/aur-out:/pkg" -w /pkg \
+            archlinux:base-devel \
+            bash -c '
+              useradd -m builder &&
+              chown -R builder:builder /pkg &&
+              sudo -u builder makepkg --printsrcinfo > .SRCINFO
+            '
+
+      - name: Setup SSH for AUR
+        env:
+          AUR_SSH_PRIVATE_KEY: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$AUR_SSH_PRIVATE_KEY" > ~/.ssh/aur
+          chmod 600 ~/.ssh/aur
+          ssh-keyscan -t ed25519,rsa aur.archlinux.org >> ~/.ssh/known_hosts
+          cat > ~/.ssh/config <<'EOF'
+          Host aur.archlinux.org
+              IdentityFile ~/.ssh/aur
+              IdentitiesOnly yes
+              User aur
+          EOF
+          chmod 600 ~/.ssh/config
+
+      - name: Push to AUR
+        env:
+          PKGVER: ${{ steps.ver.outputs.pkgver }}
+          PKGREL: ${{ inputs.pkgrel }}
+        run: |
+          git clone ssh://aur@aur.archlinux.org/image2display-bin.git aur-repo
+          cp aur-out/PKGBUILD aur-out/.SRCINFO aur-repo/
+          cd aur-repo
+          git config user.name "Canmi"
+          git config user.email "t@canmi.icu"
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "No changes, skipping push"
+            exit 0
+          fi
+          git add PKGBUILD .SRCINFO
+          git commit -m "release: ${PKGVER}-${PKGREL}"
+          git push
