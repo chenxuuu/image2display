@@ -12,10 +12,14 @@ on:
         required: false
         default: "1"
         type: string
+  workflow_run:
+    workflows: ["release"]
+    types: [completed]
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -36,7 +40,7 @@ jobs:
       - name: Render PKGBUILD
         env:
           PKGVER: ${{ steps.ver.outputs.pkgver }}
-          PKGREL: ${{ inputs.pkgrel }}
+          PKGREL: ${{ inputs.pkgrel || '1' }}
         run: |
           mkdir -p aur-out
           sed -e "s/__PKGVER__/${PKGVER}/g" \
@@ -75,7 +79,7 @@ jobs:
       - name: Push to AUR
         env:
           PKGVER: ${{ steps.ver.outputs.pkgver }}
-          PKGREL: ${{ inputs.pkgrel }}
+          PKGREL: ${{ inputs.pkgrel || '1' }}
         run: |
           git clone ssh://aur@aur.archlinux.org/image2display-bin.git aur-repo
           cp aur-out/PKGBUILD aur-out/.SRCINFO aur-repo/
