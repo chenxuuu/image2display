@@ -24,6 +24,10 @@ Supports Win10+, Linux, OSX
 
 ## Download
 
+Get it from Microsoft store:
+
+<a href='//www.microsoft.com/store/apps/9nnkjcj08k0l?cid=storebadge&ocid=badge'><img src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png' alt='English badge' width='160'/></a>
+
 All official versions: [GitHub Releases](https://github.com/chenxuuu/image2display/releases/latest)
 
 CI snapshot version: [GitHub Action](https://nightly.link/chenxuuu/image2display/workflows/build/master)

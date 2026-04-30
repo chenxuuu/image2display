@@ -24,6 +24,10 @@
 
 ## 下载
 
+从微软商店安装：
+
+<a href='//www.microsoft.com/store/apps/9nnkjcj08k0l?cid=storebadge&ocid=badge'><img src='https://developer.microsoft.com/store/badges/images/Chinese_Simplified_get-it-from-MS.png' alt='Chinese badge' width='160'/></a>
+
 所有正式版本：[GitHub Releases](https://github.com/chenxuuu/image2display/releases/latest)
 
 CI快照版：[GitHub Action](https://nightly.link/chenxuuu/image2display/workflows/build/master)
