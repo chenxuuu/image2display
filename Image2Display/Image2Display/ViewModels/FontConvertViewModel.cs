@@ -156,8 +156,12 @@ namespace Image2Display.ViewModels
                 {
                     Content = f,
                     Tag = f,
-                    //FontFamily = f
                 };
+                //预览字体：Avalonia 会把族名里的空白当字重分隔符，族名里出现连续空格时
+                //测量下拉框就会抛异常闪退（issue #8），拿不到安全的名字就不设预览字体
+                var previewFamily = FontFamilyHelper.CreatePreviewFontFamily(f);
+                if (previewFamily is not null)
+                    item.FontFamily = previewFamily;
                 SystemFontList.Add(item);
             }
             if(SystemFontList.Count > 0)
